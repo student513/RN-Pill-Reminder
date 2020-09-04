@@ -12,7 +12,7 @@ export default class Calendar extends Component<IProps, {}> {
     render() {
         return (
             <View>
-                <Text>Calender</Text>
+                <Text style={{ fontFamily: 'ProximaNova-Regular' }}>Calender</Text>
             </View>
         )
     }
