@@ -11,7 +11,7 @@ import {observer} from 'mobx-react';
 import {observable} from 'mobx';
 import Modal from 'react-native-modal';
 import {SetTypeModal} from '../components/Modal/SetTypeModal';
-import { MyText } from '../components/MyText';
+import {MyText} from '../components/MyText';
 
 interface IProps {}
 interface IState {

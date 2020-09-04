@@ -19,7 +19,7 @@ export class MyText extends PureComponent<MyTextProps> {
 
 const styles = StyleSheet.create({
     textStyle: {
-        fontSize: 18,
+        fontSize: 15,
         fontFamily: 'ProximaNova-Regular'
     }
 })
