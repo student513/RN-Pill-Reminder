@@ -1,0 +1,66 @@
+import React, { Component } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, Button, TouchableWithoutFeedback } from 'react-native'
+import { observer } from 'mobx-react'
+import { observable } from 'mobx'
+import Modal from 'react-native-modal'
+import { SetTypeModal } from '../components/Modal/SetTypeModal'
+
+interface IProps {
+}
+interface IState {
+    modalVisible: boolean
+}
+
+class Reminder extends Component<IProps, IState> {
+    constructor(props) {
+        super(props)
+        this.state = {
+            modalVisible: false
+        }
+    }
+
+    toggleModalVisible() {
+        this.state.modalVisible ? this.setState({ modalVisible: false }) : this.setState({ modalVisible: true })
+    }
+
+    render() {
+        const { modalVisible } = this.state
+
+        return (
+            <View style={styles.container}>
+                <TouchableOpacity onPress={() => {
+                    this.toggleModalVisible()
+                    console.log(modalVisible)
+                }}>
+                    <Text style={{ fontSize: 30 }}>Add</Text>
+                </TouchableOpacity>
+
+                <TouchableWithoutFeedback onPress={() => {
+                    this.setState({modalVisible:false})
+                    }}>
+                    <Modal
+                        isVisible={modalVisible}
+                        onSwipeComplete={() => this.toggleModalVisible()}
+                        swipeDirection={['down']}
+                        style={styles.view}
+                        backdropOpacity={0.5}
+                        onBackdropPress={() => this.toggleModalVisible()}
+                    >   
+                        <SetTypeModal onPress={() => this.toggleModalVisible()} />
+                    </Modal>
+                </TouchableWithoutFeedback>
+            </View>
+        )
+    }
+}
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#fff'
+    },
+    view: {
+        justifyContent: 'flex-end',
+        margin: 0,
+    },
+});
+
+export default Reminder
