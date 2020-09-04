@@ -1,6 +1,7 @@
 import Modal from 'react-native-modal';
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import { MyText } from '../MyText';
 
 interface SetTypeModalProps {
   showModal: boolean;
@@ -9,18 +10,18 @@ interface SetTypeModalProps {
 export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
   return (
     <View style={styles.content}>
-      <Text>Please select the type of reminder.</Text>
+      <MyText>Please select the type of reminder.</MyText>
       <TouchableOpacity
         onPress={() => {
           props.navigation.navigate('Add', {type: 'Cycle'});
         }}>
-        <Text>Set Cycle</Text>
+        <MyText>Set Cycle</MyText>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
           props.navigation.navigate('Add', {type: 'DayTime'});
         }}>
-        <Text>Select Day & Time </Text>
+        <MyText>Select Day & Time </MyText>
       </TouchableOpacity>
     </View>
   );
