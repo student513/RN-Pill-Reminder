@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Reminder from '../src/screens/Reminder'
 import Setting from '../src/screens/Setting'
 import Calendar from '../src/screens/Calendar'
+import { COLOR } from '../src/helper/helper';
 
 const Tab = createBottomTabNavigator()
 
@@ -33,7 +34,7 @@ export default ({navigation, route}) => {
           return (
             <Icon
               name={iconName}
-              color={focused ? '#13A45B' : '#BDBDBD'}
+              color={focused ? COLOR.FONT_GREEN : '#BDBDBD'}
               size={26}
             />
           )
@@ -42,7 +43,7 @@ export default ({navigation, route}) => {
       tabBarOptions={{
         // showLabel: false,//tab의 label을 안보이게
         // tab label color
-        activeTintColor: '#13A45B',
+        activeTintColor: COLOR.FONT_GREEN,
         inactiveTintColor: '#BDBDBD',
         style: {
           // backgroundColor:'black',
