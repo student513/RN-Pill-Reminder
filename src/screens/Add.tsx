@@ -1,25 +1,20 @@
-import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import React, {Component} from 'react';
+import {View, StyleSheet} from 'react-native';
 
-interface IProps {
-}
+interface IProps {}
 
 class Add extends Component<IProps, {}> {
-    constructor(props) {
-        super(props)
-    }
-    render() {
-        return (
-            <View style={styles.container}>
-                
-            </View>
-        )
-    }
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return <View style={styles.container} />;
+  }
 }
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#fff'
-    },
+  container: {
+    backgroundColor: '#fff',
+  },
 });
 
-export default Add
+export default Add;

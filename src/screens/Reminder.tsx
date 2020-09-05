@@ -1,14 +1,10 @@
 import React, {Component} from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
-  Button,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {observer} from 'mobx-react';
-import {observable} from 'mobx';
 import Modal from 'react-native-modal';
 import {SetTypeModal} from '../components/Modal/SetTypeModal';
 import {MyText} from '../components/MyText';

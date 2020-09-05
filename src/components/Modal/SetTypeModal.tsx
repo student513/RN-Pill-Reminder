@@ -1,6 +1,5 @@
-import Modal from 'react-native-modal';
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, TouchableHighlight} from 'react-native';
+import {View, StyleSheet, TouchableHighlight} from 'react-native';
 import {MyText} from '../MyText';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLOR} from '../../helper/helper';
@@ -17,7 +16,7 @@ export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
       </View>
       <View style={styles.button}>
         <TouchableHighlight
-        underlayColor={COLOR.TOUCH_GREEN}
+          underlayColor={COLOR.TOUCH_GREEN}
           onPress={() => {
             props.navigation.navigate('Add', {type: 'Cycle'});
           }}>
@@ -31,7 +30,7 @@ export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
           </MyText>
         </TouchableHighlight>
         <TouchableHighlight
-        underlayColor={COLOR.TOUCH_GREEN}
+          underlayColor={COLOR.TOUCH_GREEN}
           onPress={() => {
             props.navigation.navigate('Add', {type: 'DayTime'});
           }}>
