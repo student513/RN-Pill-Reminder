@@ -1,13 +1,12 @@
 import React from 'react';
 import {View, StyleSheet, TouchableHighlight} from 'react-native';
-import {MyText} from '../MyText';
+import {MyText} from 'components/MyText';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {COLOR} from '../../helper/helper';
+import {COLOR} from 'helper/helper';
 import Modal from 'react-native-modal';
-import {controlModalStore} from '../../store/ControlModal';
+import {controlModalStore} from 'store/ControlModal';
 
 interface SetTypeModalProps {
-  showModal: boolean;
   isVisible: boolean;
   onSwipeComplete: Function;
   swipeDirection: string[];
