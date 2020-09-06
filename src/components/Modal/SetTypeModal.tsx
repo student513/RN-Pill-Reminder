@@ -4,6 +4,7 @@ import {MyText} from '../MyText';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLOR} from '../../helper/helper';
 import Modal from 'react-native-modal';
+import {controlModalStore} from '../../store/ControlModal';
 
 interface SetTypeModalProps {
   showModal: boolean;
@@ -23,8 +24,7 @@ export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
       swipeDirection={['down']}
       style={{justifyContent: 'flex-end', margin: 0}}
       backdropOpacity={0.5}
-      onBackdropPress={() => props.onBackdropPress()}
-      >
+      onBackdropPress={() => props.onBackdropPress()}>
       <View style={styles.content}>
         <View style={styles.contentTitle}>
           <MyText>Please select the type of reminder.</MyText>
@@ -33,7 +33,9 @@ export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
           <TouchableHighlight
             underlayColor={COLOR.TOUCH_GREEN}
             onPress={() => {
-              props.navigation.navigate('Add', {type: 'Cycle'});
+              controlModalStore.toggleSetTypeModalVisible(); //this modal off
+              controlModalStore.toggleSelectSetCycle(); //add modal type set
+              controlModalStore.toggleAddModalVisible(); //open add modal
             }}>
             <MyText style={styles.buttonContent}>
               <Icon
@@ -47,7 +49,9 @@ export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
           <TouchableHighlight
             underlayColor={COLOR.TOUCH_GREEN}
             onPress={() => {
-              props.navigation.navigate('Add', {type: 'DayTime'});
+              controlModalStore.toggleSetTypeModalVisible();
+              controlModalStore.toggleSelectDayTime();
+              controlModalStore.toggleAddModalVisible();
             }}>
             <MyText style={styles.buttonContent}>
               <Icon
@@ -74,7 +78,6 @@ const styles = StyleSheet.create({
   },
   button: {
     alignContent: 'flex-start',
-    // backgroundColor: COLOR.TOUCH_GREEN,
   },
   contentTitle: {
     display: 'flex',

@@ -1,70 +1,39 @@
 import React, {Component} from 'react';
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-} from 'react-native';
-import Modal from 'react-native-modal';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {SetTypeModal} from '../components/Modal/SetTypeModal';
 import {MyText} from 'components/MyText';
+import {observer} from 'mobx-react';
+import {controlModalStore} from '../store/ControlModal';
 
 interface IProps {
   navigation: any;
 }
-interface IState {
-  modalVisible: boolean;
-}
+interface IState {}
 
+@observer
 class Reminder extends Component<IProps, IState> {
   constructor(props) {
     super(props);
-    this.state = {
-      modalVisible: false,
-    };
-  }
-
-  toggleModalVisible() {
-    this.state.modalVisible
-      ? this.setState({modalVisible: false})
-      : this.setState({modalVisible: true});
   }
 
   render() {
-    const {modalVisible} = this.state;
-
     return (
       <View style={styles.container}>
         <TouchableOpacity
           onPress={() => {
-            this.toggleModalVisible();
-            console.log(modalVisible);
+            controlModalStore.toggleSetTypeModalVisible();
           }}>
           <MyText style={{fontSize: 30}}>Add</MyText>
         </TouchableOpacity>
 
-        <TouchableWithoutFeedback
-          onPress={() => {
-            this.setState({modalVisible: false});
-          }}>
-          {/* <Modal
-            isVisible={modalVisible}
-            onSwipeComplete={() => this.toggleModalVisible()}
-            swipeDirection={['down']}
-            style={styles.view}
-            backdropOpacity={0.5}
-            onBackdropPress={() => this.toggleModalVisible()}> */}
-          <SetTypeModal
-            onPress={() => this.toggleModalVisible()}
-            isVisible={modalVisible}
-            onSwipeComplete={() => this.toggleModalVisible()}
-            swipeDirection={['down']}
-            style={styles.view}
-            backdropOpacity={0.5}
-            onBackdropPress={() => this.toggleModalVisible()}
-          />
-          {/* </Modal> */}
-        </TouchableWithoutFeedback>
+        <SetTypeModal
+          isVisible={controlModalStore.setTypeModalVisible}
+          onSwipeComplete={() => controlModalStore.toggleSetTypeModalVisible()}
+          swipeDirection={['down']}
+          style={styles.view}
+          backdropOpacity={0.5}
+          onBackdropPress={() => controlModalStore.toggleSetTypeModalVisible()}
+        />
       </View>
     );
   }
