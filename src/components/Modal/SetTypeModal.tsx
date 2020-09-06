@@ -3,48 +3,64 @@ import {View, StyleSheet, TouchableHighlight} from 'react-native';
 import {MyText} from '../MyText';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLOR} from '../../helper/helper';
+import Modal from 'react-native-modal';
 
 interface SetTypeModalProps {
   showModal: boolean;
+  isVisible: boolean;
+  onSwipeComplete: Function;
+  swipeDirection: string[];
+  backdropOpacity: number;
+  onBackdropPress: Function;
+  style: any;
 }
 
 export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
   return (
-    <View style={styles.content}>
-      <View style={styles.contentTitle}>
-        <MyText>Please select the type of reminder.</MyText>
+    <Modal
+      isVisible={props.isVisible}
+      onSwipeComplete={() => props.onSwipeComplete()}
+      swipeDirection={['down']}
+      style={{justifyContent: 'flex-end', margin: 0}}
+      backdropOpacity={0.5}
+      onBackdropPress={() => props.onBackdropPress()}
+      >
+      <View style={styles.content}>
+        <View style={styles.contentTitle}>
+          <MyText>Please select the type of reminder.</MyText>
+        </View>
+        <View style={styles.button}>
+          <TouchableHighlight
+            underlayColor={COLOR.TOUCH_GREEN}
+            onPress={() => {
+              props.navigation.navigate('Add', {type: 'Cycle'});
+            }}>
+            <MyText style={styles.buttonContent}>
+              <Icon
+                name="sync-circle-outline"
+                color={COLOR.FONT_GREEN}
+                size={15}
+              />
+              Set Cycle
+            </MyText>
+          </TouchableHighlight>
+          <TouchableHighlight
+            underlayColor={COLOR.TOUCH_GREEN}
+            onPress={() => {
+              props.navigation.navigate('Add', {type: 'DayTime'});
+            }}>
+            <MyText style={styles.buttonContent}>
+              <Icon
+                name="list-circle-outline"
+                color={COLOR.FONT_GREEN}
+                size={15}
+              />
+              Select Day & Time
+            </MyText>
+          </TouchableHighlight>
+        </View>
       </View>
-      <View style={styles.button}>
-        <TouchableHighlight
-          underlayColor={COLOR.TOUCH_GREEN}
-          onPress={() => {
-            props.navigation.navigate('Add', {type: 'Cycle'});
-          }}>
-          <MyText style={styles.buttonContent}>
-            <Icon
-              name="sync-circle-outline"
-              color={COLOR.FONT_GREEN}
-              size={15}
-            />
-            Set Cycle
-          </MyText>
-        </TouchableHighlight>
-        <TouchableHighlight
-          underlayColor={COLOR.TOUCH_GREEN}
-          onPress={() => {
-            props.navigation.navigate('Add', {type: 'DayTime'});
-          }}>
-          <MyText style={styles.buttonContent}>
-            <Icon
-              name="list-circle-outline"
-              color={COLOR.FONT_GREEN}
-              size={15}
-            />
-            Select Day & Time
-          </MyText>
-        </TouchableHighlight>
-      </View>
-    </View>
+    </Modal>
   );
 };
 

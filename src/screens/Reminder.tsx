@@ -7,9 +7,11 @@ import {
 } from 'react-native';
 import Modal from 'react-native-modal';
 import {SetTypeModal} from '../components/Modal/SetTypeModal';
-import {MyText} from '../components/MyText';
+import {MyText} from 'components/MyText';
 
-interface IProps {}
+interface IProps {
+  navigation: any;
+}
 interface IState {
   modalVisible: boolean;
 }
@@ -45,15 +47,23 @@ class Reminder extends Component<IProps, IState> {
           onPress={() => {
             this.setState({modalVisible: false});
           }}>
-          <Modal
+          {/* <Modal
             isVisible={modalVisible}
             onSwipeComplete={() => this.toggleModalVisible()}
             swipeDirection={['down']}
             style={styles.view}
             backdropOpacity={0.5}
-            onBackdropPress={() => this.toggleModalVisible()}>
-            <SetTypeModal onPress={() => this.toggleModalVisible()} />
-          </Modal>
+            onBackdropPress={() => this.toggleModalVisible()}> */}
+          <SetTypeModal
+            onPress={() => this.toggleModalVisible()}
+            isVisible={modalVisible}
+            onSwipeComplete={() => this.toggleModalVisible()}
+            swipeDirection={['down']}
+            style={styles.view}
+            backdropOpacity={0.5}
+            onBackdropPress={() => this.toggleModalVisible()}
+          />
+          {/* </Modal> */}
         </TouchableWithoutFeedback>
       </View>
     );
