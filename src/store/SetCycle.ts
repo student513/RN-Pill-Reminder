@@ -1,6 +1,6 @@
 import {observable, action} from 'mobx';
 import {createContext} from 'react';
-import {Time, Date, RePeat} from '../helper/interface';
+import {Time, Date, RePeat} from 'helper/interface';
 
 class SetCycleStore {
   @observable Name: string = '';
@@ -19,15 +19,10 @@ class SetCycleStore {
     repeat: RePeat;
   } = null;
 
-  // @action
-  // increase = () => {
-  //   this.number++
-  // }
-
-  // @action
-  // decrease = () => {
-  //   this.number--
-  // }
+  @action
+  onChangeName = (Name: string) => {
+    this.Name = Name;
+  };
 }
 
 export const setCycleStore = new SetCycleStore();

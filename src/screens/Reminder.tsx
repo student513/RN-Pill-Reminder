@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import {SetTypeModal, AddModal} from 'components/Modal';
-import {MyText, MyTextInput} from 'components/MyText';
+import {SetTypeModal} from 'components/Modal';
+import {MyText} from 'components/MyText';
 import {observer} from 'mobx-react';
 import {controlModalStore} from 'store/ControlModal';
-import {TextInput} from 'react-native-paper';
-import {FormHelperText } from '@material-ui/core';
+import AddModal from 'components/Modal/AddModal';
 
 interface IProps {
   navigation: any;
@@ -27,7 +26,7 @@ class Reminder extends Component<IProps, IState> {
           }}>
           <MyText style={{fontSize: 30}}>Add</MyText>
         </TouchableOpacity>
-        <TextInput/>
+
         <SetTypeModal
           isVisible={controlModalStore.setTypeModalVisible}
           onSwipeComplete={() => controlModalStore.toggleSetTypeModalVisible()}

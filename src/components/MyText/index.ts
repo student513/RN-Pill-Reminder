@@ -1,1 +1,1 @@
-export * from './MyText'
+export * from './MyText';

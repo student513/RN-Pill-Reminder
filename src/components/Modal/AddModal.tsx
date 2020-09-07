@@ -1,10 +1,13 @@
-import React from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React, {Component} from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import {MyText, MyTextInput} from '../MyText';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {COLOR} from '../../helper/helper';
 import Modal from 'react-native-modal';
-import {controlModalStore} from '../../store/ControlModal';
+import {TouchableOpacity} from 'react-native';
+import {COLOR} from 'helper';
+import {observer} from 'mobx-react';
+import {setCycleStore} from 'store/SetCycle';
+import {TextInput} from 'react-native-gesture-handler';
 
 const {height} = Dimensions.get('window');
 
@@ -17,36 +20,65 @@ interface AddModalProps {
   style: any;
 }
 
-export const AddModal: React.FC<AddModalProps> = (props) => {
-  return (
-    <Modal
-      isVisible={props.isVisible}
-      onSwipeComplete={() => props.onSwipeComplete()}
-      swipeDirection={['down']}
-      style={{justifyContent: 'flex-end', margin: 0}}
-      backdropOpacity={0.5}
-      onBackdropPress={() => props.onBackdropPress()}>
-      <View style={styles.content}>
-        <MyTextInput
-          textColor="#0F0F0F"
-          //   containerStyle={style.textInputContainer}
-          editable={true}
-          value=""
-          placeHolder="Medication name"
-          autoFocus={false}
-        />
-      </View>
-    </Modal>
-  );
-};
+@observer
+class AddModal extends Component<AddModalProps, {}> {
+  constructor(props: any) {
+    super(props);
+  }
+  render() {
+    return (
+      <Modal
+        isVisible={this.props.isVisible}
+        onSwipeComplete={() => this.props.onSwipeComplete()}
+        swipeDirection={['down']}
+        style={{justifyContent: 'flex-end', margin: 0}}
+        backdropOpacity={0.5}
+        onBackdropPress={() => this.props.onBackdropPress()}>
+        <View style={styles.content}>
+          <View style={styles.modalHeader}>
+            <TouchableOpacity>
+              <MyText style={{color: COLOR.FONT_GREEN, fontSize: 16}}>
+                Cancel
+              </MyText>
+            </TouchableOpacity>
+            <MyText>Detail</MyText>
+            <TouchableOpacity>
+              <MyText style={{color: COLOR.FONT_GREEN, fontSize: 16}}>
+                Done
+              </MyText>
+            </TouchableOpacity>
+          </View>
+          <MyTextInput
+            label="Name"
+            placeholder="Medication name"
+            onChangeText={(text: string) => setCycleStore.onChangeName(text)}
+          />
+          <MyTextInput
+            label="Dosage"
+            placeholder="e.g. 2 Tablets, 30 mL"
+            onChangeText={(text: string) => setCycleStore.onChangeName(text)}
+          />
+        </View>
+      </Modal>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   content: {
     backgroundColor: 'white',
     paddingBottom: 40,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
     borderColor: 'rgba(0, 0, 0, 0.1)',
     height: height * 0.9,
+    padding: 15,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 35,
   },
 });
+
+export default AddModal;

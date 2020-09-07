@@ -1,2 +1,2 @@
-export * from './AddModal'
-export * from './SetTypeModal'
+// export * from './AddModal';
+export * from './SetTypeModal';
