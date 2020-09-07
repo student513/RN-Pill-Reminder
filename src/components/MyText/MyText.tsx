@@ -8,9 +8,10 @@ import {
   TextInput,
   Platform,
   TextInputProps,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
-import { COLOR } from 'helper';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import {COLOR} from 'helper';
 
 interface MyTextProps extends TextProps {}
 interface MyTextInputProps extends TextInputProps {
@@ -35,26 +36,32 @@ export class MyTextInput extends PureComponent<MyTextInputProps> {
 
   render() {
     return (
-      <View
-        style={
-          this.state.isFocus ? styles.focusedContainer : styles.basicContainer
-        }>
-        <MyText
-          style={{
-            color: '#7D7D7D',
-            fontSize: 14,
-            paddingLeft: 5,
-            paddingTop: 10,
-          }}>
-          {this.props.label}
-        </MyText>
-        <TextInput
-          style={styles.textInput}
-          placeholderTextColor="#0F0F0F"
-          {...this.props}
-          onFocus={() => this.setState({isFocus: true})}
-        />
-      </View>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+          this.setState({isFocus: false});
+        }}>
+        <View
+          style={
+            this.state.isFocus ? styles.focusedContainer : styles.basicContainer
+          }>
+          <MyText
+            style={{
+              color: '#7D7D7D',
+              fontSize: 14,
+              paddingLeft: 5,
+              paddingTop: 10,
+            }}>
+            {this.props.label}
+          </MyText>
+          <TextInput
+            style={styles.textInput}
+            placeholderTextColor="#0F0F0F"
+            {...this.props}
+            onFocus={() => this.setState({isFocus: true})}
+          />
+        </View>
+      </TouchableWithoutFeedback>
     );
   }
 }

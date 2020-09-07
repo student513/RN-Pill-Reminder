@@ -7,7 +7,7 @@ import {TouchableOpacity} from 'react-native';
 import {COLOR} from 'helper';
 import {observer} from 'mobx-react';
 import {setCycleStore} from 'store/SetCycle';
-import {TextInput} from 'react-native-gesture-handler';
+import {controlModalStore} from 'store';
 
 const {height} = Dimensions.get('window');
 
@@ -36,7 +36,8 @@ class AddModal extends Component<AddModalProps, {}> {
         onBackdropPress={() => this.props.onBackdropPress()}>
         <View style={styles.content}>
           <View style={styles.modalHeader}>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => controlModalStore.toggleAddModalVisible()}>
               <MyText style={{color: COLOR.FONT_GREEN, fontSize: 16}}>
                 Cancel
               </MyText>
