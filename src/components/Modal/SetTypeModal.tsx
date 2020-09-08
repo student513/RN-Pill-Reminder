@@ -43,6 +43,11 @@ export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
                 size={15}
               />
               Set Cycle
+              <Icon
+                name="chevron-forward-outline"
+                size={20}
+                style={styles.chevron}
+              />
             </MyText>
           </TouchableHighlight>
           <TouchableHighlight
@@ -59,6 +64,11 @@ export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
                 size={15}
               />
               Select Day & Time
+              <Icon
+                name="chevron-forward-outline"
+                size={20}
+                style={styles.chevron}
+              />
             </MyText>
           </TouchableHighlight>
         </View>
@@ -86,5 +96,10 @@ const styles = StyleSheet.create({
   buttonContent: {
     color: COLOR.FONT_GREEN,
     padding: 15,
+  },
+  chevron: {
+    color: COLOR.FONT_GREEN,
+    paddingTop: 18,
+    justifyContent: 'flex-end',
   },
 });

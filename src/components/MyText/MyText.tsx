@@ -10,13 +10,20 @@ import {
   TextInputProps,
   TouchableWithoutFeedback,
   Keyboard,
+  ViewProps,
+  TouchableOpacity,
 } from 'react-native';
 import {COLOR} from 'helper';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 interface MyTextProps extends TextProps {}
 interface MyTextInputProps extends TextInputProps {
   label: string;
   placeholder: string;
+}
+interface MyButtonProps extends ViewProps {
+  icon: string;
+  title: string;
 }
 
 export class MyText extends PureComponent<MyTextProps> {
@@ -33,7 +40,6 @@ export class MyTextInput extends PureComponent<MyTextInputProps> {
       isFocus: false,
     };
   }
-
   render() {
     return (
       <TouchableWithoutFeedback
@@ -43,7 +49,9 @@ export class MyTextInput extends PureComponent<MyTextInputProps> {
         }}>
         <View
           style={
-            this.state.isFocus ? styles.focusedContainer : styles.basicContainer
+            this.state.isFocus
+              ? styles.focusedInputContainer
+              : styles.basicInputContainer
           }>
           <MyText
             style={{
@@ -66,18 +74,55 @@ export class MyTextInput extends PureComponent<MyTextInputProps> {
   }
 }
 
+export class MyTableButton extends PureComponent<MyButtonProps> {
+  render() {
+    return (
+      <TouchableOpacity>
+        <View style={[styles.buttonContainer, this.props.style]}>
+          <Icon
+            name={this.props.icon}
+            size={25}
+            style={{paddingTop: 18, paddingRight: 5}}
+          />
+          <MyText style={{paddingVertical: 17}}>{this.props.title}</MyText>
+          <Icon
+            name="chevron-forward-outline"
+            size={25}
+            style={styles.chevron}
+          />
+        </View>
+      </TouchableOpacity>
+    );
+  }
+}
+
+export class MyToggleButton extends PureComponent<MyButtonProps> {
+  render() {
+    return (
+      <View style={[styles.buttonContainer, this.props.style]}>
+        <Icon
+          name={this.props.icon}
+          size={25}
+          style={{paddingTop: 18, paddingRight: 5}}
+        />
+        <MyText style={{paddingVertical: 17}}>{this.props.title}</MyText>
+      </View>
+    );
+  }
+}
+
 const styles = StyleSheet.create({
   textStyle: {
     fontSize: 18,
     fontFamily: 'ProximaNova-Regular',
   },
-  basicContainer: {
+  basicInputContainer: {
     borderRadius: 6,
     backgroundColor: '#F3F3F3',
     paddingLeft: 10,
     marginBottom: 20,
   },
-  focusedContainer: {
+  focusedInputContainer: {
     borderRadius: 6,
     backgroundColor: '#fff',
     paddingLeft: 10,
@@ -98,5 +143,16 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
       },
     }),
+  },
+  buttonContainer: {
+    backgroundColor: '#F3F3F3',
+    paddingLeft: 10,
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  chevron: {
+    color: COLOR.FONT_GREEN,
+    paddingTop: 18,
+    justifyContent: 'flex-end',
   },
 });
