@@ -10,20 +10,24 @@ import {
   TextInputProps,
   TouchableWithoutFeedback,
   Keyboard,
-  ViewProps,
   TouchableOpacity,
+  Switch,
+  SwitchProps,
 } from 'react-native';
 import {COLOR} from 'helper';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 interface MyTextProps extends TextProps {}
+
 interface MyTextInputProps extends TextInputProps {
   label: string;
   placeholder: string;
 }
-interface MyButtonProps extends ViewProps {
+
+interface MyButtonProps extends SwitchProps {
   icon: string;
   title: string;
+  description: string;
 }
 
 export class MyText extends PureComponent<MyTextProps> {
@@ -44,6 +48,7 @@ export class MyTextInput extends PureComponent<MyTextInputProps> {
     return (
       <TouchableWithoutFeedback
         onPress={() => {
+          console.log('dsdfasdf');
           Keyboard.dismiss();
           this.setState({isFocus: false});
         }}>
@@ -99,13 +104,17 @@ export class MyTableButton extends PureComponent<MyButtonProps> {
 export class MyToggleButton extends PureComponent<MyButtonProps> {
   render() {
     return (
-      <View style={[styles.buttonContainer, this.props.style]}>
-        <Icon
-          name={this.props.icon}
-          size={25}
-          style={{paddingTop: 18, paddingRight: 5}}
-        />
-        <MyText style={{paddingVertical: 17}}>{this.props.title}</MyText>
+      <View>
+        <View style={[styles.buttonContainer, this.props.style]}>
+          <Icon
+            name={this.props.icon}
+            size={25}
+            style={{paddingTop: 18, paddingRight: 5}}
+          />
+          <MyText style={{paddingVertical: 17}}>{this.props.title}</MyText>
+          <Switch ios_backgroundColor={COLOR.FONT_GREEN} {...this.props} />
+        </View>
+        <MyText style={styles.notice}>{this.props.description}</MyText>
       </View>
     );
   }
@@ -154,5 +163,11 @@ const styles = StyleSheet.create({
     color: COLOR.FONT_GREEN,
     paddingTop: 18,
     justifyContent: 'flex-end',
+  },
+  notice: {
+    fontSize: 11,
+    color: '#5B5B5B',
+    marginBottom: 25,
+    paddingLeft: 2,
   },
 });

@@ -10,7 +10,7 @@ class SetCycleStore {
   @observable EndRepeat: Date = null;
   @observable isRepeat: boolean = false;
   @observable Repeat: RePeat = null;
-  @observable isBedTime: boolean = false;
+  @observable Bedtime: boolean = false;
   @observable Critical: boolean = false;
   @observable Timing: string = '';
   @observable NextTime: {
@@ -20,8 +20,43 @@ class SetCycleStore {
   } = null;
 
   @action
+  init = () => {
+    this.Name = '';
+    this.Dosage = '';
+    this.StartTime = null; //현재 시간 함수로 assign되나?
+    this.isEndRepeat = false;
+    this.EndRepeat = null;
+    this.isRepeat = false;
+    this.Repeat = null;
+    this.Bedtime = false;
+    this.Critical = false;
+    this.Timing = '';
+    this.NextTime = null;
+  };
+
+  @action
   onChangeName = (Name: string) => {
     this.Name = Name;
+  };
+  @action
+  toggleBedtime = () => {
+    if (!this.Bedtime) {
+      this.Bedtime = true;
+      // this.Critical = false;
+    } else {
+      this.Bedtime = false;
+      // this.Critical = true;
+    }
+  };
+  @action
+  toggleCritical = () => {
+    if (!this.Critical) {
+      // this.Bedtime = false;
+      this.Critical = true;
+    } else {
+      // this.Bedtime = true;
+      this.Critical = false;
+    }
   };
 }
 

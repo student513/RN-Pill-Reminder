@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {View, StyleSheet, Dimensions} from 'react-native';
+import {View, StyleSheet, Dimensions, ScrollView} from 'react-native';
 import {MyText, MyTextInput, MyTableButton, MyToggleButton} from '../MyText';
 import Modal from 'react-native-modal';
 import {TouchableOpacity} from 'react-native';
@@ -8,7 +8,6 @@ import {COLOR} from 'helper';
 import {observer} from 'mobx-react';
 import {setCycleStore} from 'store/SetCycle';
 import {controlModalStore} from 'store';
-import {ScrollView} from 'react-native-gesture-handler';
 
 const {height} = Dimensions.get('window');
 
@@ -90,30 +89,43 @@ class AddModal extends Component<AddModalProps, {}> {
               marginBottom: 20,
             }}
           />
-          <MyToggleButton
-            icon="moon-outline"
-            title="Bedtime"
-            style={{
-              borderRadius: 6,
-            }}
-          />
-          <MyText style={styles.notice}>
-            Turn this on if you don't want to receive reminders while you are in
-            bed.
-          </MyText>
-          <MyToggleButton
-            icon="notifications-outline"
-            title="Critical"
-            style={{
-              borderRadius: 6,
-            }}
-          />
-          <MyText style={styles.notice}>
-            Critical alerts allows the app to ring the notification sound even when your phone is in silent or do not disturb mode.
-          </MyText>
-          {/* <TouchableOpacity onPress={() => console.log(setCycleStore.NextTime)}>
-            <MyText>ddddddd</MyText>
-          </TouchableOpacity> */}
+          {setCycleStore.Critical ? (
+            <View />
+          ) : (
+            <MyToggleButton
+              icon="moon-outline"
+              title="Bedtime"
+              style={{
+                borderRadius: 6,
+              }}
+              onValueChange={() => {
+                setCycleStore.toggleBedtime();
+              }}
+              value={setCycleStore.Bedtime}
+              description="Turn this on if you don't want to receive reminders while you are in bed."
+            />
+          )}
+          {setCycleStore.Bedtime ? (
+            <View />
+          ) : (
+            <MyToggleButton
+              icon="notifications-outline"
+              title="Critical"
+              style={{borderRadius: 6}}
+              onValueChange={() => {
+                setCycleStore.toggleCritical();
+              }}
+              value={setCycleStore.Critical}
+              description="Critical alerts allows the app to ring the notification sound even when your phone is in silent or do not disturb mode."
+            />
+          )}
+          <TouchableOpacity
+            onPress={() => {
+              console.log(setCycleStore.Bedtime);
+              console.log(setCycleStore.Critical);
+            }}>
+            <MyText style={{marginBottom: 30}}>ddddddd</MyText>
+          </TouchableOpacity>
         </ScrollView>
       </Modal>
     );

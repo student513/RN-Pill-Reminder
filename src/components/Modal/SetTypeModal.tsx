@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {COLOR} from 'helper/helper';
 import Modal from 'react-native-modal';
 import {controlModalStore} from 'store/ControlModal';
+import { setCycleStore } from 'store';
 
 interface SetTypeModalProps {
   isVisible: boolean;
@@ -35,6 +36,7 @@ export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
               controlModalStore.toggleSetTypeModalVisible(); //this modal off
               controlModalStore.toggleSelectSetCycle(); //add modal type set
               controlModalStore.toggleAddModalVisible(); //open add modal
+              setCycleStore.init();
             }}>
             <MyText style={styles.buttonContent}>
               <Icon
