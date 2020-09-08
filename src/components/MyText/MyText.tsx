@@ -10,24 +10,14 @@ import {
   TextInputProps,
   TouchableWithoutFeedback,
   Keyboard,
-  TouchableOpacity,
-  Switch,
-  SwitchProps,
 } from 'react-native';
 import {COLOR} from 'helper';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 interface MyTextProps extends TextProps {}
 
 interface MyTextInputProps extends TextInputProps {
   label: string;
   placeholder: string;
-}
-
-interface MyButtonProps extends SwitchProps {
-  icon: string;
-  title: string;
-  description: string;
 }
 
 export class MyText extends PureComponent<MyTextProps> {
@@ -79,46 +69,6 @@ export class MyTextInput extends PureComponent<MyTextInputProps> {
   }
 }
 
-export class MyTableButton extends PureComponent<MyButtonProps> {
-  render() {
-    return (
-      <TouchableOpacity>
-        <View style={[styles.buttonContainer, this.props.style]}>
-          <Icon
-            name={this.props.icon}
-            size={25}
-            style={{paddingTop: 18, paddingRight: 5}}
-          />
-          <MyText style={{paddingVertical: 17}}>{this.props.title}</MyText>
-          <Icon
-            name="chevron-forward-outline"
-            size={25}
-            style={styles.chevron}
-          />
-        </View>
-      </TouchableOpacity>
-    );
-  }
-}
-
-export class MyToggleButton extends PureComponent<MyButtonProps> {
-  render() {
-    return (
-      <View>
-        <View style={[styles.buttonContainer, this.props.style]}>
-          <Icon
-            name={this.props.icon}
-            size={25}
-            style={{paddingTop: 18, paddingRight: 5}}
-          />
-          <MyText style={{paddingVertical: 17}}>{this.props.title}</MyText>
-          <Switch ios_backgroundColor={COLOR.FONT_GREEN} {...this.props} />
-        </View>
-        <MyText style={styles.notice}>{this.props.description}</MyText>
-      </View>
-    );
-  }
-}
 
 const styles = StyleSheet.create({
   textStyle: {

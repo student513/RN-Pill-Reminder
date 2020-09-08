@@ -1,13 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {View, StyleSheet, Dimensions, ScrollView} from 'react-native';
-import {MyText, MyTextInput, MyTableButton, MyToggleButton} from '../MyText';
+import {MyText, MyTextInput} from '../MyText';
 import Modal from 'react-native-modal';
 import {TouchableOpacity} from 'react-native';
 import {COLOR} from 'helper';
 import {observer} from 'mobx-react';
 import {setCycleStore} from 'store/SetCycle';
 import {controlModalStore} from 'store';
+import {MyTableButton, MyToggleButton} from 'components/MyButton';
 
 const {height} = Dimensions.get('window');
 
