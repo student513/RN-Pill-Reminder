@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {COLOR} from 'helper/helper';
 import Modal from 'react-native-modal';
 import {controlModalStore} from 'store/ControlModal';
-import { setCycleStore } from 'store';
+import {setCycleStore} from 'store';
 
 interface SetTypeModalProps {
   isVisible: boolean;
@@ -29,7 +29,7 @@ export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
         <View style={styles.contentTitle}>
           <MyText>Please select the type of reminder.</MyText>
         </View>
-        <View style={styles.button}>
+        <View style={{alignContent: 'flex-start'}}>
           <TouchableHighlight
             underlayColor={COLOR.TOUCH_GREEN}
             onPress={() => {
@@ -38,19 +38,20 @@ export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
               controlModalStore.toggleAddModalVisible(); //open add modal
               setCycleStore.init();
             }}>
-            <MyText style={styles.buttonContent}>
+            <View style={{display: 'flex', flexDirection: 'row'}}>
               <Icon
                 name="sync-circle-outline"
                 color={COLOR.FONT_GREEN}
-                size={15}
+                size={22}
+                style={styles.roundIcon}
               />
-              Set Cycle
+              <MyText style={styles.buttonContent}>Set Cycle</MyText>
               <Icon
                 name="chevron-forward-outline"
                 size={20}
                 style={styles.chevron}
               />
-            </MyText>
+            </View>
           </TouchableHighlight>
           <TouchableHighlight
             underlayColor={COLOR.TOUCH_GREEN}
@@ -59,19 +60,20 @@ export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
               controlModalStore.toggleSelectDayTime();
               controlModalStore.toggleAddModalVisible();
             }}>
-            <MyText style={styles.buttonContent}>
+            <View style={{display: 'flex', flexDirection: 'row'}}>
               <Icon
                 name="list-circle-outline"
                 color={COLOR.FONT_GREEN}
-                size={15}
+                size={22}
+                style={styles.roundIcon}
               />
-              Select Day & Time
+              <MyText style={styles.buttonContent}>Select Day & Time</MyText>
               <Icon
                 name="chevron-forward-outline"
                 size={20}
                 style={styles.chevron}
               />
-            </MyText>
+            </View>
           </TouchableHighlight>
         </View>
       </View>
@@ -87,9 +89,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     borderColor: 'rgba(0, 0, 0, 0.1)',
   },
-  button: {
-    alignContent: 'flex-start',
-  },
   contentTitle: {
     display: 'flex',
     alignItems: 'center',
@@ -97,11 +96,18 @@ const styles = StyleSheet.create({
   },
   buttonContent: {
     color: COLOR.FONT_GREEN,
-    padding: 15,
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingLeft: 5,
+  },
+  roundIcon: {
+    paddingTop: 18,
+    paddingLeft: 15,
   },
   chevron: {
     color: COLOR.FONT_GREEN,
     paddingTop: 18,
-    justifyContent: 'flex-end',
+    position: 'absolute',
+    left: 300,
   },
 });

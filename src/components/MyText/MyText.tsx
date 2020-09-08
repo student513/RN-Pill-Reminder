@@ -103,21 +103,4 @@ const styles = StyleSheet.create({
       },
     }),
   },
-  buttonContainer: {
-    backgroundColor: '#F3F3F3',
-    paddingLeft: 10,
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  chevron: {
-    color: COLOR.FONT_GREEN,
-    paddingTop: 18,
-    justifyContent: 'flex-end',
-  },
-  notice: {
-    fontSize: 11,
-    color: '#5B5B5B',
-    marginBottom: 25,
-    paddingLeft: 2,
-  },
 });

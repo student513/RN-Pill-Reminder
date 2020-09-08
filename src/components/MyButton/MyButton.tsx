@@ -51,7 +51,9 @@ export class MyToggleButton extends PureComponent<MyButtonProps> {
             style={{paddingTop: 18, paddingRight: 5}}
           />
           <MyText style={{paddingVertical: 17}}>{this.props.title}</MyText>
-          <Switch ios_backgroundColor={COLOR.FONT_GREEN} {...this.props} />
+          <View style={{position: 'absolute', left: 280, paddingTop: 18}}>
+            <Switch ios_backgroundColor={COLOR.FONT_GREEN} {...this.props} />
+          </View>
         </View>
         <MyText style={styles.notice}>{this.props.description}</MyText>
       </View>
@@ -59,38 +61,6 @@ export class MyToggleButton extends PureComponent<MyButtonProps> {
   }
 }
 const styles = StyleSheet.create({
-  textStyle: {
-    fontSize: 18,
-    fontFamily: 'ProximaNova-Regular',
-  },
-  basicInputContainer: {
-    borderRadius: 6,
-    backgroundColor: '#F3F3F3',
-    paddingLeft: 10,
-    marginBottom: 20,
-  },
-  focusedInputContainer: {
-    borderRadius: 6,
-    backgroundColor: '#fff',
-    paddingLeft: 10,
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: COLOR.FONT_GREEN,
-  },
-  textInput: {
-    ...Platform.select({
-      ios: {
-        fontFamily: 'ProximaNova-Regular',
-        fontSize: 18,
-        paddingBottom: 10,
-      },
-      android: {
-        fontFamily: 'ProximaNova-Regular',
-        fontSize: 18,
-        paddingBottom: 10,
-      },
-    }),
-  },
   buttonContainer: {
     backgroundColor: '#F3F3F3',
     paddingLeft: 10,
@@ -100,7 +70,8 @@ const styles = StyleSheet.create({
   chevron: {
     color: COLOR.FONT_GREEN,
     paddingTop: 18,
-    justifyContent: 'flex-end',
+    position: 'absolute',
+    left: 300,
   },
   notice: {
     fontSize: 11,
