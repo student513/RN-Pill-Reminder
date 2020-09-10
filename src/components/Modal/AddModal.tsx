@@ -9,6 +9,7 @@ import {observer} from 'mobx-react';
 import {setCycleStore} from 'store/SetCycle';
 import {controlModalStore} from 'store';
 import {MyTableButton, MyToggleButton} from 'components/MyButton';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const {height} = Dimensions.get('window');
 
@@ -73,7 +74,18 @@ class AddModal extends Component<AddModalProps, {}> {
               borderTopRightRadius: 6,
               marginBottom: 1,
             }}
+            onPress={() => setCycleStore.showTimepicker()}
           />
+          {setCycleStore.show && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={setCycleStore.EndRepeat}
+              mode={setCycleStore.mode}
+              is24Hour={true}
+              display="default"
+              onChange={setCycleStore.onChange}
+            />
+          )}
           <MyTableButton
             icon="sync-circle-outline"
             title="Repeat"
@@ -89,7 +101,18 @@ class AddModal extends Component<AddModalProps, {}> {
               borderBottomRightRadius: 6,
               marginBottom: 20,
             }}
+            onPress={() => setCycleStore.showDatepicker()}
           />
+          {setCycleStore.show && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={setCycleStore.EndRepeat}
+              mode={setCycleStore.mode}
+              is24Hour={true}
+              display="default"
+              onChange={setCycleStore.onChange}
+            />
+          )}
           {setCycleStore.Critical ? (
             <View />
           ) : (

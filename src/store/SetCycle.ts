@@ -1,13 +1,14 @@
 import {observable, action} from 'mobx';
 import {createContext} from 'react';
-import {Time, Date, RePeat} from 'helper/interface';
+import {Time, ymdDate, RePeat} from 'helper/interface';
+import {Platform} from 'react-native';
 
 class SetCycleStore {
   @observable Name: string = '';
   @observable Dosage: string = '';
   @observable StartTime: Time = null;
   @observable isEndRepeat: boolean = false;
-  @observable EndRepeat: Date = null;
+  @observable EndRepeat: Date = new Date();
   @observable isRepeat: boolean = false;
   @observable Repeat: RePeat = null;
   @observable Bedtime: boolean = false;
@@ -18,6 +19,10 @@ class SetCycleStore {
     time: Time;
     repeat: RePeat;
   } = null;
+
+  // DateTime Picker variable
+  @observable show: boolean = false;
+  @observable mode: string = 'date';
 
   @action
   init = () => {
@@ -42,21 +47,39 @@ class SetCycleStore {
   toggleBedtime = () => {
     if (!this.Bedtime) {
       this.Bedtime = true;
-      // this.Critical = false;
     } else {
       this.Bedtime = false;
-      // this.Critical = true;
     }
   };
   @action
   toggleCritical = () => {
     if (!this.Critical) {
-      // this.Bedtime = false;
       this.Critical = true;
     } else {
-      // this.Bedtime = true;
       this.Critical = false;
     }
+  };
+  // Date Time picker function
+  @action
+  onChange = (event: Event, selectedDate?: Date) => {
+    const currentDate = selectedDate || this.EndRepeat;
+    this.show = Platform.OS === 'ios';
+    this.EndRepeat = currentDate;
+  };
+  @action
+  showMode = (currentMode: string) => {
+    this.show = true;
+    this.mode = currentMode;
+  };
+  @action
+  showDatepicker = () => {
+    this.show = true;
+    this.mode = 'date';
+  };
+  @action
+  showTimepicker = () => {
+    this.show = true;
+    this.mode = 'time';
   };
 }
 

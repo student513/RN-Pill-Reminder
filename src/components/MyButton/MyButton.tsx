@@ -3,25 +3,31 @@ import React, {PureComponent} from 'react';
 import {
   StyleSheet,
   View,
-  Platform,
   TouchableOpacity,
   Switch,
+  TouchableOpacityProps,
   SwitchProps,
 } from 'react-native';
 import {COLOR} from 'helper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {MyText} from 'components/MyText';
 
-interface MyButtonProps extends SwitchProps {
+interface MyTableButtonProps extends TouchableOpacityProps {
+  icon: string;
+  title: string;
+  onPress: Function;
+}
+
+interface MyToggleButtonProps extends SwitchProps {
   icon: string;
   title: string;
   description: string;
 }
 
-export class MyTableButton extends PureComponent<MyButtonProps> {
+export class MyTableButton extends PureComponent<MyTableButtonProps> {
   render() {
     return (
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => this.props.onPress()}>
         <View style={[styles.buttonContainer, this.props.style]}>
           <Icon
             name={this.props.icon}
@@ -40,7 +46,7 @@ export class MyTableButton extends PureComponent<MyButtonProps> {
   }
 }
 
-export class MyToggleButton extends PureComponent<MyButtonProps> {
+export class MyToggleButton extends PureComponent<MyToggleButtonProps> {
   render() {
     return (
       <View>

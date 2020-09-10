@@ -4,7 +4,7 @@ export interface Time {
   isAM: boolean;
 }
 
-export interface Date {
+export interface ymdDate {
   year: number;
   month: string;
   day: number;
