@@ -29,7 +29,7 @@ class SetCycleStore {
     this.Name = '';
     this.Dosage = '';
     this.StartTime = null; //현재 시간 함수로 assign되나?
-    this.isEndRepeat = false;
+    this.isEndRepeat = new Date();
     this.EndRepeat = null;
     this.isRepeat = false;
     this.Repeat = null;
