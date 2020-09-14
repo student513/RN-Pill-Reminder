@@ -2,13 +2,15 @@ import {observable, action} from 'mobx';
 import {createContext} from 'react';
 import {Time, ymdDate, RePeat} from 'helper/interface';
 import {Platform} from 'react-native';
+import moment from 'moment';
 
 class SetCycleStore {
   @observable Name: string = '';
   @observable Dosage: string = '';
-  @observable StartTime: Time = null;
+  @observable nowTime: Date = new Date(); // StartTime, EndRepeat에 파싱하기 전 날짜 정보
+  @observable StartTime: string = '';
   @observable isEndRepeat: boolean = false;
-  @observable EndRepeat: Date = new Date();
+  @observable EndRepeat: string = '';
   @observable isRepeat: boolean = false;
   @observable Repeat: RePeat = null;
   @observable Bedtime: boolean = false;
@@ -28,15 +30,18 @@ class SetCycleStore {
   init = () => {
     this.Name = '';
     this.Dosage = '';
-    this.StartTime = null; //현재 시간 함수로 assign되나?
-    this.isEndRepeat = new Date();
-    this.EndRepeat = null;
+    // this.nowTime = new Date();
+    this.StartTime = '';
+    this.isEndRepeat = false;
+    this.EndRepeat = '';
     this.isRepeat = false;
     this.Repeat = null;
     this.Bedtime = false;
     this.Critical = false;
     this.Timing = '';
     this.NextTime = null;
+    this.show = false;
+    this.mode = 'date';
   };
 
   @action
@@ -62,9 +67,10 @@ class SetCycleStore {
   // Date Time picker function
   @action
   onChange = (event: Event, selectedDate?: Date) => {
-    const currentDate = selectedDate || this.EndRepeat;
+    const currentDate = selectedDate || this.nowTime;
     this.show = Platform.OS === 'ios';
-    this.EndRepeat = currentDate;
+    this.nowTime = currentDate;
+    this.parseDateToString();
   };
   @action
   showMode = (currentMode: string) => {
@@ -80,6 +86,16 @@ class SetCycleStore {
   showTimepicker = () => {
     this.show = true;
     this.mode = 'time';
+  };
+  @action
+  parseDateToString = () => {
+    this.StartTime = moment.parseZone(this.nowTime).format('ddd,MMM D,LT');
+    this.EndRepeat = moment.parseZone(this.nowTime).format('ddd,MMM D,LT');
+  };
+  @action
+  updateTime = () => {
+    this.nowTime = new Date();
+    console.log(this.nowTime)
   };
 }
 

@@ -74,12 +74,15 @@ class AddModal extends Component<AddModalProps, {}> {
               borderTopRightRadius: 6,
               marginBottom: 1,
             }}
-            onPress={() => setCycleStore.showTimepicker()}
+            onPress={() => {
+              setCycleStore.showTimepicker();
+            }}
+            remark={setCycleStore.StartTime}
           />
           {setCycleStore.show && (
             <DateTimePicker
               testID="dateTimePicker"
-              value={setCycleStore.EndRepeat}
+              value={setCycleStore.nowTime}
               mode={setCycleStore.mode}
               is24Hour={true}
               display="default"
@@ -101,12 +104,15 @@ class AddModal extends Component<AddModalProps, {}> {
               borderBottomRightRadius: 6,
               marginBottom: 20,
             }}
-            onPress={() => setCycleStore.showDatepicker()}
+            onPress={() => {
+              setCycleStore.showDatepicker();
+            }}
+            remark={setCycleStore.EndRepeat}
           />
           {setCycleStore.show && (
             <DateTimePicker
               testID="dateTimePicker"
-              value={setCycleStore.EndRepeat}
+              value={setCycleStore.nowTime}
               mode={setCycleStore.mode}
               is24Hour={true}
               display="default"

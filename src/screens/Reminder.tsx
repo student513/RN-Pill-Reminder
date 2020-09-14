@@ -27,11 +27,12 @@ class Reminder extends Component<IProps, IState> {
           <MyText style={{fontSize: 30}}>Add</MyText>
         </TouchableOpacity>
 
-          <TouchableOpacity onPress={()=>{
-            this.props.navigation.navigate('Picker')
+        <TouchableOpacity
+          onPress={() => {
+            this.props.navigation.navigate('Picker');
           }}>
-            <MyText>Picker</MyText>
-          </TouchableOpacity>
+          <MyText>Picker</MyText>
+        </TouchableOpacity>
 
         <SetTypeModal
           isVisible={controlModalStore.setTypeModalVisible}

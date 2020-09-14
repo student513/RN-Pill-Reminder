@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {View, Button, Platform} from 'react-native';
+import {View, Button, Platform, Text} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export const TimePicker = () => {
   const [date, setDate] = useState(new Date(1598051730000));
@@ -34,6 +35,9 @@ export const TimePicker = () => {
       <View>
         <Button onPress={showTimepicker} title="Show time picker!" />
       </View>
+      <TouchableOpacity onPress={()=>console.log(date)}>
+        <Text>dasdfasf</Text>
+      </TouchableOpacity>
       {show && (
         <DateTimePicker
           testID="dateTimePicker"

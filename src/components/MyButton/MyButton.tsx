@@ -16,6 +16,7 @@ interface MyTableButtonProps extends TouchableOpacityProps {
   icon: string;
   title: string;
   onPress: Function;
+  remark: string;
 }
 
 interface MyToggleButtonProps extends SwitchProps {
@@ -35,6 +36,7 @@ export class MyTableButton extends PureComponent<MyTableButtonProps> {
             style={{paddingTop: 18, paddingRight: 5}}
           />
           <MyText style={{paddingVertical: 17}}>{this.props.title}</MyText>
+          <MyText style={styles.remark}>{this.props.remark}</MyText>
           <Icon
             name="chevron-forward-outline"
             size={25}
@@ -72,6 +74,13 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     display: 'flex',
     flexDirection: 'row',
+  },
+  remark: {
+    position: 'absolute',
+    left: 180,
+    fontSize: 10,
+    paddingTop: 25,
+    color: COLOR.FONT_GREEN,
   },
   chevron: {
     color: COLOR.FONT_GREEN,
