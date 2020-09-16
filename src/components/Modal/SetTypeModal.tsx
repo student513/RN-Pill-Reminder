@@ -1,41 +1,116 @@
-import Modal from 'react-native-modal'
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import {View, StyleSheet, TouchableHighlight} from 'react-native';
+import {MyText} from 'components/MyText';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {COLOR} from 'helper/helper';
+import Modal from 'react-native-modal';
+import {controlModalStore} from 'store/ControlModal';
+import {setCycleStore} from 'store';
 
 interface SetTypeModalProps {
-    showModal: boolean
+  isVisible: boolean;
+  onSwipeComplete: Function;
+  swipeDirection: string[];
+  backdropOpacity: number;
+  onBackdropPress: Function;
+  style: any;
 }
 
 export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
-    return (
-        <View style={styles.content}>
-            <Text>Please select the type of reminder.</Text>
-            <TouchableOpacity onPress={() => {
-                props.navigation.navigate('Add', { type: 'Cycle' })
-            }}>
-                <Text>Set Cycle</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => {
-                props.navigation.navigate('Add', { type: 'DayTime' })
-            }}>
-                <Text>Select Day & Time </Text>
-            </TouchableOpacity>
+  return (
+    <Modal
+      isVisible={props.isVisible}
+      onSwipeComplete={() => props.onSwipeComplete()}
+      swipeDirection={['down']}
+      style={{justifyContent: 'flex-end', margin: 0}}
+      backdropOpacity={0.5}
+      onBackdropPress={() => props.onBackdropPress()}>
+      <View style={styles.content}>
+        <View style={styles.contentTitle}>
+          <MyText>Please select the type of reminder.</MyText>
         </View>
-    )
-}
+        <View style={{alignContent: 'flex-start'}}>
+          <TouchableHighlight
+            underlayColor={COLOR.TOUCH_GREEN}
+            onPress={() => {
+              controlModalStore.toggleSetTypeModalVisible(); //this modal off
+              controlModalStore.toggleSelectSetCycle(); //add modal type set
+              controlModalStore.toggleAddModalVisible(); //open add modal
+              setCycleStore.parseDateToString();
+              setCycleStore.updateTime();
+            }}>
+            <View style={{display: 'flex', flexDirection: 'row'}}>
+              <Icon
+                name="sync-circle-outline"
+                color={COLOR.FONT_GREEN}
+                size={22}
+                style={styles.roundIcon}
+              />
+              <MyText style={styles.buttonContent}>Set Cycle</MyText>
+              <Icon
+                name="chevron-forward-outline"
+                size={20}
+                style={styles.chevron}
+              />
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight
+            underlayColor={COLOR.TOUCH_GREEN}
+            onPress={() => {
+              controlModalStore.toggleSetTypeModalVisible();
+              controlModalStore.toggleSelectDayTime();
+              controlModalStore.toggleAddModalVisible();
+              setCycleStore.parseDateToString();
+              setCycleStore.updateTime();
+            }}>
+            <View style={{display: 'flex', flexDirection: 'row'}}>
+              <Icon
+                name="list-circle-outline"
+                color={COLOR.FONT_GREEN}
+                size={22}
+                style={styles.roundIcon}
+              />
+              <MyText style={styles.buttonContent}>Select Day & Time</MyText>
+              <Icon
+                name="chevron-forward-outline"
+                size={20}
+                style={styles.chevron}
+              />
+            </View>
+          </TouchableHighlight>
+        </View>
+      </View>
+    </Modal>
+  );
+};
 
 const styles = StyleSheet.create({
-    content: {
-        backgroundColor: 'white',
-        padding: 22,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        borderColor: 'rgba(0, 0, 0, 0.1)',
-    },
-    contentTitle: {
-        fontSize: 20,
-        marginBottom: 12,
-    },
+  content: {
+    backgroundColor: 'white',
+    paddingBottom: 40,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+  },
+  contentTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    margin: 40,
+  },
+  buttonContent: {
+    color: COLOR.FONT_GREEN,
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingLeft: 5,
+  },
+  roundIcon: {
+    paddingTop: 18,
+    paddingLeft: 15,
+  },
+  chevron: {
+    color: COLOR.FONT_GREEN,
+    paddingTop: 18,
+    position: 'absolute',
+    left: 300,
+  },
 });

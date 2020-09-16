@@ -1,18 +1,10 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
-
+import {StyleSheet, StatusBar} from 'react-native';
 import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
-import Stack from './Navigator/Stack'
+import {NavigationContainer} from '@react-navigation/native';
+import Stack from './Navigator/Stack';
 
-const App: () => React$Node = () => {
+const App = ({}) => {
   return (
     <NavigationContainer>
       <StatusBar style="auto" />

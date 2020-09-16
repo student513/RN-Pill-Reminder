@@ -1,66 +1,67 @@
-import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Button, TouchableWithoutFeedback } from 'react-native'
-import { observer } from 'mobx-react'
-import { observable } from 'mobx'
-import Modal from 'react-native-modal'
-import { SetTypeModal } from '../components/Modal/SetTypeModal'
+import React, {Component} from 'react';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {SetTypeModal} from 'components/Modal';
+import {MyText} from 'components/MyText';
+import {observer} from 'mobx-react';
+import {controlModalStore} from 'store/ControlModal';
+import AddModal from 'components/Modal/AddModal';
 
 interface IProps {
+  navigation: any;
 }
-interface IState {
-    modalVisible: boolean
-}
+interface IState {}
 
+@observer
 class Reminder extends Component<IProps, IState> {
-    constructor(props) {
-        super(props)
-        this.state = {
-            modalVisible: false
-        }
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    toggleModalVisible() {
-        this.state.modalVisible ? this.setState({ modalVisible: false }) : this.setState({ modalVisible: true })
-    }
+  render() {
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity
+          onPress={() => {
+            controlModalStore.toggleSetTypeModalVisible();
+          }}>
+          <MyText style={{fontSize: 30}}>Add</MyText>
+        </TouchableOpacity>
 
-    render() {
-        const { modalVisible } = this.state
+        <TouchableOpacity
+          onPress={() => {
+            this.props.navigation.navigate('Picker');
+          }}>
+          <MyText>Picker</MyText>
+        </TouchableOpacity>
 
-        return (
-            <View style={styles.container}>
-                <TouchableOpacity onPress={() => {
-                    this.toggleModalVisible()
-                    console.log(modalVisible)
-                }}>
-                    <Text style={{ fontSize: 30 }}>Add</Text>
-                </TouchableOpacity>
-
-                <TouchableWithoutFeedback onPress={() => {
-                    this.setState({modalVisible:false})
-                    }}>
-                    <Modal
-                        isVisible={modalVisible}
-                        onSwipeComplete={() => this.toggleModalVisible()}
-                        swipeDirection={['down']}
-                        style={styles.view}
-                        backdropOpacity={0.5}
-                        onBackdropPress={() => this.toggleModalVisible()}
-                    >   
-                        <SetTypeModal onPress={() => this.toggleModalVisible()} />
-                    </Modal>
-                </TouchableWithoutFeedback>
-            </View>
-        )
-    }
+        <SetTypeModal
+          isVisible={controlModalStore.setTypeModalVisible}
+          onSwipeComplete={() => controlModalStore.toggleSetTypeModalVisible()}
+          swipeDirection={['down']}
+          style={styles.modal}
+          backdropOpacity={0.5}
+          onBackdropPress={() => controlModalStore.toggleSetTypeModalVisible()}
+        />
+        <AddModal
+          isVisible={controlModalStore.addModalVisible}
+          onSwipeComplete={() => controlModalStore.toggleAddModalVisible()}
+          swipeDirection={['down']}
+          style={styles.modal}
+          backdropOpacity={0.5}
+          onBackdropPress={() => controlModalStore.toggleAddModalVisible()}
+        />
+      </View>
+    );
+  }
 }
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#fff'
-    },
-    view: {
-        justifyContent: 'flex-end',
-        margin: 0,
-    },
+  container: {
+    backgroundColor: '#fff',
+  },
+  modal: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
 });
 
-export default Reminder
+export default Reminder;
