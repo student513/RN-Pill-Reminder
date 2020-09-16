@@ -76,7 +76,6 @@ class AddModal extends Component<AddModalProps, {}> {
             }}
             onPress={() => {
               setCycleStore.showTimepicker();
-              console.log(setCycleStore.StartTime);
             }}
             remark={setCycleStore.ParsedStartTime}
           />
@@ -106,12 +105,8 @@ class AddModal extends Component<AddModalProps, {}> {
             }}
             onPress={() => {
               setCycleStore.showDatepicker();
-              console.log(setCycleStore.EndTime);
             }}
-            remark={
-              // setCycleStore.isEndRepeat ? setCycleStore.ParsedEndTime : 'Never'
-              setCycleStore.ParsedEndTime
-            }
+            remark={setCycleStore.ParsedEndTime}
           />
           {setCycleStore.showDate && (
             <DateTimePicker
