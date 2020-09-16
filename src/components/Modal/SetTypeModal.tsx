@@ -36,7 +36,8 @@ export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
               controlModalStore.toggleSetTypeModalVisible(); //this modal off
               controlModalStore.toggleSelectSetCycle(); //add modal type set
               controlModalStore.toggleAddModalVisible(); //open add modal
-              setCycleStore.init();
+              setCycleStore.parseDateToString();
+              setCycleStore.updateTime();
             }}>
             <View style={{display: 'flex', flexDirection: 'row'}}>
               <Icon
@@ -59,6 +60,8 @@ export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
               controlModalStore.toggleSetTypeModalVisible();
               controlModalStore.toggleSelectDayTime();
               controlModalStore.toggleAddModalVisible();
+              setCycleStore.parseDateToString();
+              setCycleStore.updateTime();
             }}>
             <View style={{display: 'flex', flexDirection: 'row'}}>
               <Icon

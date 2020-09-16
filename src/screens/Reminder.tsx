@@ -15,9 +15,6 @@ interface IState {}
 class Reminder extends Component<IProps, IState> {
   constructor(props) {
     super(props);
-    this.state={
-      temp:0
-    }
   }
 
   render() {
@@ -29,6 +26,14 @@ class Reminder extends Component<IProps, IState> {
           }}>
           <MyText style={{fontSize: 30}}>Add</MyText>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            this.props.navigation.navigate('Picker');
+          }}>
+          <MyText>Picker</MyText>
+        </TouchableOpacity>
+
         <SetTypeModal
           isVisible={controlModalStore.setTypeModalVisible}
           onSwipeComplete={() => controlModalStore.toggleSetTypeModalVisible()}

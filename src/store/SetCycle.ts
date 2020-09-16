@@ -1,38 +1,29 @@
 import {observable, action} from 'mobx';
 import {createContext} from 'react';
-import {Time, Date, RePeat} from 'helper/interface';
+import {Time, RePeat} from 'helper/interface';
+import {Platform} from 'react-native';
+import moment from 'moment';
 
 class SetCycleStore {
   @observable Name: string = '';
   @observable Dosage: string = '';
-  @observable StartTime: Time = null;
+  @observable StartTime: Date = new Date(); // StartTime, EndRepeat에 파싱하기 전 날짜 정보
+  @observable EndTime: Date = new Date();
+  @observable ParsedStartTime: string = '';
   @observable isEndRepeat: boolean = false;
-  @observable EndRepeat: Date = null;
+  @observable EndRepeat: string = '';
+  @observable ParsedEndTime: string = '';
   @observable isRepeat: boolean = false;
   @observable Repeat: RePeat = null;
   @observable Bedtime: boolean = false;
   @observable Critical: boolean = false;
   @observable Timing: string = '';
-  @observable NextTime: {
-    date: number;
-    time: Time;
-    repeat: RePeat;
-  } = null;
+  @observable NextTime: Date = new Date();
 
-  @action
-  init = () => {
-    this.Name = '';
-    this.Dosage = '';
-    this.StartTime = null; //현재 시간 함수로 assign되나?
-    this.isEndRepeat = false;
-    this.EndRepeat = null;
-    this.isRepeat = false;
-    this.Repeat = null;
-    this.Bedtime = false;
-    this.Critical = false;
-    this.Timing = '';
-    this.NextTime = null;
-  };
+  // DateTime Picker variable
+  @observable showTime: boolean = false;
+  @observable showDate: boolean = false;
+  @observable mode: string = 'date';
 
   @action
   onChangeName = (Name: string) => {
@@ -42,21 +33,60 @@ class SetCycleStore {
   toggleBedtime = () => {
     if (!this.Bedtime) {
       this.Bedtime = true;
-      // this.Critical = false;
     } else {
       this.Bedtime = false;
-      // this.Critical = true;
     }
   };
   @action
   toggleCritical = () => {
     if (!this.Critical) {
-      // this.Bedtime = false;
       this.Critical = true;
     } else {
-      // this.Bedtime = true;
       this.Critical = false;
     }
+  };
+  // Date Time picker function
+  @action
+  onChangeStartTime = (event: Event, selectedDate?: Date) => {
+    const currentDate = selectedDate || this.StartTime;
+    this.showTime = Platform.OS === 'ios';
+    this.StartTime = currentDate;
+    this.ParsedStartTime = moment
+      .parseZone(this.StartTime)
+      .format('ddd,MMM D,LT');
+  };
+  @action
+  onChangeEndTime = (event: Event, selectedDate?: Date) => {
+    const currentDate = selectedDate || this.EndTime;
+    this.showDate = Platform.OS === 'ios';
+    this.EndTime = currentDate;
+    this.ParsedEndTime = moment
+      .parseZone(this.EndTime)
+      .format('ddd,MMM D,YYYY');
+  };
+  @action
+  showDatepicker = () => {
+    this.showDate = true;
+    this.mode = 'date';
+  };
+  @action
+  showTimepicker = () => {
+    this.showTime = true;
+    this.mode = 'time';
+  };
+  @action
+  parseDateToString = () => {
+    this.ParsedStartTime = moment
+      .parseZone(this.StartTime)
+      .format('ddd,MMM D,LT');
+    this.ParsedEndTime = moment
+      .parseZone(this.EndTime)
+      .format('ddd,MMM D,YYYY');
+  };
+  @action
+  updateTime = () => {
+    this.StartTime = new Date();
+    this.EndTime = new Date();
   };
 }
 

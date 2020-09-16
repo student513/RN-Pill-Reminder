@@ -9,6 +9,7 @@ import {observer} from 'mobx-react';
 import {setCycleStore} from 'store/SetCycle';
 import {controlModalStore} from 'store';
 import {MyTableButton, MyToggleButton} from 'components/MyButton';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const {height} = Dimensions.get('window');
 
@@ -73,7 +74,20 @@ class AddModal extends Component<AddModalProps, {}> {
               borderTopRightRadius: 6,
               marginBottom: 1,
             }}
+            onPress={() => {
+              setCycleStore.showTimepicker();
+            }}
+            remark={setCycleStore.ParsedStartTime}
           />
+          {setCycleStore.showTime && (
+            <DateTimePicker
+              value={setCycleStore.StartTime}
+              mode={setCycleStore.mode}
+              is24Hour={true}
+              display="default"
+              onChange={setCycleStore.onChangeStartTime}
+            />
+          )}
           <MyTableButton
             icon="sync-circle-outline"
             title="Repeat"
@@ -89,7 +103,20 @@ class AddModal extends Component<AddModalProps, {}> {
               borderBottomRightRadius: 6,
               marginBottom: 20,
             }}
+            onPress={() => {
+              setCycleStore.showDatepicker();
+            }}
+            remark={setCycleStore.ParsedEndTime}
           />
+          {setCycleStore.showDate && (
+            <DateTimePicker
+              value={setCycleStore.EndTime}
+              mode={setCycleStore.mode}
+              is24Hour={true}
+              display="default"
+              onChange={setCycleStore.onChangeEndTime}
+            />
+          )}
           {setCycleStore.Critical ? (
             <View />
           ) : (
@@ -120,13 +147,6 @@ class AddModal extends Component<AddModalProps, {}> {
               description="Critical alerts allows the app to ring the notification sound even when your phone is in silent or do not disturb mode."
             />
           )}
-          {/* <TouchableOpacity
-            onPress={() => {
-              console.log(setCycleStore.Bedtime);
-              console.log(setCycleStore.Critical);
-            }}>
-            <MyText style={{marginBottom: 30}}>ddddddd</MyText>
-          </TouchableOpacity> */}
         </ScrollView>
       </Modal>
     );

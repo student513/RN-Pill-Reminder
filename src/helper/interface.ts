@@ -4,12 +4,6 @@ export interface Time {
   isAM: boolean;
 }
 
-export interface Date {
-  year: number;
-  month: string;
-  day: number;
-}
-
 export interface RePeat {
   Frequency: string;
   Every: number;

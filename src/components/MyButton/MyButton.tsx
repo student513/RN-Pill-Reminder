@@ -3,25 +3,32 @@ import React, {PureComponent} from 'react';
 import {
   StyleSheet,
   View,
-  Platform,
   TouchableOpacity,
   Switch,
+  TouchableOpacityProps,
   SwitchProps,
 } from 'react-native';
 import {COLOR} from 'helper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {MyText} from 'components/MyText';
 
-interface MyButtonProps extends SwitchProps {
+interface MyTableButtonProps extends TouchableOpacityProps {
+  icon: string;
+  title: string;
+  onPress: Function;
+  remark: string;
+}
+
+interface MyToggleButtonProps extends SwitchProps {
   icon: string;
   title: string;
   description: string;
 }
 
-export class MyTableButton extends PureComponent<MyButtonProps> {
+export class MyTableButton extends PureComponent<MyTableButtonProps> {
   render() {
     return (
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => this.props.onPress()}>
         <View style={[styles.buttonContainer, this.props.style]}>
           <Icon
             name={this.props.icon}
@@ -29,6 +36,7 @@ export class MyTableButton extends PureComponent<MyButtonProps> {
             style={{paddingTop: 18, paddingRight: 5}}
           />
           <MyText style={{paddingVertical: 17}}>{this.props.title}</MyText>
+          <MyText style={styles.remark}>{this.props.remark}</MyText>
           <Icon
             name="chevron-forward-outline"
             size={25}
@@ -40,7 +48,7 @@ export class MyTableButton extends PureComponent<MyButtonProps> {
   }
 }
 
-export class MyToggleButton extends PureComponent<MyButtonProps> {
+export class MyToggleButton extends PureComponent<MyToggleButtonProps> {
   render() {
     return (
       <View>
@@ -66,6 +74,13 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     display: 'flex',
     flexDirection: 'row',
+  },
+  remark: {
+    position: 'absolute',
+    left: 180,
+    fontSize: 10,
+    paddingTop: 25,
+    color: COLOR.FONT_GREEN,
   },
   chevron: {
     color: COLOR.FONT_GREEN,
