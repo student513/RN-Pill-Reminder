@@ -9,7 +9,8 @@ class SetDayTimeStore {
   @observable Time: Time = null;
   @observable TimeList: Time[] = null;
   @observable isEndRepeat: boolean = false;
-  @observable EndRepeat: ymdDate = null;
+  @observable EndRepeat: string = '';
+  @observable EndTime: string = '';
   @observable Critical: boolean = false;
   @observable NextTime: {
     date: number;

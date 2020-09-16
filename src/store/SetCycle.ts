@@ -1,48 +1,29 @@
 import {observable, action} from 'mobx';
 import {createContext} from 'react';
-import {Time, ymdDate, RePeat} from 'helper/interface';
+import {Time, RePeat} from 'helper/interface';
 import {Platform} from 'react-native';
 import moment from 'moment';
 
 class SetCycleStore {
   @observable Name: string = '';
   @observable Dosage: string = '';
-  @observable nowTime: Date = new Date(); // StartTime, EndRepeat에 파싱하기 전 날짜 정보
-  @observable StartTime: string = '';
+  @observable StartTime: Date = new Date(); // StartTime, EndRepeat에 파싱하기 전 날짜 정보
+  @observable EndTime: Date = new Date();
+  @observable ParsedStartTime: string = '';
   @observable isEndRepeat: boolean = false;
   @observable EndRepeat: string = '';
+  @observable ParsedEndTime: string = '';
   @observable isRepeat: boolean = false;
   @observable Repeat: RePeat = null;
   @observable Bedtime: boolean = false;
   @observable Critical: boolean = false;
   @observable Timing: string = '';
-  @observable NextTime: {
-    date: number;
-    time: Time;
-    repeat: RePeat;
-  } = null;
+  @observable NextTime: Date = new Date();
 
   // DateTime Picker variable
-  @observable show: boolean = false;
+  @observable showTime: boolean = false;
+  @observable showDate: boolean = false;
   @observable mode: string = 'date';
-
-  @action
-  init = () => {
-    this.Name = '';
-    this.Dosage = '';
-    // this.nowTime = new Date();
-    this.StartTime = '';
-    this.isEndRepeat = false;
-    this.EndRepeat = '';
-    this.isRepeat = false;
-    this.Repeat = null;
-    this.Bedtime = false;
-    this.Critical = false;
-    this.Timing = '';
-    this.NextTime = null;
-    this.show = false;
-    this.mode = 'date';
-  };
 
   @action
   onChangeName = (Name: string) => {
@@ -66,36 +47,46 @@ class SetCycleStore {
   };
   // Date Time picker function
   @action
-  onChange = (event: Event, selectedDate?: Date) => {
-    const currentDate = selectedDate || this.nowTime;
-    this.show = Platform.OS === 'ios';
-    this.nowTime = currentDate;
-    this.parseDateToString();
+  onChangeStartTime = (event: Event, selectedDate?: Date) => {
+    const currentDate = selectedDate || this.StartTime;
+    this.showTime = Platform.OS === 'ios';
+    this.StartTime = currentDate;
+    this.ParsedStartTime = moment
+      .parseZone(this.StartTime)
+      .format('ddd,MMM D,LT');
   };
   @action
-  showMode = (currentMode: string) => {
-    this.show = true;
-    this.mode = currentMode;
+  onChangeEndTime = (event: Event, selectedDate?: Date) => {
+    const currentDate = selectedDate || this.EndTime;
+    this.showDate = Platform.OS === 'ios';
+    this.EndTime = currentDate;
+    this.ParsedEndTime = moment
+      .parseZone(this.EndTime)
+      .format('ddd,MMM D,YYYY');
   };
   @action
   showDatepicker = () => {
-    this.show = true;
+    this.showDate = true;
     this.mode = 'date';
   };
   @action
   showTimepicker = () => {
-    this.show = true;
+    this.showTime = true;
     this.mode = 'time';
   };
   @action
   parseDateToString = () => {
-    this.StartTime = moment.parseZone(this.nowTime).format('ddd,MMM D,LT');
-    this.EndRepeat = moment.parseZone(this.nowTime).format('ddd,MMM D,LT');
+    this.ParsedStartTime = moment
+      .parseZone(this.StartTime)
+      .format('ddd,MMM D,LT');
+    this.ParsedEndTime = moment
+      .parseZone(this.EndTime)
+      .format('ddd,MMM D,YYYY');
   };
   @action
   updateTime = () => {
-    this.nowTime = new Date();
-    console.log(this.nowTime)
+    this.StartTime = new Date();
+    this.EndTime = new Date();
   };
 }
 

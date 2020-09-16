@@ -76,17 +76,17 @@ class AddModal extends Component<AddModalProps, {}> {
             }}
             onPress={() => {
               setCycleStore.showTimepicker();
+              console.log(setCycleStore.StartTime);
             }}
-            remark={setCycleStore.StartTime}
+            remark={setCycleStore.ParsedStartTime}
           />
-          {setCycleStore.show && (
+          {setCycleStore.showTime && (
             <DateTimePicker
-              testID="dateTimePicker"
-              value={setCycleStore.nowTime}
+              value={setCycleStore.StartTime}
               mode={setCycleStore.mode}
               is24Hour={true}
               display="default"
-              onChange={setCycleStore.onChange}
+              onChange={setCycleStore.onChangeStartTime}
             />
           )}
           <MyTableButton
@@ -106,17 +106,20 @@ class AddModal extends Component<AddModalProps, {}> {
             }}
             onPress={() => {
               setCycleStore.showDatepicker();
+              console.log(setCycleStore.EndTime);
             }}
-            remark={setCycleStore.EndRepeat}
+            remark={
+              // setCycleStore.isEndRepeat ? setCycleStore.ParsedEndTime : 'Never'
+              setCycleStore.ParsedEndTime
+            }
           />
-          {setCycleStore.show && (
+          {setCycleStore.showDate && (
             <DateTimePicker
-              testID="dateTimePicker"
-              value={setCycleStore.nowTime}
+              value={setCycleStore.EndTime}
               mode={setCycleStore.mode}
               is24Hour={true}
               display="default"
-              onChange={setCycleStore.onChange}
+              onChange={setCycleStore.onChangeEndTime}
             />
           )}
           {setCycleStore.Critical ? (
