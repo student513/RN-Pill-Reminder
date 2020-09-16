@@ -147,13 +147,6 @@ class AddModal extends Component<AddModalProps, {}> {
               description="Critical alerts allows the app to ring the notification sound even when your phone is in silent or do not disturb mode."
             />
           )}
-          {/* <TouchableOpacity
-            onPress={() => {
-              console.log(setCycleStore.Bedtime);
-              console.log(setCycleStore.Critical);
-            }}>
-            <MyText style={{marginBottom: 30}}>ddddddd</MyText>
-          </TouchableOpacity> */}
         </ScrollView>
       </Modal>
     );
