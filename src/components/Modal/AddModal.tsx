@@ -41,7 +41,7 @@ class AddModal extends Component<AddModalProps, {}> {
             <TouchableOpacity
               onPress={() => controlModalStore.toggleAddModalVisible()}>
               <MyText style={{color: COLOR.FONT_GREEN, fontSize: 16}}>
-                Cancel
+                OK
               </MyText>
             </TouchableOpacity>
             <MyText style={{fontFamily: 'ProximaNova-Bold'}}>Detail</MyText>
