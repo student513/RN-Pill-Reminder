@@ -1,12 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {View, StyleSheet, Dimensions, ScrollView} from 'react-native';
-import {MyText, MyTextInput} from '../components/MyText';
-import {TouchableOpacity} from 'react-native';
-import {COLOR} from 'helper';
+import {MyTextInput} from '../components/MyText';
 import {observer} from 'mobx-react';
 import {setCycleStore} from 'store/SetCycle';
-import {controlModalStore} from 'store';
 import {MyTableButton, MyToggleButton} from 'components/MyButton';
 import DateTimePicker from '@react-native-community/datetimepicker';
 

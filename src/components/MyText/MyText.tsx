@@ -8,7 +8,6 @@ import {
   TextInput,
   Platform,
   TextInputProps,
-  TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
 import {COLOR} from 'helper';
@@ -36,39 +35,32 @@ export class MyTextInput extends PureComponent<MyTextInputProps> {
   }
   render() {
     return (
-      <TouchableWithoutFeedback
-        onPress={() => {
-          console.log('dsdfasdf');
-          Keyboard.dismiss();
-          this.setState({isFocus: false});
-        }}>
-        <View
-          style={
-            this.state.isFocus
-              ? styles.focusedInputContainer
-              : styles.basicInputContainer
-          }>
-          <MyText
-            style={{
-              color: '#7D7D7D',
-              fontSize: 14,
-              paddingLeft: 5,
-              paddingTop: 10,
-            }}>
-            {this.props.label}
-          </MyText>
-          <TextInput
-            style={styles.textInput}
-            placeholderTextColor="#0F0F0F"
-            {...this.props}
-            onFocus={() => this.setState({isFocus: true})}
-          />
-        </View>
-      </TouchableWithoutFeedback>
+      <View
+        style={
+          this.state.isFocus
+            ? styles.focusedInputContainer
+            : styles.basicInputContainer
+        }>
+        <MyText
+          style={{
+            color: '#7D7D7D',
+            fontSize: 14,
+            paddingLeft: 5,
+            paddingTop: 10,
+          }}>
+          {this.props.label}
+        </MyText>
+        <TextInput
+          style={styles.textInput}
+          placeholderTextColor="#0F0F0F"
+          {...this.props}
+          onFocus={() => this.setState({isFocus: true})}
+          onBlur={() => this.setState({isFocus: false})}
+        />
+      </View>
     );
   }
 }
-
 
 const styles = StyleSheet.create({
   textStyle: {
@@ -85,7 +77,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     backgroundColor: '#fff',
     paddingLeft: 10,
-    marginBottom: 20,
+    marginBottom: 18,
     borderWidth: 1,
     borderColor: COLOR.FONT_GREEN,
   },
