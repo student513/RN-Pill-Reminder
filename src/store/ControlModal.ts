@@ -1,9 +1,8 @@
-import {observable, action, computed} from 'mobx';
+import {observable, action} from 'mobx';
 import {createContext} from 'react';
 
 class ControlModalStore {
   @observable setTypeModalVisible: boolean;
-  @observable addModalVisible: boolean;
   @observable selectSetCycle: boolean;
   @observable selectDayTime: boolean;
 
@@ -17,30 +16,15 @@ class ControlModalStore {
   };
 
   @action
-  toggleAddModalVisible = () => {
-    if (this.addModalVisible) {
-      this.addModalVisible = false;
-    } else {
-      this.addModalVisible = true;
-    }
+  setSelectSetCycle = () => {
+    this.selectSetCycle = true;
+    this.selectDayTime = false;
   };
 
   @action
-  toggleSelectSetCycle = () => {
-    if (this.selectSetCycle) {
-      this.selectSetCycle = false;
-    } else {
-      this.selectSetCycle = true;
-    }
-  };
-
-  @action
-  toggleSelectDayTime = () => {
-    if (this.selectDayTime) {
-      this.selectDayTime = false;
-    } else {
-      this.selectDayTime = true;
-    }
+  setSelectDayTime = () => {
+    this.selectSetCycle = false;
+    this.selectDayTime = true;
   };
 }
 

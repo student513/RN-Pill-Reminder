@@ -1,6 +1,6 @@
 import {observable, action} from 'mobx';
 import {createContext} from 'react';
-import {Time, RePeat} from 'helper/interface';
+import {RePeat} from 'helper/interface';
 import {Platform} from 'react-native';
 import moment from 'moment';
 

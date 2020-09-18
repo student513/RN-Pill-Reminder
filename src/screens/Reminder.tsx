@@ -4,7 +4,6 @@ import {SetTypeModal} from 'components/Modal';
 import {MyText} from 'components/MyText';
 import {observer} from 'mobx-react';
 import {controlModalStore} from 'store/ControlModal';
-import AddModal from 'components/Modal/AddModal';
 
 interface IProps {
   navigation: any;
@@ -33,14 +32,7 @@ class Reminder extends Component<IProps, IState> {
           style={styles.modal}
           backdropOpacity={0.5}
           onBackdropPress={() => controlModalStore.toggleSetTypeModalVisible()}
-        />
-        <AddModal
-          isVisible={controlModalStore.addModalVisible}
-          onSwipeComplete={() => controlModalStore.toggleAddModalVisible()}
-          swipeDirection={['down']}
-          style={styles.modal}
-          backdropOpacity={0.5}
-          onBackdropPress={() => controlModalStore.toggleAddModalVisible()}
+          navigation={this.props.navigation}
         />
       </View>
     );
