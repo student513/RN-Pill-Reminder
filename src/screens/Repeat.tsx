@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect} from 'react';
+import React, {useState, Component} from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import {MyToggleButton, MyTableButton} from 'components/MyButton';
 import {setCycleStore} from 'store/SetCycle';
@@ -9,11 +9,13 @@ const {height} = Dimensions.get('window');
 export default function Repeat() {
   const [isRepeat, setRepeat] = useState(false);
   const toggleRepeat = () => setRepeat((prevState) => !prevState);
-
-  useEffect(() => {
-    // setCycleStore.isRepeat 업데이트 해주기
-});
-
+  // interface IProps {}
+  // export default class Repeat extends Component<IProps, {}> {
+  //   constructor(props: any) {
+  //     super(props);
+  //     this.state = {};
+  //   }
+  //   render() {
   return (
     <View style={styles.content}>
       <MyToggleButton
@@ -21,11 +23,12 @@ export default function Repeat() {
         title="Repeat"
         style={{borderRadius: 6}}
         onValueChange={() => {
-          toggleRepeat();
+          setCycleStore.toggleRepeat();
+          console.log(setCycleStore.isRepeat);
         }}
-        value={isRepeat}
+        value={setCycleStore.isRepeat}
       />
-      {isRepeat ? (
+      {setCycleStore.isRepeat ? (
         <View>
           <MyTableButton
             icon="time-outline"
