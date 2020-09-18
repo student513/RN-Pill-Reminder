@@ -83,6 +83,9 @@ class Detail extends Component<DetailProps, {}> {
           style={{
             marginBottom: 1,
           }}
+          onPress={() => {
+            this.props.navigation.navigate('Repeat');
+          }}
         />
         <MyTableButton
           icon="stop-circle-outline"

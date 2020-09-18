@@ -30,6 +30,14 @@ class SetCycleStore {
     this.Name = Name;
   };
   @action
+  toggleRepeat = () => {
+    if (!this.isRepeat) {
+      this.isRepeat = true;
+    } else {
+      this.isRepeat = false;
+    }
+  };
+  @action
   toggleBedtime = () => {
     if (!this.Bedtime) {
       this.Bedtime = true;
