@@ -6,6 +6,7 @@ import {COLOR} from 'helper/helper';
 import Modal from 'react-native-modal';
 import {controlModalStore} from 'store/ControlModal';
 import {setCycleStore} from 'store';
+import { observer } from 'mobx-react';
 
 interface SetTypeModalProps {
   isVisible: boolean;
@@ -14,8 +15,10 @@ interface SetTypeModalProps {
   backdropOpacity: number;
   onBackdropPress: Function;
   style: any;
+  navigation: any;
 }
 
+@observer
 export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
   return (
     <Modal
@@ -34,10 +37,10 @@ export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
             underlayColor={COLOR.TOUCH_GREEN}
             onPress={() => {
               controlModalStore.toggleSetTypeModalVisible(); //this modal off
-              controlModalStore.toggleSelectSetCycle(); //add modal type set
-              controlModalStore.toggleAddModalVisible(); //open add modal
+              controlModalStore.setSelectSetCycle(); //add modal type set
               setCycleStore.parseDateToString();
               setCycleStore.updateTime();
+              props.navigation.navigate('Detail');
             }}>
             <View style={{display: 'flex', flexDirection: 'row'}}>
               <Icon
@@ -58,10 +61,10 @@ export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
             underlayColor={COLOR.TOUCH_GREEN}
             onPress={() => {
               controlModalStore.toggleSetTypeModalVisible();
-              controlModalStore.toggleSelectDayTime();
-              controlModalStore.toggleAddModalVisible();
+              controlModalStore.setSelectDayTime();
               setCycleStore.parseDateToString();
               setCycleStore.updateTime();
+              props.navigation.navigate('Detail');
             }}>
             <View style={{display: 'flex', flexDirection: 'row'}}>
               <Icon
