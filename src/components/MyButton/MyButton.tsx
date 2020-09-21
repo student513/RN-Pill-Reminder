@@ -13,7 +13,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {MyText} from 'components/MyText';
 
 interface MyTableButtonProps extends TouchableOpacityProps {
-  icon: string;
+  icon?: string;
   title: string;
   onPress: Function;
   remark: string;
@@ -30,18 +30,26 @@ export class MyTableButton extends PureComponent<MyTableButtonProps> {
     return (
       <TouchableOpacity onPress={() => this.props.onPress()}>
         <View style={[styles.buttonContainer, this.props.style]}>
-          <Icon
-            name={this.props.icon}
-            size={25}
-            style={{paddingTop: 18, paddingRight: 5}}
-          />
+          {this.props.icon ? (
+            <Icon
+              name={this.props.icon}
+              size={25}
+              style={{paddingTop: 18, paddingRight: 5}}
+            />
+          ) : (
+            <View />
+          )}
           <MyText style={{paddingVertical: 17}}>{this.props.title}</MyText>
           <MyText style={styles.remark}>{this.props.remark}</MyText>
-          <Icon
-            name="chevron-forward-outline"
-            size={25}
-            style={styles.chevron}
-          />
+          {this.props.icon ? (
+            <Icon
+              name="chevron-forward-outline"
+              size={25}
+              style={styles.chevron}
+            />
+          ) : (
+            <View />
+          )}
         </View>
       </TouchableOpacity>
     );

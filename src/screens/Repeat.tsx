@@ -10,10 +10,6 @@ export default function Repeat() {
   const [isRepeat, setRepeat] = useState(false);
   const toggleRepeat = () => setRepeat((prevState) => !prevState);
 
-  useEffect(() => {
-    // setCycleStore.isRepeat 업데이트 해주기
-});
-
   return (
     <View style={styles.content}>
       <MyToggleButton
@@ -22,14 +18,14 @@ export default function Repeat() {
         style={{borderRadius: 6}}
         onValueChange={() => {
           toggleRepeat();
+          setCycleStore.toggleRepeat();
         }}
         value={isRepeat}
       />
       {isRepeat ? (
         <View>
           <MyTableButton
-            icon="time-outline"
-            title="Start Time"
+            title="Frequency"
             style={{
               borderTopLeftRadius: 6,
               borderTopRightRadius: 6,
@@ -38,11 +34,10 @@ export default function Repeat() {
             onPress={() => {
               setCycleStore.showTimepicker();
             }}
-            remark={setCycleStore.ParsedStartTime}
+            remark={setCycleStore.frequency}
           />
           <MyTableButton
-            icon="stop-circle-outline"
-            title="End Repeat"
+            title="Every"
             style={{
               borderBottomLeftRadius: 6,
               borderBottomRightRadius: 6,
@@ -51,7 +46,7 @@ export default function Repeat() {
             onPress={() => {
               setCycleStore.showDatepicker();
             }}
-            remark={setCycleStore.ParsedEndTime}
+            remark={setCycleStore.every}
           />
         </View>
       ) : (

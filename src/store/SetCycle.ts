@@ -1,6 +1,5 @@
 import {observable, action} from 'mobx';
 import {createContext} from 'react';
-import {RePeat} from 'helper/interface';
 import {Platform} from 'react-native';
 import moment from 'moment';
 
@@ -14,7 +13,8 @@ class SetCycleStore {
   @observable EndRepeat: string = '';
   @observable ParsedEndTime: string = '';
   @observable isRepeat: boolean = false;
-  @observable Repeat: RePeat = null;
+  @observable frequency: string = '';
+  @observable every: number = 1;
   @observable Bedtime: boolean = false;
   @observable Critical: boolean = false;
   @observable Timing: string = '';
