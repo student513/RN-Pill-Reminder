@@ -1,14 +1,23 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
+import React, {useState} from 'react';
+import {View, StyleSheet, Dimensions} from 'react-native';
 import {MyToggleButton, MyTableButton} from 'components/MyButton';
 import {setCycleStore} from 'store/SetCycle';
+import {Picker} from '@react-native-community/picker';
 
-const {height} = Dimensions.get('window');
+const {height, width} = Dimensions.get('window');
 
 export default function Repeat() {
   const [isRepeat, setRepeat] = useState(false);
+  const [showFrequency, setFrequency] = useState(false);
+  const [showEvery, setEvery] = useState(false);
+  const [frequency, modiFrequency] = useState('');
+
   const toggleRepeat = () => setRepeat((prevState) => !prevState);
+  const toggleFrequency = () => setFrequency((prevState) => !prevState);
+  const toggleEvery = () => setEvery((prevState) => !prevState);
+
+  const frequencyType = ['Minutely', 'Hourly', 'Daily', 'Weekly', 'Monthly'];
 
   return (
     <View style={styles.content}>
@@ -31,11 +40,25 @@ export default function Repeat() {
               borderTopRightRadius: 6,
               marginBottom: 1,
             }}
-            onPress={() => {
-              setCycleStore.showTimepicker();
-            }}
+            onPress={() => toggleFrequency()}
             remark={setCycleStore.frequency}
           />
+          {/* IOS picker에 대한 조건 추가 */}
+          {showFrequency ? (
+            <Picker
+              selectedValue={frequency}
+              style={{height: 50, width: width}}
+              onValueChange={(itemValue) => {
+                modiFrequency(itemValue);
+                setCycleStore.setFrequency(itemValue);
+              }}>
+              {frequencyType.map((value) => (
+                <Picker.Item label={value} value={value} />
+              ))}
+            </Picker>
+          ) : (
+            <View />
+          )}
           <MyTableButton
             title="Every"
             style={{
@@ -43,10 +66,8 @@ export default function Repeat() {
               borderBottomRightRadius: 6,
               marginBottom: 20,
             }}
-            onPress={() => {
-              setCycleStore.showDatepicker();
-            }}
-            remark={setCycleStore.every}
+            onPress={() => toggleEvery()}
+            remark={`${setCycleStore.every} ${setCycleStore.frequency}`}
           />
         </View>
       ) : (
@@ -55,7 +76,6 @@ export default function Repeat() {
     </View>
   );
 }
-// }
 
 const styles = StyleSheet.create({
   content: {

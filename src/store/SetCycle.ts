@@ -96,6 +96,10 @@ class SetCycleStore {
     this.StartTime = new Date();
     this.EndTime = new Date();
   };
+  //Repeat picker function
+  setFrequency = (itemValue: string) => {
+    this.frequency = itemValue;
+  };
 }
 
 export const setCycleStore = new SetCycleStore();
