@@ -13,7 +13,7 @@ class SetCycleStore {
   @observable EndRepeat: string = '';
   @observable ParsedEndTime: string = '';
   @observable isRepeat: boolean = false;
-  @observable frequency: string = '';
+  @observable frequency: string = 'Daily';
   @observable every: number = 1;
   @observable Bedtime: boolean = false;
   @observable Critical: boolean = false;
@@ -51,6 +51,14 @@ class SetCycleStore {
       this.Critical = true;
     } else {
       this.Critical = false;
+    }
+  };
+  @action
+  toggleEndRepeat = () => {
+    if (!this.isEndRepeat) {
+      this.isEndRepeat = true;
+    } else {
+      this.isEndRepeat = false;
     }
   };
   // Date Time picker function
@@ -99,6 +107,9 @@ class SetCycleStore {
   //Repeat picker function
   setFrequency = (itemValue: string) => {
     this.frequency = itemValue;
+  };
+  setEvery = (itemValue: number) => {
+    this.every = itemValue;
   };
 }
 

@@ -8,7 +8,6 @@ import {
   TextInput,
   Platform,
   TextInputProps,
-  Keyboard,
 } from 'react-native';
 import {COLOR} from 'helper';
 

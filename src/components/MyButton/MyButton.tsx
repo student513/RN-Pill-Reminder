@@ -8,7 +8,7 @@ import {
   TouchableOpacityProps,
   SwitchProps,
 } from 'react-native';
-import {COLOR} from 'helper';
+import {COLOR, POSITION} from 'helper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {MyText} from 'components/MyText';
 
@@ -22,7 +22,7 @@ interface MyTableButtonProps extends TouchableOpacityProps {
 interface MyToggleButtonProps extends SwitchProps {
   icon: string;
   title: string;
-  description: string;
+  description?: string;
 }
 
 export class MyTableButton extends PureComponent<MyTableButtonProps> {
@@ -34,13 +34,18 @@ export class MyTableButton extends PureComponent<MyTableButtonProps> {
             <Icon
               name={this.props.icon}
               size={25}
-              style={{paddingTop: 18, paddingRight: 5}}
+              style={{paddingTop: 20, paddingRight: 5}}
             />
           ) : (
             <View />
           )}
           <MyText style={{paddingVertical: 17}}>{this.props.title}</MyText>
-          <MyText style={styles.remark}>{this.props.remark}</MyText>
+          <MyText
+            style={
+              this.props.icon ? styles.remark : styles.remarkWithoutChevron
+            }>
+            {this.props.remark}
+          </MyText>
           {this.props.icon ? (
             <Icon
               name="chevron-forward-outline"
@@ -67,11 +72,20 @@ export class MyToggleButton extends PureComponent<MyToggleButtonProps> {
             style={{paddingTop: 18, paddingRight: 5}}
           />
           <MyText style={{paddingVertical: 17}}>{this.props.title}</MyText>
-          <View style={{position: 'absolute', left: 280, paddingTop: 18}}>
+          <View
+            style={{
+              position: 'absolute',
+              left: POSITION.SWITCH,
+              paddingTop: 18,
+            }}>
             <Switch ios_backgroundColor={COLOR.FONT_GREEN} {...this.props} />
           </View>
         </View>
-        <MyText style={styles.notice}>{this.props.description}</MyText>
+        {this.props.description ? (
+          <MyText style={styles.notice}>{this.props.description}</MyText>
+        ) : (
+          <View />
+        )}
       </View>
     );
   }
@@ -79,22 +93,29 @@ export class MyToggleButton extends PureComponent<MyToggleButtonProps> {
 const styles = StyleSheet.create({
   buttonContainer: {
     backgroundColor: '#F3F3F3',
-    paddingLeft: 10,
+    paddingLeft: 15,
     display: 'flex',
     flexDirection: 'row',
   },
   remark: {
     position: 'absolute',
-    left: 180,
+    left: 200,
+    fontSize: 10,
+    paddingTop: 25,
+    color: COLOR.FONT_GREEN,
+  },
+  remarkWithoutChevron: {
+    position: 'absolute',
+    left: 245,
     fontSize: 10,
     paddingTop: 25,
     color: COLOR.FONT_GREEN,
   },
   chevron: {
     color: COLOR.FONT_GREEN,
-    paddingTop: 18,
+    paddingTop: 20,
     position: 'absolute',
-    left: 300,
+    left: POSITION.CHEVRON,
   },
   notice: {
     fontSize: 11,

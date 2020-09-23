@@ -96,19 +96,10 @@ class Detail extends Component<DetailProps, {}> {
             marginBottom: 20,
           }}
           onPress={() => {
-            setCycleStore.showDatepicker();
+            this.props.navigation.navigate('EndRepeat')
           }}
           remark={setCycleStore.ParsedEndTime}
         />
-        {setCycleStore.showDate && (
-          <DateTimePicker
-            value={setCycleStore.EndTime}
-            mode={setCycleStore.mode}
-            is24Hour={true}
-            display="default"
-            onChange={setCycleStore.onChangeEndTime}
-          />
-        )}
         {setCycleStore.Critical ? (
           <View />
         ) : (
