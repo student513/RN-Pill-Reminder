@@ -6,7 +6,7 @@ import {setCycleStore} from 'store/SetCycle';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {observer} from 'mobx-react';
 
-const {height, width} = Dimensions.get('window');
+const {height} = Dimensions.get('window');
 
 interface IState {
   isEndRepeat: boolean;

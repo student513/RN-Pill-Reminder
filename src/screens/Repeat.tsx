@@ -9,13 +9,17 @@ import {observer} from 'mobx-react';
 
 const {height, width} = Dimensions.get('window');
 
+const frequencyType: string[] = [
+  'Minutely',
+  'Hourly',
+  'Daily',
+  'Weekly',
+  'Monthly',
+];
+
 interface IState {
-  isRepeat: boolean;
   showFrequency: boolean;
   showEvery: boolean;
-  frequency: string;
-  every: number;
-  frequencyType: string[];
   everyContent: any[];
 }
 
@@ -24,21 +28,11 @@ class Repeat extends Component<{}, IState> {
   constructor(props: any) {
     super(props);
     this.state = {
-      isRepeat: false,
       showFrequency: false,
       showEvery: false,
-      frequency: '',
-      every: 1,
-      frequencyType: ['Minutely', 'Hourly', 'Daily', 'Weekly', 'Monthly'],
       everyContent: [],
     };
   }
-
-  toggleRepeat = () => {
-    this.setState((prevState) => ({
-      isRepeat: !prevState.isRepeat,
-    }));
-  };
 
   toggleFrequency = () => {
     this.setState((prevState) => ({
@@ -53,15 +47,7 @@ class Repeat extends Component<{}, IState> {
   };
 
   render() {
-    const {
-      isRepeat,
-      showFrequency,
-      showEvery,
-      frequency,
-      every,
-      frequencyType,
-      everyContent,
-    } = this.state;
+    const {showFrequency} = this.state;
     return (
       <View style={styles.content}>
         <MyToggleButton

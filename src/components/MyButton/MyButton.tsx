@@ -15,7 +15,7 @@ import {MyText} from 'components/MyText';
 interface MyTableButtonProps extends TouchableOpacityProps {
   icon?: string;
   title: string;
-  onPress: Function;
+  onPress: any;
   remark: string;
 }
 
@@ -69,14 +69,14 @@ export class MyToggleButton extends PureComponent<MyToggleButtonProps> {
           <Icon
             name={this.props.icon}
             size={25}
-            style={{paddingTop: 18, paddingRight: 5}}
+            style={{paddingTop: 20, paddingRight: 5}}
           />
           <MyText style={{paddingVertical: 17}}>{this.props.title}</MyText>
           <View
             style={{
               position: 'absolute',
-              left: POSITION.SWITCH,
-              paddingTop: 18,
+              right: POSITION.SWITCH,
+              paddingTop: 20,
             }}>
             <Switch ios_backgroundColor={COLOR.FONT_GREEN} {...this.props} />
           </View>
@@ -99,14 +99,14 @@ const styles = StyleSheet.create({
   },
   remark: {
     position: 'absolute',
-    left: 200,
+    right: 40,
     fontSize: 10,
     paddingTop: 25,
     color: COLOR.FONT_GREEN,
   },
   remarkWithoutChevron: {
     position: 'absolute',
-    left: 245,
+    right: 20,
     fontSize: 10,
     paddingTop: 25,
     color: COLOR.FONT_GREEN,
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     color: COLOR.FONT_GREEN,
     paddingTop: 20,
     position: 'absolute',
-    left: POSITION.CHEVRON,
+    right: POSITION.CHEVRON,
   },
   notice: {
     fontSize: 11,

@@ -86,6 +86,11 @@ class Detail extends Component<DetailProps, {}> {
           onPress={() => {
             this.props.navigation.navigate('Repeat');
           }}
+          remark={
+            setCycleStore.isRepeat
+              ? 'Every ' + `${setCycleStore.every} ${setCycleStore.frequency}`
+              : ''
+          }
         />
         <MyTableButton
           icon="stop-circle-outline"
@@ -96,9 +101,11 @@ class Detail extends Component<DetailProps, {}> {
             marginBottom: 20,
           }}
           onPress={() => {
-            this.props.navigation.navigate('EndRepeat')
+            this.props.navigation.navigate('EndRepeat');
           }}
-          remark={setCycleStore.ParsedEndTime}
+          remark={
+            setCycleStore.isEndRepeat ? setCycleStore.ParsedEndTime : 'Never'
+          }
         />
         {setCycleStore.Critical ? (
           <View />

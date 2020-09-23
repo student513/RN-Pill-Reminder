@@ -4,6 +4,6 @@ export const COLOR = {
 };
 
 export const POSITION = {
-  SWITCH: 320,
-  CHEVRON: 340,
+  SWITCH: 10,
+  CHEVRON: 10,
 };
