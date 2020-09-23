@@ -4,6 +4,7 @@ import {View, StyleSheet, Dimensions} from 'react-native';
 import {MyToggleButton, MyTableButton} from 'components/MyButton';
 import {setCycleStore} from 'store/SetCycle';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {observer} from 'mobx-react';
 
 const {height, width} = Dimensions.get('window');
 
@@ -11,6 +12,7 @@ interface IState {
   isEndRepeat: boolean;
 }
 
+@observer
 class EndRepeat extends Component<{}, IState> {
   constructor(props: any) {
     super(props);

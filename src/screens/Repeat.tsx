@@ -5,6 +5,7 @@ import {MyToggleButton, MyTableButton} from 'components/MyButton';
 import {setCycleStore} from 'store/SetCycle';
 import {Picker} from '@react-native-community/picker';
 import {MyTextInput} from 'components/MyText';
+import {observer} from 'mobx-react';
 
 const {height, width} = Dimensions.get('window');
 
@@ -18,6 +19,7 @@ interface IState {
   everyContent: any[];
 }
 
+@observer
 class Repeat extends Component<{}, IState> {
   constructor(props: any) {
     super(props);
@@ -67,12 +69,11 @@ class Repeat extends Component<{}, IState> {
           title="Repeat"
           style={{borderRadius: 6, marginBottom: 25}}
           onValueChange={() => {
-            this.toggleRepeat();
             setCycleStore.toggleRepeat();
           }}
-          value={isRepeat}
+          value={setCycleStore.isRepeat}
         />
-        {isRepeat ? (
+        {setCycleStore.isRepeat ? (
           <View>
             <MyTableButton
               title="Frequency"
@@ -87,10 +88,9 @@ class Repeat extends Component<{}, IState> {
             {/* IOS picker에 대한 조건 추가 */}
             {showFrequency ? (
               <Picker
-                selectedValue={frequency}
+                selectedValue={setCycleStore.frequency}
                 style={{height: 50, width: width - 15}}
                 onValueChange={(itemValue) => {
-                  this.setState({frequency: itemValue});
                   setCycleStore.setFrequency(itemValue);
                   this.setState({showFrequency: false});
                 }}
@@ -112,12 +112,12 @@ class Repeat extends Component<{}, IState> {
               onPress={() => this.toggleEvery()}
               remark={`${setCycleStore.every} ${setCycleStore.frequency}`}
             />
-            <MyTextInput
+            {/* <MyTextInput
               label="input"
               placeholder="1"
               keyboardType = 'numeric'
               onChangeText={(input: number) => setCycleStore.setEvery()}
-            />
+            /> */}
             {/* {showEvery ? (
               <Picker
                 selectedValue={every}
