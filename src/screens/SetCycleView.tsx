@@ -9,42 +9,14 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 const {height} = Dimensions.get('window');
 
-interface DetailProps {
-  isVisible: boolean;
-  onSwipeComplete: Function;
-  swipeDirection: string[];
-  backdropOpacity: number;
-  onBackdropPress: Function;
-  style: any;
-}
-
 @observer
-class Detail extends Component<DetailProps, {}> {
+class SetCycleView extends Component<{}, {}> {
   constructor(props: any) {
     super(props);
   }
   render() {
     return (
       <ScrollView style={styles.content}>
-        {/* <View style={styles.modalHeader}>
-          <TouchableOpacity
-            onPress={() => controlModalStore.toggleAddModalVisible()}>
-            <MyText style={{color: COLOR.FONT_GREEN, fontSize: 16}}>
-              Cancel
-            </MyText>
-          </TouchableOpacity>
-          <MyText style={{fontFamily: 'ProximaNova-Bold'}}>Detail</MyText>
-          <TouchableOpacity>
-            <MyText
-              style={{
-                color: COLOR.FONT_GREEN,
-                fontSize: 16,
-                fontFamily: 'ProximaNova-Bold',
-              }}>
-              Done
-            </MyText>
-          </TouchableOpacity>
-        </View> */}
         <MyTextInput
           label="Name"
           placeholder="Medication name"
@@ -101,7 +73,7 @@ class Detail extends Component<DetailProps, {}> {
             marginBottom: 20,
           }}
           onPress={() => {
-            this.props.navigation.navigate('EndRepeat');
+            this.props.navigation.navigate('EndRepeat', {type: 'cycle'});
           }}
           remark={
             setCycleStore.isEndRepeat ? setCycleStore.ParsedEndTime : 'Never'
@@ -165,4 +137,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Detail;
+export default SetCycleView;

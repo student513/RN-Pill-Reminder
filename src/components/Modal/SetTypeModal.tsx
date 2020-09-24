@@ -2,11 +2,11 @@ import React from 'react';
 import {View, StyleSheet, TouchableHighlight, Dimensions} from 'react-native';
 import {MyText} from 'components/MyText';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {COLOR, POSITION} from 'helper/helper';
+import {COLOR} from 'helper/helper';
 import Modal from 'react-native-modal';
 import {controlModalStore} from 'store/ControlModal';
-import {setCycleStore} from 'store';
-import { observer } from 'mobx-react';
+import {setCycleStore, setDayTimeStore} from 'store';
+import {observer} from 'mobx-react';
 
 const {width} = Dimensions.get('window');
 
@@ -39,10 +39,9 @@ export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
             underlayColor={COLOR.TOUCH_GREEN}
             onPress={() => {
               controlModalStore.toggleSetTypeModalVisible(); //this modal off
-              controlModalStore.setSelectSetCycle(); //add modal type set
               setCycleStore.parseDateToString();
               setCycleStore.updateTime();
-              props.navigation.navigate('Detail');
+              props.navigation.navigate('Details', {pillType: 'Cycle'});
             }}>
             <View style={{display: 'flex', flexDirection: 'row'}}>
               <Icon
@@ -63,10 +62,9 @@ export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
             underlayColor={COLOR.TOUCH_GREEN}
             onPress={() => {
               controlModalStore.toggleSetTypeModalVisible();
-              controlModalStore.setSelectDayTime();
-              setCycleStore.parseDateToString();
-              setCycleStore.updateTime();
-              props.navigation.navigate('Detail');
+              setDayTimeStore.parseDateToString();
+              setDayTimeStore.updateTime();
+              props.navigation.navigate('Details', {pillType: 'Select'});
             }}>
             <View style={{display: 'flex', flexDirection: 'row'}}>
               <Icon
