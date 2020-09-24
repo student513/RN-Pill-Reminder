@@ -16,7 +16,8 @@ interface MyTableButtonProps extends TouchableOpacityProps {
   icon?: string;
   title: string;
   onPress: any;
-  remark: string;
+  remark?: string;
+  checked?: boolean;
 }
 
 interface MyToggleButtonProps extends SwitchProps {
@@ -52,6 +53,11 @@ export class MyTableButton extends PureComponent<MyTableButtonProps> {
               size={25}
               style={styles.chevron}
             />
+          ) : (
+            <View />
+          )}
+          {this.props.checked ? (
+            <Icon name="checkmark-outline" size={25} style={styles.chevron} />
           ) : (
             <View />
           )}
