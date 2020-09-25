@@ -2,8 +2,8 @@ import {observable} from 'mobx';
 import {createContext} from 'react';
 
 class PillListStore {
-  @observable CardList: any[] = null;
-  @observable VeiwLog: any[] = null;
+  @observable CardList: any[] = [];
+  @observable VeiwLog: any[] = [];
 }
 
 export const pillListStore = new PillListStore();

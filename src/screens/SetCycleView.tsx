@@ -1,11 +1,18 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {View, StyleSheet, Dimensions, ScrollView} from 'react-native';
-import {MyTextInput} from '../components/MyText';
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
+import {MyText, MyTextInput} from '../components/MyText';
 import {observer} from 'mobx-react';
 import {setCycleStore} from 'store/SetCycle';
 import {MyTableButton, MyToggleButton} from 'components/MyButton';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { pillListStore } from 'store';
 
 const {height} = Dimensions.get('window');
 
@@ -14,6 +21,12 @@ class SetCycleView extends Component<{}, {}> {
   constructor(props: any) {
     super(props);
   }
+
+  pushCardList = () => {
+    setCycleStore.fillInfo();
+    pillListStore.CardList.push(setCycleStore.PillCard);
+  };
+
   render() {
     return (
       <ScrollView style={styles.content}>
@@ -109,6 +122,15 @@ class SetCycleView extends Component<{}, {}> {
             description="Critical alerts allows the app to ring the notification sound even when your phone is in silent or do not disturb mode."
           />
         )}
+        <TouchableOpacity
+          style={{marginBottom: 30}}
+          onPress={() => {
+            this.pushCardList();
+            this.props.navigation.goBack();
+            console.log(pillListStore.CardList);
+          }}>
+          <MyText>Done</MyText>
+        </TouchableOpacity>
       </ScrollView>
     );
   }

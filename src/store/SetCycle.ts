@@ -2,6 +2,7 @@ import {observable, action} from 'mobx';
 import {createContext} from 'react';
 import {Platform} from 'react-native';
 import moment from 'moment';
+import {CyclePillInfo} from 'helper';
 
 class SetCycleStore {
   @observable Name: string = '';
@@ -17,9 +18,25 @@ class SetCycleStore {
   @observable every: number = 1;
   @observable Bedtime: boolean = false;
   @observable Critical: boolean = false;
+
   @observable Timing: string = '';
   @observable NextTime: Date = new Date();
 
+  @observable PillCard: CyclePillInfo = {
+    Name: '',
+    Dosage: '',
+    StartTime: new Date(),
+    EndTime: new Date(),
+    ParsedStartTime: '',
+    isEndRepeat: false,
+    EndRepeat: '',
+    ParsedEndTime: '',
+    isRepeat: false,
+    frequency: '',
+    every: 1,
+    Bedtime: false,
+    Critical: false,
+  };
   // DateTime Picker variable
   @observable showTime: boolean = false;
   @observable showDate: boolean = false;
@@ -39,7 +56,7 @@ class SetCycleStore {
     this.Bedtime = false;
     this.Critical = false;
     this.parseDateToString();
-  }
+  };
 
   @action
   onChangeName = (Name: string) => {
@@ -80,7 +97,23 @@ class SetCycleStore {
   @action
   offEndRepeat = () => {
     this.isEndRepeat = false;
-  }
+  };
+  @action
+  fillInfo = () => {
+    this.PillCard.Name = this.Name;
+    this.PillCard.Dosage = this.Dosage;
+    this.PillCard.StartTime = this.StartTime;
+    this.PillCard.EndTime = this.EndTime;
+    this.PillCard.ParsedStartTime = this.ParsedStartTime;
+    this.PillCard.isEndRepeat = this.isEndRepeat;
+    this.PillCard.EndRepeat = this.EndRepeat;
+    this.PillCard.ParsedEndTime = this.ParsedEndTime;
+    this.PillCard.isRepeat = this.isRepeat;
+    this.PillCard.frequency = this.frequency;
+    this.PillCard.every = this.every;
+    this.PillCard.Bedtime = this.Bedtime;
+    this.PillCard.Critical = this.Critical;
+  };
   // Date Time picker function
   @action
   onChangeStartTime = (event: Event, selectedDate?: Date) => {
