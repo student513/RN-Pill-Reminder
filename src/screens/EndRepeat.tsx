@@ -5,29 +5,21 @@ import {MyToggleButton, MyTableButton} from 'components/MyButton';
 import {setCycleStore} from 'store/SetCycle';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {observer} from 'mobx-react';
+import {setDayTimeStore} from 'store';
 
 const {height} = Dimensions.get('window');
 
-interface IState {
-  isEndRepeat: boolean;
-}
-
 @observer
-class EndRepeat extends Component<{}, IState> {
+class EndRepeat extends Component<{route: any}, {}> {
   constructor(props: any) {
     super(props);
-    this.state = {
-      isEndRepeat: false,
-    };
   }
-
-  toggleEndRepeat = () => {
-    this.setState((prevState) => ({
-      isEndRepeat: !prevState.isEndRepeat,
-    }));
+  componentDidMount = () => {
+    this.props.route.params.type === 'cycle'
+      ? setDayTimeStore.offEndRepeat()
+      : setCycleStore.offEndRepeat();
   };
   render() {
-    const {isEndRepeat} = this.state;
     return (
       <View style={styles.content}>
         <MyToggleButton
@@ -35,12 +27,17 @@ class EndRepeat extends Component<{}, IState> {
           title="End Repeat"
           style={{borderRadius: 6, marginBottom: 25}}
           onValueChange={() => {
-            this.toggleEndRepeat();
-            setCycleStore.toggleEndRepeat();
+            this.props.route.params.type === 'cycle'
+              ? setCycleStore.toggleEndRepeat()
+              : setDayTimeStore.toggleEndRepeat();
           }}
-          value={isEndRepeat}
+          value={
+            this.props.route.params.type === 'cycle'
+              ? setCycleStore.isEndRepeat
+              : setDayTimeStore.isEndRepeat
+          }
         />
-        {isEndRepeat ? (
+        {setCycleStore.isEndRepeat && (
           <View>
             <MyTableButton
               title="End Repeat Date"
@@ -61,8 +58,28 @@ class EndRepeat extends Component<{}, IState> {
               />
             )}
           </View>
-        ) : (
-          <View />
+        )}
+        {setDayTimeStore.isEndRepeat && (
+          <View>
+            <MyTableButton
+              title="End Repeat Date"
+              style={{
+                borderRadius: 6,
+                marginBottom: 1,
+              }}
+              onPress={() => setDayTimeStore.showDatepicker()}
+              remark={setDayTimeStore.ParsedEndTime}
+            />
+            {setDayTimeStore.showDate && (
+              <DateTimePicker
+                value={setDayTimeStore.EndTime}
+                mode={setDayTimeStore.mode}
+                is24Hour={true}
+                display="default"
+                onChange={setDayTimeStore.onChangeEndTime}
+              />
+            )}
+          </View>
         )}
       </View>
     );

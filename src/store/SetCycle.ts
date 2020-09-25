@@ -77,6 +77,10 @@ class SetCycleStore {
       this.isEndRepeat = false;
     }
   };
+  @action
+  offEndRepeat = () => {
+    this.isEndRepeat = false;
+  }
   // Date Time picker function
   @action
   onChangeStartTime = (event: Event, selectedDate?: Date) => {

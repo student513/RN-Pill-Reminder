@@ -54,7 +54,10 @@ class SetDayTimeStore {
       this.isEndRepeat = false;
     }
   };
-
+  @action
+  offEndRepeat = () => {
+    this.isEndRepeat = false;
+  }
   // Date Time picker function
   @action
   onChangeTime = (event: Event, selectedDate?: Date) => {
