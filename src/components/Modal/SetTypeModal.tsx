@@ -39,8 +39,6 @@ export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
             underlayColor={COLOR.TOUCH_GREEN}
             onPress={() => {
               controlModalStore.toggleSetTypeModalVisible(); //this modal off
-              setCycleStore.parseDateToString();
-              setCycleStore.updateTime();
               props.navigation.navigate('Details', {pillType: 'Cycle'});
             }}>
             <View style={{display: 'flex', flexDirection: 'row'}}>
@@ -62,8 +60,6 @@ export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
             underlayColor={COLOR.TOUCH_GREEN}
             onPress={() => {
               controlModalStore.toggleSetTypeModalVisible();
-              setDayTimeStore.parseDateToString();
-              setDayTimeStore.updateTime();
               props.navigation.navigate('Details', {pillType: 'Select'});
             }}>
             <View style={{display: 'flex', flexDirection: 'row'}}>

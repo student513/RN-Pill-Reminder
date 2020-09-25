@@ -26,6 +26,22 @@ class SetCycleStore {
   @observable mode: string = 'date';
 
   @action
+  initCycle = () => {
+    this.Name = '';
+    this.Dosage = '';
+    this.StartTime = new Date();
+    this.EndTime = new Date();
+    this.isEndRepeat = false;
+    this.EndRepeat = '';
+    this.isRepeat = false;
+    this.frequency = 'Daily';
+    this.every = 1;
+    this.Bedtime = false;
+    this.Critical = false;
+    this.parseDateToString();
+  }
+
+  @action
   onChangeName = (Name: string) => {
     this.Name = Name;
   };

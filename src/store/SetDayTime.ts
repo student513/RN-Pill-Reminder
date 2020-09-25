@@ -23,6 +23,18 @@ class SetDayTimeStore {
   @observable mode: string = 'date';
 
   @action
+  initDayTime = () => {
+    this.Name = '';
+    this.Dosage = '';
+    this.Time = new Date();
+    this.EndTime = new Date();
+    this.isEndRepeat = false;
+    this.EndRepeat = '';
+    this.Critical = false;
+    this.parseDateToString();
+  }
+
+  @action
   onChangeName = (Name: string) => {
     this.Name = Name;
   };

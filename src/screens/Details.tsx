@@ -4,6 +4,7 @@ import {View} from 'react-native';
 import {observer} from 'mobx-react';
 import SetCycleView from './SetCycleView';
 import SetDayTimeView from './SetDayTimeView';
+import {setCycleStore, setDayTimeStore} from 'store';
 interface IProps {
   navigation: any;
   route: any;
@@ -14,6 +15,12 @@ class Detail extends Component<IProps, {}> {
   constructor(props: any) {
     super(props);
   }
+
+  componentDidMount = () => {
+    this.props.route.params.pillType === 'Cycle'
+      ? setCycleStore.initCycle()
+      : setDayTimeStore.initDayTime();
+  };
 
   render() {
     return (
