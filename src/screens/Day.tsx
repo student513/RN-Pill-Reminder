@@ -7,40 +7,44 @@ import {MyTableButton} from 'components/MyButton';
 const {height} = Dimensions.get('window');
 
 const Days = [
-  {id: 0, key: 'Mon', title: 'Monday', selected: false},
-  {id: 1, key: 'Tue', title: 'Tuesday', selected: false},
-  {id: 2, key: 'Wed', title: 'Wednesday', selected: false},
-  {id: 3, key: 'Thur', title: 'Thursday', selected: false},
-  {id: 4, key: 'Fri', title: 'Friday', selected: false},
-  {id: 5, key: 'Sat', title: 'Saturday', selected: true},
-  {id: 6, key: 'Sun', title: 'Sunday', selected: false},
+  {id: 0, key: 'Mon', title: 'Monday'},
+  {id: 1, key: 'Tue', title: 'Tuesday'},
+  {id: 2, key: 'Wed', title: 'Wednesday'},
+  {id: 3, key: 'Thur', title: 'Thursday'},
+  {id: 4, key: 'Fri', title: 'Friday'},
+  {id: 5, key: 'Sat', title: 'Saturday'},
+  {id: 6, key: 'Sun', title: 'Sunday'},
 ];
 
 interface IState {
-  Week: object[];
+  Selected: boolean[];
 }
 
 @observer
-class Day extends Component<{}, {}> {
+class Day extends Component<{}, IState> {
   constructor(props: any) {
     super(props);
     this.state = {
-      Week: [],
+      Selected: Array(Days.length).fill(false),
     };
   }
+
+  toggleSelected = (id: number) => {
+    const select = this.state.Selected;
+    select[id] = select[id] ? false : true;
+    this.setState({Selected: select});
+  };
+
   render() {
+    const {Selected} = this.state;
     return (
       <View style={styles.content}>
         {Days.map((day) => (
           <MyTableButton
             title={day.title}
-            style={{
-              borderTopLeftRadius: 6,
-              borderTopRightRadius: 6,
-              marginBottom: 1,
-            }}
-            checked={day.selected}
-            onPress={() => {}}
+            style={{marginBottom: 1}}
+            checked={Selected[day.id]}
+            onPress={() => this.toggleSelected(day.id)}
           />
         ))}
       </View>
@@ -58,16 +62,13 @@ const styles = StyleSheet.create({
     height: height * 0.9,
     padding: 15,
   },
-  modalHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 35,
+  monday: {
+    borderTopLeftRadius: 6,
+    borderTopRightRadius: 6,
   },
-  notice: {
-    fontSize: 11,
-    color: '#5B5B5B',
-    marginBottom: 25,
-    paddingLeft: 2,
+  sunday: {
+    borderBottomLeftRadius: 6,
+    borderBottomRightRadius: 6,
   },
 });
 
