@@ -96,6 +96,7 @@ export class MyToggleButton extends PureComponent<MyToggleButtonProps> {
     );
   }
 }
+
 const styles = StyleSheet.create({
   buttonContainer: {
     backgroundColor: '#F3F3F3',

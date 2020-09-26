@@ -23,3 +23,15 @@ export interface CyclePillInfo {
   Bedtime: boolean;
   Critical: boolean;
 }
+
+export interface DayTimePillInfo {
+  Name: string;
+  Dosage: string;
+  Time: Date;
+  EndTime: Date;
+  ParsedTime: string;
+  isEndRepeat: boolean;
+  EndRepeat: string;
+  ParsedEndTime: string;
+  Critical: boolean;
+}

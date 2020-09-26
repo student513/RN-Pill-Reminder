@@ -5,7 +5,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {COLOR} from 'helper/helper';
 import Modal from 'react-native-modal';
 import {controlModalStore} from 'store/ControlModal';
-import {setCycleStore, setDayTimeStore} from 'store';
 import {observer} from 'mobx-react';
 
 const {width} = Dimensions.get('window');

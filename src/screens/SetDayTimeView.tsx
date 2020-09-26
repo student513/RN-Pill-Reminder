@@ -1,11 +1,18 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {View, StyleSheet, Dimensions, ScrollView} from 'react-native';
-import {MyTextInput} from '../components/MyText';
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
+import {MyText, MyTextInput} from '../components/MyText';
 import {observer} from 'mobx-react';
 import {setDayTimeStore} from 'store/SetDayTime';
 import {MyTableButton, MyToggleButton} from 'components/MyButton';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {pillListStore} from 'store';
 
 const {height} = Dimensions.get('window');
 
@@ -14,6 +21,10 @@ class SetDayTimeView extends Component<{navigation: any}, {}> {
   constructor(props: any) {
     super(props);
   }
+  pushCardList = () => {
+    setDayTimeStore.fillInfo();
+    pillListStore.CardList.push(setDayTimeStore.PillCard);
+  };
   render() {
     return (
       <ScrollView style={styles.content}>
@@ -25,7 +36,7 @@ class SetDayTimeView extends Component<{navigation: any}, {}> {
         <MyTextInput
           label="Dosage"
           placeholder="e.g. 2 Tablets, 30 mL"
-          onChangeText={(text: string) => setDayTimeStore.onChangeName(text)}
+          onChangeText={(text: string) => setDayTimeStore.onChangeDosage(text)}
         />
         <MyTableButton
           icon="sync-circle-outline"
@@ -85,6 +96,15 @@ class SetDayTimeView extends Component<{navigation: any}, {}> {
           value={setDayTimeStore.Critical}
           description="Critical alerts allows the app to ring the notification sound even when your phone is in silent or do not disturb mode."
         />
+        <TouchableOpacity
+          style={{marginBottom: 30}}
+          onPress={() => {
+            this.pushCardList();
+            this.props.navigation.goBack();
+            console.log(pillListStore.CardList);
+          }}>
+          <MyText>Done</MyText>
+        </TouchableOpacity>
       </ScrollView>
     );
   }

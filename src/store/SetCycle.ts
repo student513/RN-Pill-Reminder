@@ -63,6 +63,10 @@ class SetCycleStore {
     this.Name = Name;
   };
   @action
+  onChangeDosage = (Dosage: string) => {
+    this.Dosage = Dosage;
+  };
+  @action
   toggleRepeat = () => {
     if (!this.isRepeat) {
       this.isRepeat = true;

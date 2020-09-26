@@ -4,18 +4,18 @@ import {SetTypeModal} from 'components/Modal';
 import {MyText} from 'components/MyText';
 import {observer} from 'mobx-react';
 import {controlModalStore} from 'store/ControlModal';
+import {MyCard} from 'components/MyCard';
+import {pillListStore} from 'store';
 
 interface IProps {
   navigation: any;
 }
-interface IState {}
 
 @observer
-class Reminder extends Component<IProps, IState> {
+class Reminder extends Component<IProps, {}> {
   constructor(props: any) {
     super(props);
   }
-
   render() {
     return (
       <View style={styles.container}>
@@ -25,6 +25,11 @@ class Reminder extends Component<IProps, IState> {
           }}>
           <MyText style={{fontSize: 30}}>Add</MyText>
         </TouchableOpacity>
+
+        {pillListStore.CardList.map((pill) => (
+          <MyCard name={pill.Name} dosage={pill.Dosage} />
+        ))}
+
         <SetTypeModal
           isVisible={controlModalStore.setTypeModalVisible}
           onSwipeComplete={() => controlModalStore.toggleSetTypeModalVisible()}

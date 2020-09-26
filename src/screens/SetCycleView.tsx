@@ -12,7 +12,7 @@ import {observer} from 'mobx-react';
 import {setCycleStore} from 'store/SetCycle';
 import {MyTableButton, MyToggleButton} from 'components/MyButton';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { pillListStore } from 'store';
+import {pillListStore} from 'store';
 
 const {height} = Dimensions.get('window');
 
@@ -38,7 +38,7 @@ class SetCycleView extends Component<{}, {}> {
         <MyTextInput
           label="Dosage"
           placeholder="e.g. 2 Tablets, 30 mL"
-          onChangeText={(text: string) => setCycleStore.onChangeName(text)}
+          onChangeText={(text: string) => setCycleStore.onChangeDosage(text)}
         />
         <MyTableButton
           icon="time-outline"

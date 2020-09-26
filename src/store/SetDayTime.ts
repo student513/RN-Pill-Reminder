@@ -2,6 +2,7 @@ import {observable, action} from 'mobx';
 import {createContext} from 'react';
 import {Platform} from 'react-native';
 import moment from 'moment';
+import {DayTimePillInfo} from 'helper';
 
 class SetDayTimeStore {
   @observable Name: string = '';
@@ -13,9 +14,22 @@ class SetDayTimeStore {
   @observable EndRepeat: string = '';
   @observable ParsedEndTime: string = '';
   @observable Critical: boolean = false;
+
   @observable Timing: string = '';
   @observable NextTime: Date = new Date();
   @observable Week: object[] = [];
+
+  @observable PillCard: DayTimePillInfo = {
+    Name: '',
+    Dosage: '',
+    Time: new Date(),
+    EndTime: new Date(),
+    ParsedTime: '',
+    isEndRepeat: false,
+    EndRepeat: '',
+    ParsedEndTime: '',
+    Critical: false,
+  };
 
   // DateTime Picker variable
   @observable showTime: boolean = false;
@@ -32,11 +46,14 @@ class SetDayTimeStore {
     this.EndRepeat = '';
     this.Critical = false;
     this.parseDateToString();
-  }
-
+  };
   @action
   onChangeName = (Name: string) => {
     this.Name = Name;
+  };
+  @action
+  onChangeDosage = (Dosage: string) => {
+    this.Dosage = Dosage;
   };
   @action
   toggleCritical = () => {
@@ -57,7 +74,19 @@ class SetDayTimeStore {
   @action
   offEndRepeat = () => {
     this.isEndRepeat = false;
-  }
+  };
+  @action
+  fillInfo = () => {
+    this.PillCard.Name = this.Name;
+    this.PillCard.Dosage = this.Dosage;
+    this.PillCard.Time = this.Time;
+    this.PillCard.EndTime = this.EndTime;
+    this.PillCard.ParsedTime = this.ParsedTime;
+    this.PillCard.isEndRepeat = this.isEndRepeat;
+    this.PillCard.EndRepeat = this.EndRepeat;
+    this.PillCard.ParsedEndTime = this.ParsedEndTime;
+    this.PillCard.Critical = this.Critical;
+  };
   // Date Time picker function
   @action
   onChangeTime = (event: Event, selectedDate?: Date) => {
