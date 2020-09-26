@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import {COLOR, POSITION} from 'helper';
 import {MyText} from 'components/MyText';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -21,6 +20,9 @@ export class MyCard extends PureComponent<IProps, {checked: boolean}> {
     this.setState((prevState) => ({
       checked: !prevState.checked,
     }));
+    setTimeout(() => {
+      this.setState({checked: false});
+    }, 2000);
   };
   render() {
     return (
@@ -28,11 +30,7 @@ export class MyCard extends PureComponent<IProps, {checked: boolean}> {
         <TouchableOpacity style={styles.card}>
           <TouchableOpacity onPress={() => this.toggleCheck()}>
             {this.state.checked ? (
-              <Icon
-                name="checkmark-circle-outline"
-                size={27}
-                style={styles.check}
-              />
+              <Icon name="checkmark-circle" size={27} style={styles.check} />
             ) : (
               <Icon name="ellipse-outline" size={27} style={styles.check} />
             )}
@@ -79,6 +77,7 @@ const styles = StyleSheet.create({
     marginBottom: 32,
     marginLeft: 20,
     marginRight: 25,
+    color: '#13A45B',
   },
   name: {
     marginTop: 15,
