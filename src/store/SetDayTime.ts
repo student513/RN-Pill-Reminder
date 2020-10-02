@@ -75,18 +75,6 @@ class SetDayTimeStore {
   offEndRepeat = () => {
     this.isEndRepeat = false;
   };
-  @action
-  fillInfo = () => {
-    this.PillCard.Name = this.Name;
-    this.PillCard.Dosage = this.Dosage;
-    this.PillCard.Time = this.Time;
-    this.PillCard.EndTime = this.EndTime;
-    this.PillCard.ParsedTime = this.ParsedTime;
-    this.PillCard.isEndRepeat = this.isEndRepeat;
-    this.PillCard.EndRepeat = this.EndRepeat;
-    this.PillCard.ParsedEndTime = this.ParsedEndTime;
-    this.PillCard.Critical = this.Critical;
-  };
   // Date Time picker function
   @action
   onChangeTime = (event: Event, selectedDate?: Date) => {

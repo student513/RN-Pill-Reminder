@@ -22,8 +22,16 @@ class SetDayTimeView extends Component<{navigation: any}, {}> {
     super(props);
   }
   pushCardList = () => {
-    setDayTimeStore.fillInfo();
-    pillListStore.CardList.push(setDayTimeStore.PillCard);
+    pillListStore.CardList.push({
+      Name: setDayTimeStore.Name,
+      Dosage: setDayTimeStore.Dosage,
+      Time: setDayTimeStore.Time,
+      EndTime: setDayTimeStore.EndTime,
+      isEndRepeat: setDayTimeStore.isEndRepeat,
+      EndRepeat: setDayTimeStore.EndRepeat,
+      ParsedEndTime: setDayTimeStore.ParsedEndTime,
+      Critical: setDayTimeStore.Critical,
+    });
   };
   render() {
     return (

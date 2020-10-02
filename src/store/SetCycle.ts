@@ -102,22 +102,6 @@ class SetCycleStore {
   offEndRepeat = () => {
     this.isEndRepeat = false;
   };
-  @action
-  fillInfo = () => {
-    this.PillCard.Name = this.Name;
-    this.PillCard.Dosage = this.Dosage;
-    this.PillCard.StartTime = this.StartTime;
-    this.PillCard.EndTime = this.EndTime;
-    this.PillCard.ParsedStartTime = this.ParsedStartTime;
-    this.PillCard.isEndRepeat = this.isEndRepeat;
-    this.PillCard.EndRepeat = this.EndRepeat;
-    this.PillCard.ParsedEndTime = this.ParsedEndTime;
-    this.PillCard.isRepeat = this.isRepeat;
-    this.PillCard.frequency = this.frequency;
-    this.PillCard.every = this.every;
-    this.PillCard.Bedtime = this.Bedtime;
-    this.PillCard.Critical = this.Critical;
-  };
   // Date Time picker function
   @action
   onChangeStartTime = (event: Event, selectedDate?: Date) => {

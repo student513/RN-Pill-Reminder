@@ -23,8 +23,21 @@ class SetCycleView extends Component<{}, {}> {
   }
 
   pushCardList = () => {
-    setCycleStore.fillInfo();
-    pillListStore.CardList.push(setCycleStore.PillCard);
+    pillListStore.CardList.push({
+      Name: setCycleStore.Name,
+      Dosage: setCycleStore.Dosage,
+      StartTime: setCycleStore.StartTime,
+      EndTime: setCycleStore.EndTime,
+      ParsedStartTime: setCycleStore.ParsedStartTime,
+      isEndRepeat: setCycleStore.isEndRepeat,
+      EndRepeat: setCycleStore.EndRepeat,
+      ParsedEndTime: setCycleStore.ParsedEndTime,
+      isRepeat: setCycleStore.isRepeat,
+      frequency: setCycleStore.frequency,
+      every: setCycleStore.every,
+      Bedtime: setCycleStore.Bedtime,
+      Critical: setCycleStore.Critical,
+    });
   };
 
   render() {
