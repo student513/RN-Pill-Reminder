@@ -1,7 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {
-  View,
   StyleSheet,
   Dimensions,
   ScrollView,
@@ -23,7 +22,10 @@ class SetDayTimeView extends Component<{navigation: any}, {}> {
     super(props);
   }
   pushCardList = () => {
+    pillListStore.updatePillKey();
     pillListStore.CardList.push({
+      key: pillListStore.PillKey,
+      PillType: 'DayTime',
       Name: setDayTimeStore.Name,
       Dosage: setDayTimeStore.Dosage,
       Time: setDayTimeStore.Time,
@@ -34,6 +36,7 @@ class SetDayTimeView extends Component<{navigation: any}, {}> {
       Critical: setDayTimeStore.Critical,
     });
   };
+
   render() {
     return (
       <ScrollView style={styles.content}>

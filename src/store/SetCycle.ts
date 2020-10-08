@@ -55,6 +55,8 @@ class SetCycleStore {
     this.every = 1;
     this.Bedtime = false;
     this.Critical = false;
+    this.showDate = false;
+    this.showTime = false;
     this.parseDateToString();
   };
 

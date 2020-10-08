@@ -24,7 +24,10 @@ class SetCycleView extends Component<{}, {}> {
   }
 
   pushCardList = () => {
+    pillListStore.updatePillKey();
     pillListStore.CardList.push({
+      key: pillListStore.PillKey,
+      PillType: 'Cycle',
       Name: setCycleStore.Name,
       Dosage: setCycleStore.Dosage,
       StartTime: setCycleStore.StartTime,
