@@ -7,6 +7,7 @@ import {
   Switch,
   TouchableOpacityProps,
   SwitchProps,
+  Platform,
 } from 'react-native';
 import {COLOR, POSITION} from 'helper';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -32,11 +33,7 @@ export class MyTableButton extends PureComponent<MyTableButtonProps> {
       <TouchableOpacity onPress={() => this.props.onPress()}>
         <View style={[styles.buttonContainer, this.props.style]}>
           {this.props.icon ? (
-            <Icon
-              name={this.props.icon}
-              size={25}
-              style={{paddingTop: 20, paddingRight: 5}}
-            />
+            <Icon name={this.props.icon} size={25} style={styles.icon} />
           ) : (
             <View />
           )}
@@ -72,19 +69,10 @@ export class MyToggleButton extends PureComponent<MyToggleButtonProps> {
     return (
       <View>
         <View style={[styles.buttonContainer, this.props.style]}>
-          <Icon
-            name={this.props.icon}
-            size={25}
-            style={{paddingTop: 20, paddingRight: 5}}
-          />
+          <Icon name={this.props.icon} size={25} style={styles.icon} />
           <MyText style={{paddingVertical: 17}}>{this.props.title}</MyText>
-          <View
-            style={{
-              position: 'absolute',
-              right: POSITION.SWITCH,
-              paddingTop: 20,
-            }}>
-            <Switch ios_backgroundColor={COLOR.FONT_GREEN} {...this.props} />
+          <View style={styles.switch}>
+            <Switch {...this.props} />
           </View>
         </View>
         {this.props.description ? (
@@ -105,10 +93,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   remark: {
+    ...Platform.select({
+      ios: {
+        paddingTop: 17,
+        fontSize: 17,
+      },
+      android: {
+        fontSize: 10,
+        paddingTop: 25,
+      },
+    }),
     position: 'absolute',
     right: 40,
-    fontSize: 10,
-    paddingTop: 25,
     color: COLOR.FONT_GREEN,
   },
   remarkWithoutChevron: {
@@ -118,9 +114,27 @@ const styles = StyleSheet.create({
     paddingTop: 25,
     color: COLOR.FONT_GREEN,
   },
+  icon: {
+    ...Platform.select({
+      ios: {
+        paddingTop: 15,
+      },
+      android: {
+        paddingTop: 20,
+      },
+    }),
+    paddingRight: 5,
+  },
   chevron: {
+    ...Platform.select({
+      ios: {
+        paddingTop: 15,
+      },
+      android: {
+        paddingTop: 20,
+      },
+    }),
     color: COLOR.FONT_GREEN,
-    paddingTop: 20,
     position: 'absolute',
     right: POSITION.CHEVRON,
   },
@@ -129,5 +143,17 @@ const styles = StyleSheet.create({
     color: '#5B5B5B',
     marginBottom: 25,
     paddingLeft: 2,
+  },
+  switch: {
+    ...Platform.select({
+      ios: {
+        paddingTop: 13,
+      },
+      android: {
+        paddingTop: 20,
+      },
+    }),
+    position: 'absolute',
+    right: POSITION.SWITCH,
   },
 });

@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, TouchableHighlight, Dimensions} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TouchableHighlight,
+  Dimensions,
+  Platform,
+} from 'react-native';
 import {MyText} from 'components/MyText';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLOR} from 'helper/helper';
@@ -102,12 +108,26 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
   },
   roundIcon: {
-    paddingTop: 19,
+    ...Platform.select({
+      ios: {
+        paddingTop: 15,
+      },
+      android: {
+        paddingTop: 19,
+      },
+    }),
     paddingLeft: 20,
   },
   chevron: {
+    ...Platform.select({
+      ios: {
+        paddingTop: 15,
+      },
+      android: {
+        paddingTop: 20,
+      },
+    }),
     color: COLOR.FONT_GREEN,
-    paddingTop: 20,
     position: 'absolute',
     left: width - 40,
   },

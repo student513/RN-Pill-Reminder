@@ -86,6 +86,8 @@ const styles = StyleSheet.create({
         fontFamily: 'ProximaNova-Regular',
         fontSize: 18,
         paddingBottom: 10,
+        paddingLeft: 5,
+        paddingTop: 5,
       },
       android: {
         fontFamily: 'ProximaNova-Regular',
