@@ -6,6 +6,7 @@ import {
   Dimensions,
   ScrollView,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import {MyText, MyTextInput} from '../components/MyText';
 import {observer} from 'mobx-react';
@@ -69,9 +70,9 @@ class SetCycleView extends Component<{}, {}> {
         {setCycleStore.showTime && (
           <DateTimePicker
             value={setCycleStore.StartTime}
-            mode={setCycleStore.mode}
+            mode={Platform.OS === 'android' ? setCycleStore.mode : 'datetime'}
             is24Hour={true}
-            display="default"
+            display={Platform.OS === 'ios' ? 'inline' : 'default'}
             onChange={setCycleStore.onChangeStartTime}
           />
         )}

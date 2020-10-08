@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {View, StyleSheet, Dimensions} from 'react-native';
+import {View, StyleSheet, Dimensions, Platform} from 'react-native';
 import {MyToggleButton, MyTableButton} from 'components/MyButton';
 import {setCycleStore} from 'store/SetCycle';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -51,9 +51,11 @@ class EndRepeat extends Component<{route: any}, {}> {
             {setCycleStore.showDate && (
               <DateTimePicker
                 value={setCycleStore.EndTime}
-                mode={setCycleStore.mode}
+                mode={
+                  Platform.OS === 'android' ? setCycleStore.mode : 'datetime'
+                }
                 is24Hour={true}
-                display="default"
+                display={Platform.OS === 'ios' ? 'inline' : 'default'}
                 onChange={setCycleStore.onChangeEndTime}
               />
             )}
@@ -75,7 +77,7 @@ class EndRepeat extends Component<{route: any}, {}> {
                 value={setDayTimeStore.EndTime}
                 mode={setDayTimeStore.mode}
                 is24Hour={true}
-                display="default"
+                display={Platform.OS === 'ios' ? 'inline' : 'default'}
                 onChange={setDayTimeStore.onChangeEndTime}
               />
             )}

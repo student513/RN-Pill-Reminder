@@ -45,6 +45,8 @@ class SetDayTimeStore {
     this.isEndRepeat = false;
     this.EndRepeat = '';
     this.Critical = false;
+    this.showTime = false;
+    this.showDate = false;
     this.parseDateToString();
   };
   @action
@@ -94,12 +96,20 @@ class SetDayTimeStore {
   };
   @action
   showDatepicker = () => {
-    this.showDate = true;
+    if (this.showDate) {
+      this.showDate = false;
+    } else {
+      this.showDate = true;
+    }
     this.mode = 'date';
   };
   @action
   showTimepicker = () => {
-    this.showTime = true;
+    if (this.showTime) {
+      this.showTime = false;
+    } else {
+      this.showTime = true;
+    }
     this.mode = 'time';
   };
   @action

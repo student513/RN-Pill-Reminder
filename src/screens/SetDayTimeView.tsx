@@ -13,6 +13,7 @@ import {setDayTimeStore} from 'store/SetDayTime';
 import {MyTableButton, MyToggleButton} from 'components/MyButton';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {pillListStore} from 'store';
+import moment from 'moment';
 
 const {height} = Dimensions.get('window');
 
@@ -66,14 +67,14 @@ class SetDayTimeView extends Component<{navigation: any}, {}> {
           onPress={() => {
             setDayTimeStore.showTimepicker();
           }}
-          remark={setDayTimeStore.ParsedTime}
+          remark={moment.parseZone(setDayTimeStore.Time).format('LT')}
         />
         {setDayTimeStore.showTime && (
           <DateTimePicker
             value={setDayTimeStore.Time}
             mode={setDayTimeStore.mode}
             is24Hour={true}
-            display="default"
+            display="spinner"
             onChange={setDayTimeStore.onChangeTime}
           />
         )}

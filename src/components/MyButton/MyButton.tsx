@@ -108,10 +108,18 @@ const styles = StyleSheet.create({
     color: COLOR.FONT_GREEN,
   },
   remarkWithoutChevron: {
+    ...Platform.select({
+      ios: {
+        fontSize: 17,
+        paddingTop: 17,
+      },
+      android: {
+        fontSize: 10,
+        paddingTop: 25,
+      },
+    }),
     position: 'absolute',
     right: 20,
-    fontSize: 10,
-    paddingTop: 25,
     color: COLOR.FONT_GREEN,
   },
   icon: {
@@ -139,7 +147,14 @@ const styles = StyleSheet.create({
     right: POSITION.CHEVRON,
   },
   notice: {
-    fontSize: 11,
+    ...Platform.select({
+      ios: {
+        fontSize: 14,
+      },
+      android: {
+        fontSize: 11,
+      },
+    }),
     color: '#5B5B5B',
     marginBottom: 25,
     paddingLeft: 2,

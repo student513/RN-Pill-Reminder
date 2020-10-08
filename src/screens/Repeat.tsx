@@ -1,10 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {View, StyleSheet, Dimensions} from 'react-native';
+import {View, StyleSheet, Dimensions, Platform} from 'react-native';
 import {MyToggleButton, MyTableButton} from 'components/MyButton';
 import {setCycleStore} from 'store/SetCycle';
 import {Picker} from '@react-native-community/picker';
-import {MyTextInput} from 'components/MyText';
 import {observer} from 'mobx-react';
 
 const {height, width} = Dimensions.get('window');
@@ -71,11 +70,10 @@ class Repeat extends Component<{}, IState> {
               onPress={() => this.toggleFrequency()}
               remark={setCycleStore.frequency}
             />
-            {/* IOS picker에 대한 조건 추가 */}
             {showFrequency ? (
               <Picker
                 selectedValue={setCycleStore.frequency}
-                style={{height: 50, width: width - 15}}
+                style={Platform.OS === 'android' ? styles.androidPicker : null}
                 onValueChange={(itemValue) => {
                   setCycleStore.setFrequency(itemValue);
                   this.setState({showFrequency: false});
@@ -138,6 +136,10 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(0, 0, 0, 0.1)',
     height: height * 0.9,
     padding: 15,
+  },
+  androidPicker: {
+    height: 50,
+    width: width - 15,
   },
 });
 

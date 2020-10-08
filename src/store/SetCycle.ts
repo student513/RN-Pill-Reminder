@@ -123,12 +123,20 @@ class SetCycleStore {
   };
   @action
   showDatepicker = () => {
-    this.showDate = true;
+    if (this.showDate) {
+      this.showDate = false;
+    } else {
+      this.showDate = true;
+    }
     this.mode = 'date';
   };
   @action
   showTimepicker = () => {
-    this.showTime = true;
+    if (this.showTime) {
+      this.showTime = false;
+    } else {
+      this.showTime = true;
+    }
     this.mode = 'time';
   };
   @action
