@@ -50,27 +50,25 @@ class Reminder extends Component<IProps, {today: string}> {
             {this.state.today}
           </MyText>
         </View>
-        <View>
-          {pillListStore.CardList.length > 0 ? (
-            pillListStore.CardList.map((pill) => (
-              <MyCard name={pill.Name} dosage={pill.Dosage} />
-            ))
-          ) : (
-            <>
-              <View style={{alignItems: 'center'}}>
-                <MyText style={styles.guideComment}>
-                  Touch the + button and start.
-                </MyText>
-              </View>
-              <View style={{alignItems: 'center'}}>
-                <Image
-                  source={{uri: 'BackgroundImg'}}
-                  style={styles.backgroundImage}
-                />
-              </View>
-            </>
-          )}
-        </View>
+        {pillListStore.CardList.length > 0 ? (
+          pillListStore.CardList.map((pill) => (
+            <MyCard name={pill.Name} dosage={pill.Dosage} />
+          ))
+        ) : (
+          <>
+            <View style={{alignItems: 'center'}}>
+              <MyText style={styles.guideComment}>
+                Touch the + button and start.
+              </MyText>
+            </View>
+            <View style={{alignItems: 'center'}}>
+              <Image
+                source={{uri: 'BackgroundImg'}}
+                style={styles.backgroundImage}
+              />
+            </View>
+          </>
+        )}
         <SetTypeModal
           isVisible={controlModalStore.setTypeModalVisible}
           onSwipeComplete={() => controlModalStore.toggleSetTypeModalVisible()}
