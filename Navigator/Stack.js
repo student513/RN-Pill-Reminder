@@ -11,7 +11,7 @@ const Stack = createStackNavigator();
 export default () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Tab" component={Tab} />
+      <Stack.Screen name="Tab" component={Tab} options={{headerShown: false}} />
       <Stack.Screen name="Details" component={Details} />
       <Stack.Screen name="Repeat" component={Repeat} />
       <Stack.Screen name="EndRepeat" component={EndRepeat} />

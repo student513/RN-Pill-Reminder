@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Platform} from 'react-native';
 import {MyText} from 'components/MyText';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -35,19 +35,14 @@ export class MyCard extends PureComponent<IProps, {checked: boolean}> {
               <Icon name="ellipse-outline" size={27} style={styles.check} />
             )}
           </TouchableOpacity>
-          <View style={styles.name}>
-            <MyText style={{fontSize: 17, fontFamily: 'ProximaNova-Bold'}}>
-              {this.props.name}
-            </MyText>
+          <View style={styles.nameContainer}>
+            <MyText style={styles.name}>{this.props.name}</MyText>
           </View>
-          <View style={styles.dosage}>
-            <MyText
-              style={{fontSize: 12, paddingVertical: 1, paddingHorizontal: 5}}>
-              {this.props.dosage}
-            </MyText>
+          <View style={styles.dosageContainer}>
+            <MyText style={styles.dosage}>{this.props.dosage}</MyText>
           </View>
-          <View style={styles.timing}>
-            <MyText style={{fontSize: 12}}>1 hours ago</MyText>
+          <View style={styles.timingContainer}>
+            <MyText style={styles.timing}>1 hours ago</MyText>
           </View>
         </TouchableOpacity>
       </View>
@@ -79,10 +74,21 @@ const styles = StyleSheet.create({
     marginRight: 25,
     color: '#13A45B',
   },
-  name: {
+  nameContainer: {
     marginTop: 15,
   },
-  dosage: {
+  name: {
+    ...Platform.select({
+      ios: {
+        fontSize: 23,
+      },
+      android: {
+        fontSize: 17,
+      },
+    }),
+    fontFamily: 'ProximaNova-Bold',
+  },
+  dosageContainer: {
     backgroundColor: '#fff',
     marginBottom: 40,
     marginTop: 15,
@@ -90,15 +96,38 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 15,
   },
+  dosage: {
+    ...Platform.select({
+      ios: {
+        fontSize: 15,
+      },
+      android: {
+        fontSize: 12,
+      },
+    }),
+    paddingVertical: 1,
+    paddingHorizontal: 5,
+  },
   card: {
     backgroundColor: '#F0F9F0',
     borderRadius: 15,
     flexDirection: 'row',
   },
-  timing: {
+  timingContainer: {
     position: 'absolute',
     marginTop: 45,
     left: 75,
+  },
+  timing: {
+    ...Platform.select({
+      ios: {
+        fontSize: 15,
+      },
+      android: {
+        fontSize: 12,
+      },
+    }),
+    color: '#5D5D5D',
   },
   before: {},
   now: {},
