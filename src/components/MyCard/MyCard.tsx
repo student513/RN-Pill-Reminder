@@ -1,7 +1,9 @@
 import React, {PureComponent} from 'react';
-import {StyleSheet, View, TouchableOpacity, Platform} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Platform, Animated} from 'react-native';
 import {MyText} from 'components/MyText';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import {RectButton} from 'react-native-gesture-handler';
 
 interface IProps {
   name: string;
@@ -10,12 +12,26 @@ interface IProps {
 }
 
 export class MyCard extends PureComponent<IProps, {checked: boolean}> {
+  private swipeableRow: React.RefObject<HTMLInputElement>;
   constructor(props: any) {
     super(props);
+    this.swipeableRow = React.createRef();
     this.state = {
       checked: false,
     };
   }
+  RightAction = () => {
+    const pressHandler = () => {
+      this.close();
+    };
+    return (
+      <Animated.View>
+        <RectButton style={styles.skipButton} onPress={pressHandler}>
+          <MyText style={styles.font}>Skip</MyText>
+        </RectButton>
+      </Animated.View>
+    );
+  };
   toggleCheck = () => {
     this.setState((prevState) => ({
       checked: !prevState.checked,
@@ -24,28 +40,36 @@ export class MyCard extends PureComponent<IProps, {checked: boolean}> {
       this.setState({checked: false});
     }, 2000);
   };
+  updateRef = (ref: any) => {
+    this.swipeableRow = ref;
+  };
+  close = () => {
+    this.swipeableRow.close();
+  };
   render() {
     return (
-      <View style={styles.container}>
-        <TouchableOpacity style={styles.card}>
-          <TouchableOpacity onPress={() => this.toggleCheck()}>
-            {this.state.checked ? (
-              <Icon name="checkmark-circle" size={27} style={styles.check} />
-            ) : (
-              <Icon name="ellipse-outline" size={27} style={styles.check} />
-            )}
+      <Swipeable renderRightActions={this.RightAction} ref={this.updateRef}>
+        <View style={styles.container}>
+          <TouchableOpacity style={styles.card}>
+            <TouchableOpacity onPress={() => this.toggleCheck()}>
+              {this.state.checked ? (
+                <Icon name="checkmark-circle" size={27} style={styles.check} />
+              ) : (
+                <Icon name="ellipse-outline" size={27} style={styles.check} />
+              )}
+            </TouchableOpacity>
+            <View style={styles.nameContainer}>
+              <MyText style={styles.name}>{this.props.name}</MyText>
+            </View>
+            <View style={styles.dosageContainer}>
+              <MyText style={styles.dosage}>{this.props.dosage}</MyText>
+            </View>
+            <View style={styles.timingContainer}>
+              <MyText style={styles.timing}>1 hours ago</MyText>
+            </View>
           </TouchableOpacity>
-          <View style={styles.nameContainer}>
-            <MyText style={styles.name}>{this.props.name}</MyText>
-          </View>
-          <View style={styles.dosageContainer}>
-            <MyText style={styles.dosage}>{this.props.dosage}</MyText>
-          </View>
-          <View style={styles.timingContainer}>
-            <MyText style={styles.timing}>1 hours ago</MyText>
-          </View>
-        </TouchableOpacity>
-      </View>
+        </View>
+      </Swipeable>
     );
   }
 }
@@ -133,5 +157,18 @@ const styles = StyleSheet.create({
   now: {},
   after: {
     backgroundColor: '#931AB7',
+  },
+  skipButton: {
+    borderRadius: 15,
+    backgroundColor: '#B826E3',
+    height: 77,
+    width: 80,
+    marginRight: 15,
+    alignItems: 'center',
+  },
+  font: {
+    fontFamily: 'ProximaNova-Bold',
+    color: '#fff',
+    marginTop: 25,
   },
 });
