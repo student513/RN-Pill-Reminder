@@ -38,7 +38,10 @@ class Reminder extends Component<IProps, {today: string}> {
             onPress={() => {
               controlModalStore.toggleSetTypeModalVisible();
             }}>
-            <MyText style={{fontSize: 30, marginTop: 50}}>Add</MyText>
+            <Image
+              source={{uri: 'Add'}}
+              style={{width: 34, height: 34, marginTop: 50, marginRight: 15}}
+            />
           </TouchableOpacity>
           <MyText style={styles.tabTitle}>Reminder</MyText>
           <MyText
@@ -52,7 +55,7 @@ class Reminder extends Component<IProps, {today: string}> {
         </View>
         {pillListStore.CardList.length > 0 ? (
           pillListStore.CardList.map((pill) => (
-            <MyCard name={pill.Name} dosage={pill.Dosage} />
+            <MyCard name={pill.Name} dosage={pill.Dosage} key={pill.key} />
           ))
         ) : (
           <>
@@ -102,17 +105,17 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontFamily: 'ProximaNova-Bold',
     color: '#393939',
-    marginLeft: 10,
+    marginLeft: 15,
   },
   todayNone: {
     fontSize: 21,
     color: '#5B5B5B',
-    marginLeft: 10,
+    marginLeft: 15,
   },
   today: {
     fontSize: 21,
     color: '#5B5B5B',
-    marginLeft: 10,
+    marginLeft: 15,
     marginBottom: 30,
   },
   backgroundImage: {

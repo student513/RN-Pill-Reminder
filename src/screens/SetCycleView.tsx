@@ -144,7 +144,7 @@ class SetCycleView extends Component<{}, {}> {
           onPress={() => {
             this.pushCardList();
             this.props.navigation.goBack();
-            console.log(pillListStore.CardList);
+            // console.log(pillListStore.CardList);
           }}>
           <MyText>Done</MyText>
         </TouchableOpacity>

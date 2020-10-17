@@ -113,7 +113,7 @@ class SetDayTimeView extends Component<{navigation: any}, {}> {
           onPress={() => {
             this.pushCardList();
             this.props.navigation.goBack();
-            console.log(pillListStore.CardList);
+            // console.log(pillListStore.CardList);
           }}>
           <MyText>Done</MyText>
         </TouchableOpacity>
