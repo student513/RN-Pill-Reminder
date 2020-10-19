@@ -18,11 +18,10 @@ import {pillListStore} from 'store';
 const {height} = Dimensions.get('window');
 
 @observer
-class SetCycleView extends Component<{}, {}> {
+class SetCycleView extends Component<{navigation: object; Key?: number}, {}> {
   constructor(props: any) {
     super(props);
   }
-
   pushCardList = () => {
     pillListStore.updatePillKey();
     pillListStore.CardList.push({

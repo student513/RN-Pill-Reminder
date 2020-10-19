@@ -9,7 +9,7 @@ import {pillListStore} from 'store';
 import moment from 'moment';
 
 interface IProps {
-  navigation: any;
+  navigation: object;
 }
 
 @observer
@@ -55,7 +55,13 @@ class Reminder extends Component<IProps, {today: string}> {
         </View>
         {pillListStore.CardList.length > 0 ? (
           pillListStore.CardList.map((pill) => (
-            <MyCard name={pill.Name} dosage={pill.Dosage} key={pill.key} />
+            <MyCard
+              name={pill.Name}
+              dosage={pill.Dosage}
+              Key={pill.key}
+              PillType={pill.PillType}
+              navigation={this.props.navigation}
+            />
           ))
         ) : (
           <>

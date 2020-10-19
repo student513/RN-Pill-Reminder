@@ -6,8 +6,9 @@ import SetCycleView from './SetCycleView';
 import SetDayTimeView from './SetDayTimeView';
 import {setCycleStore, setDayTimeStore} from 'store';
 interface IProps {
-  navigation: any;
+  navigation: object;
   route: any;
+  Key?: number;
 }
 
 @observer
@@ -26,9 +27,15 @@ class Detail extends Component<IProps, {}> {
     return (
       <View>
         {this.props.route.params.pillType === 'Cycle' ? (
-          <SetCycleView navigation={this.props.navigation} />
+          <SetCycleView
+            Key={this.props.route.params.Key}
+            navigation={this.props.navigation}
+          />
         ) : (
-          <SetDayTimeView navigation={this.props.navigation} />
+          <SetDayTimeView
+            Key={this.props.route.params.Key}
+            navigation={this.props.navigation}
+          />
         )}
       </View>
     );

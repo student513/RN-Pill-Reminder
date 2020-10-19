@@ -19,17 +19,17 @@ class SetDayTimeStore {
   @observable NextTime: Date = new Date();
   @observable Week: object[] = [];
 
-  @observable PillCard: DayTimePillInfo = {
-    Name: '',
-    Dosage: '',
-    Time: new Date(),
-    EndTime: new Date(),
-    ParsedTime: '',
-    isEndRepeat: false,
-    EndRepeat: '',
-    ParsedEndTime: '',
-    Critical: false,
-  };
+  // @observable PillCard: DayTimePillInfo = {
+  //   Name: '',
+  //   Dosage: '',
+  //   Time: new Date(),
+  //   EndTime: new Date(),
+  //   ParsedTime: '',
+  //   isEndRepeat: false,
+  //   EndRepeat: '',
+  //   ParsedEndTime: '',
+  //   Critical: false,
+  // };
 
   // DateTime Picker variable
   @observable showTime: boolean = false;

@@ -22,21 +22,21 @@ class SetCycleStore {
   @observable Timing: string = '';
   @observable NextTime: Date = new Date();
 
-  @observable PillCard: CyclePillInfo = {
-    Name: '',
-    Dosage: '',
-    StartTime: new Date(),
-    EndTime: new Date(),
-    ParsedStartTime: '',
-    isEndRepeat: false,
-    EndRepeat: '',
-    ParsedEndTime: '',
-    isRepeat: false,
-    frequency: '',
-    every: 1,
-    Bedtime: false,
-    Critical: false,
-  };
+  // @observable PillCard: CyclePillInfo = {
+  //   Name: '',
+  //   Dosage: '',
+  //   StartTime: new Date(),
+  //   EndTime: new Date(),
+  //   ParsedStartTime: '',
+  //   isEndRepeat: false,
+  //   EndRepeat: '',
+  //   ParsedEndTime: '',
+  //   isRepeat: false,
+  //   frequency: '',
+  //   every: 1,
+  //   Bedtime: false,
+  //   Critical: false,
+  // };
   // DateTime Picker variable
   @observable showTime: boolean = false;
   @observable showDate: boolean = false;

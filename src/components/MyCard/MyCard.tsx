@@ -1,5 +1,11 @@
 import React, {PureComponent} from 'react';
-import {StyleSheet, View, TouchableOpacity, Platform, Animated} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Platform,
+  Animated,
+} from 'react-native';
 import {MyText} from 'components/MyText';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
@@ -8,7 +14,10 @@ import {RectButton} from 'react-native-gesture-handler';
 interface IProps {
   name: string;
   dosage: string;
-  timing: string;
+  timing?: string;
+  Key: number;
+  navigation: object;
+  PillType: string;
 }
 
 export class MyCard extends PureComponent<IProps, {checked: boolean}> {
@@ -46,11 +55,22 @@ export class MyCard extends PureComponent<IProps, {checked: boolean}> {
   close = () => {
     this.swipeableRow.close();
   };
+  // componentDidMount=()=>{
+  //   // console.slog("dasdfasf");
+  //   console.log(this.props.Key);
+  // }
   render() {
     return (
       <Swipeable renderRightActions={this.RightAction} ref={this.updateRef}>
         <View style={styles.container}>
-          <TouchableOpacity style={styles.card}>
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() => {
+              this.props.navigation.navigate('Details', {
+                pillType: this.props.PillType,
+                Key: this.props.Key,
+              });
+            }}>
             <TouchableOpacity onPress={() => this.toggleCheck()}>
               {this.state.checked ? (
                 <Icon name="checkmark-circle" size={27} style={styles.check} />

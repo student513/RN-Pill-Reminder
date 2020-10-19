@@ -22,7 +22,7 @@ interface SetTypeModalProps {
   backdropOpacity: number;
   onBackdropPress: Function;
   style: any;
-  navigation: any;
+  navigation: object;
 }
 
 @observer

@@ -17,7 +17,7 @@ import moment from 'moment';
 const {height} = Dimensions.get('window');
 
 @observer
-class SetDayTimeView extends Component<{navigation: any}, {}> {
+class SetDayTimeView extends Component<{navigation: object; Key?: number}, {}> {
   constructor(props: any) {
     super(props);
   }
@@ -36,7 +36,14 @@ class SetDayTimeView extends Component<{navigation: any}, {}> {
       Critical: setDayTimeStore.Critical,
     });
   };
-
+  getWillEditCard = (key: number) => {
+    const Card = pillListStore.CardList.find((card) => card.key === key);
+    // console.log(Card);
+  };
+  componentDidMount = () => {
+    console.log(this.props.Key);
+    this.props.Key ? this.getWillEditCard(this.props.Key) : null;
+  };
   render() {
     return (
       <ScrollView style={styles.content}>
