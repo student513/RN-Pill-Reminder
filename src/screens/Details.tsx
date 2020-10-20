@@ -4,7 +4,8 @@ import {View} from 'react-native';
 import {observer} from 'mobx-react';
 import SetCycleView from './SetCycleView';
 import SetDayTimeView from './SetDayTimeView';
-import {setCycleStore, setDayTimeStore} from 'store';
+import {setCycleStore, setDayTimeStore, pillListStore} from 'store';
+
 interface IProps {
   navigation: object;
   route: any;
@@ -16,9 +17,16 @@ class Detail extends Component<IProps, {}> {
   constructor(props: any) {
     super(props);
   }
-
-  componentDidMount = () => {
+  getWillEditCard = (key: number) => {
+    const Card = pillListStore.CardList.find((card) => card.key === key);
     this.props.route.params.pillType === 'Cycle'
+      ? setCycleStore.initCycle(this.props.route.params.Key, Card)
+      : setDayTimeStore.initDayTime(this.props.route.params.Key, Card);
+  };
+  componentDidMount = () => {
+    this.props.route.params.Key
+      ? this.getWillEditCard(this.props.route.params.Key)
+      : this.props.route.params.pillType === 'Cycle'
       ? setCycleStore.initCycle()
       : setDayTimeStore.initDayTime();
   };

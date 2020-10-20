@@ -22,39 +22,23 @@ class SetCycleStore {
   @observable Timing: string = '';
   @observable NextTime: Date = new Date();
 
-  // @observable PillCard: CyclePillInfo = {
-  //   Name: '',
-  //   Dosage: '',
-  //   StartTime: new Date(),
-  //   EndTime: new Date(),
-  //   ParsedStartTime: '',
-  //   isEndRepeat: false,
-  //   EndRepeat: '',
-  //   ParsedEndTime: '',
-  //   isRepeat: false,
-  //   frequency: '',
-  //   every: 1,
-  //   Bedtime: false,
-  //   Critical: false,
-  // };
-  // DateTime Picker variable
   @observable showTime: boolean = false;
   @observable showDate: boolean = false;
   @observable mode: string = 'date';
 
   @action
-  initCycle = () => {
-    this.Name = '';
-    this.Dosage = '';
-    this.StartTime = new Date();
-    this.EndTime = new Date();
-    this.isEndRepeat = false;
-    this.EndRepeat = '';
-    this.isRepeat = false;
-    this.frequency = 'Daily';
-    this.every = 1;
-    this.Bedtime = false;
-    this.Critical = false;
+  initCycle = (Key?: number, Card?: CyclePillInfo) => {
+    Key ? (this.Name = Card?.Name) : (this.Name = '');
+    Key ? (this.Dosage = Card?.Dosage) : (this.Dosage = '');
+    Key ? (this.StartTime = Card?.StartTime) : (this.StartTime = new Date());
+    Key ? (this.EndTime = Card?.EndTime) : (this.EndTime = new Date());
+    Key ? (this.isEndRepeat = Card?.isEndRepeat) : (this.isEndRepeat = false);
+    Key ? (this.EndRepeat = Card?.EndRepeat) : (this.EndRepeat = '');
+    Key ? (this.isRepeat = Card?.isRepeat) : (this.isRepeat = false);
+    Key ? (this.frequency = Card?.frequency) : (this.frequency = 'Daily');
+    Key ? (this.every = Card?.every) : (this.every = 1);
+    Key ? (this.Bedtime = Card?.Bedtime) : (this.Bedtime = false);
+    Key ? (this.Critical = Card?.Critical) : (this.Critical = false);
     this.showDate = false;
     this.showTime = false;
     this.parseDateToString();

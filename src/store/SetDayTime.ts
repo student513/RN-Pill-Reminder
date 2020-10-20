@@ -19,32 +19,19 @@ class SetDayTimeStore {
   @observable NextTime: Date = new Date();
   @observable Week: object[] = [];
 
-  // @observable PillCard: DayTimePillInfo = {
-  //   Name: '',
-  //   Dosage: '',
-  //   Time: new Date(),
-  //   EndTime: new Date(),
-  //   ParsedTime: '',
-  //   isEndRepeat: false,
-  //   EndRepeat: '',
-  //   ParsedEndTime: '',
-  //   Critical: false,
-  // };
-
-  // DateTime Picker variable
   @observable showTime: boolean = false;
   @observable showDate: boolean = false;
   @observable mode: string = 'date';
 
   @action
-  initDayTime = () => {
-    this.Name = '';
-    this.Dosage = '';
-    this.Time = new Date();
-    this.EndTime = new Date();
-    this.isEndRepeat = false;
-    this.EndRepeat = '';
-    this.Critical = false;
+  initDayTime = (Key?: number, Card?: DayTimePillInfo) => {
+    Key ? (this.Name = Card?.Name) : (this.Name = '');
+    Key ? (this.Dosage = Card?.Dosage) : (this.Dosage = '');
+    Key ? (this.Time = Card?.Time) : (this.Time = new Date());
+    Key ? (this.EndTime = Card?.EndTime) : (this.EndTime = new Date());
+    Key ? (this.isEndRepeat = Card?.isEndRepeat) : (this.isEndRepeat = false);
+    Key ? (this.EndRepeat = Card?.EndRepeat) : (this.EndRepeat = '');
+    Key ? (this.Critical = Card?.Critical) : (this.Critical = false);
     this.showTime = false;
     this.showDate = false;
     this.parseDateToString();

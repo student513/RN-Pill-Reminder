@@ -36,14 +36,6 @@ class SetDayTimeView extends Component<{navigation: object; Key?: number}, {}> {
       Critical: setDayTimeStore.Critical,
     });
   };
-  getWillEditCard = (key: number) => {
-    const Card = pillListStore.CardList.find((card) => card.key === key);
-    // console.log(Card);
-  };
-  componentDidMount = () => {
-    console.log(this.props.Key);
-    this.props.Key ? this.getWillEditCard(this.props.Key) : null;
-  };
   render() {
     return (
       <ScrollView style={styles.content}>
@@ -51,11 +43,13 @@ class SetDayTimeView extends Component<{navigation: object; Key?: number}, {}> {
           label="Name"
           placeholder="Medication name"
           onChangeText={(text: string) => setDayTimeStore.onChangeName(text)}
+          value={setDayTimeStore.Name}
         />
         <MyTextInput
           label="Dosage"
           placeholder="e.g. 2 Tablets, 30 mL"
           onChangeText={(text: string) => setDayTimeStore.onChangeDosage(text)}
+          value={setDayTimeStore.Dosage}
         />
         <MyTableButton
           icon="sync-circle-outline"
