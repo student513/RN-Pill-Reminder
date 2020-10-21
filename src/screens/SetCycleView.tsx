@@ -50,11 +50,13 @@ class SetCycleView extends Component<{navigation: object; Key?: number}, {}> {
           label="Name"
           placeholder="Medication name"
           onChangeText={(text: string) => setCycleStore.onChangeName(text)}
+          value={setCycleStore.Name}
         />
         <MyTextInput
           label="Dosage"
           placeholder="e.g. 2 Tablets, 30 mL"
           onChangeText={(text: string) => setCycleStore.onChangeDosage(text)}
+          value={setCycleStore.Dosage}
         />
         <MyTableButton
           icon="time-outline"

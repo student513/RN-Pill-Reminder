@@ -25,13 +25,13 @@ class SetDayTimeStore {
 
   @action
   initDayTime = (Key?: number, Card?: DayTimePillInfo) => {
-    Key ? (this.Name = Card?.Name) : (this.Name = '');
-    Key ? (this.Dosage = Card?.Dosage) : (this.Dosage = '');
-    Key ? (this.Time = Card?.Time) : (this.Time = new Date());
-    Key ? (this.EndTime = Card?.EndTime) : (this.EndTime = new Date());
-    Key ? (this.isEndRepeat = Card?.isEndRepeat) : (this.isEndRepeat = false);
-    Key ? (this.EndRepeat = Card?.EndRepeat) : (this.EndRepeat = '');
-    Key ? (this.Critical = Card?.Critical) : (this.Critical = false);
+    Key && Card ? (this.Name = Card?.Name) : (this.Name = '');
+    Key && Card ? (this.Dosage = Card?.Dosage) : (this.Dosage = '');
+    Key && Card ? (this.Time = Card?.Time) : (this.Time = new Date());
+    Key && Card ? (this.EndTime = Card?.EndTime) : (this.EndTime = new Date());
+    Key && Card ? (this.isEndRepeat = Card?.isEndRepeat) : (this.isEndRepeat = false);
+    Key && Card ? (this.EndRepeat = Card?.EndRepeat) : (this.EndRepeat = '');
+    Key && Card ? (this.Critical = Card?.Critical) : (this.Critical = false);
     this.showTime = false;
     this.showDate = false;
     this.parseDateToString();

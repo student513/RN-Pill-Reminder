@@ -28,17 +28,17 @@ class SetCycleStore {
 
   @action
   initCycle = (Key?: number, Card?: CyclePillInfo) => {
-    Key ? (this.Name = Card?.Name) : (this.Name = '');
-    Key ? (this.Dosage = Card?.Dosage) : (this.Dosage = '');
-    Key ? (this.StartTime = Card?.StartTime) : (this.StartTime = new Date());
-    Key ? (this.EndTime = Card?.EndTime) : (this.EndTime = new Date());
-    Key ? (this.isEndRepeat = Card?.isEndRepeat) : (this.isEndRepeat = false);
-    Key ? (this.EndRepeat = Card?.EndRepeat) : (this.EndRepeat = '');
-    Key ? (this.isRepeat = Card?.isRepeat) : (this.isRepeat = false);
-    Key ? (this.frequency = Card?.frequency) : (this.frequency = 'Daily');
-    Key ? (this.every = Card?.every) : (this.every = 1);
-    Key ? (this.Bedtime = Card?.Bedtime) : (this.Bedtime = false);
-    Key ? (this.Critical = Card?.Critical) : (this.Critical = false);
+    Key && Card ? (this.Name = Card?.Name) : (this.Name = '');
+    Key && Card ? (this.Dosage = Card?.Dosage) : (this.Dosage = '');
+    Key && Card ? (this.StartTime = Card?.StartTime) : (this.StartTime = new Date());
+    Key && Card ? (this.EndTime = Card?.EndTime) : (this.EndTime = new Date());
+    Key && Card ? (this.isEndRepeat = Card?.isEndRepeat) : (this.isEndRepeat = false);
+    Key && Card ? (this.EndRepeat = Card?.EndRepeat) : (this.EndRepeat = '');
+    Key && Card ? (this.isRepeat = Card?.isRepeat) : (this.isRepeat = false);
+    Key && Card ? (this.frequency = Card?.frequency) : (this.frequency = 'Daily');
+    Key && Card ? (this.every = Card?.every) : (this.every = 1);
+    Key && Card ? (this.Bedtime = Card?.Bedtime) : (this.Bedtime = false);
+    Key && Card ? (this.Critical = Card?.Critical) : (this.Critical = false);
     this.showDate = false;
     this.showTime = false;
     this.parseDateToString();
