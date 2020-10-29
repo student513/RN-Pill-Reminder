@@ -61,6 +61,7 @@ export class MyTextInput extends PureComponent<MyTextInputProps> {
   }
 }
 
+
 const styles = StyleSheet.create({
   textStyle: {
     fontSize: 18,

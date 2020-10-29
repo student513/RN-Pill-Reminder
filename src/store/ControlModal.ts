@@ -3,7 +3,7 @@ import {createContext} from 'react';
 
 class ControlModalStore {
   @observable setTypeModalVisible: boolean;
-  
+
   @action
   toggleSetTypeModalVisible = () => {
     if (this.setTypeModalVisible) {
