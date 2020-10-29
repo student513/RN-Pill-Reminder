@@ -55,10 +55,6 @@ export class MyCard extends PureComponent<IProps, {checked: boolean}> {
   close = () => {
     this.swipeableRow.close();
   };
-  // componentDidMount=()=>{
-  //   // console.slog("dasdfasf");
-  //   console.log(this.props.Key);
-  // }
   render() {
     return (
       <Swipeable renderRightActions={this.RightAction} ref={this.updateRef}>

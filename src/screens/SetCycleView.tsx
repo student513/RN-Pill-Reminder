@@ -11,17 +11,28 @@ import {
 import {MyText, MyTextInput} from '../components/MyText';
 import {observer} from 'mobx-react';
 import {setCycleStore} from 'store/SetCycle';
-import {MyTableButton, MyToggleButton} from 'components/MyButton';
+import {DeleteButton, MyTableButton, MyToggleButton} from 'components/MyButton';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {pillListStore} from 'store';
 
 const {height} = Dimensions.get('window');
 
+interface IProps {
+  navigation: object;
+  Key?: number;
+}
+
 @observer
-class SetCycleView extends Component<{navigation: object; Key?: number}, {}> {
+class SetCycleView extends Component<IProps, {}> {
   constructor(props: any) {
     super(props);
   }
+  deleteCard = (key?: number) => {
+    pillListStore.deleteObject(
+      pillListStore.CardList.filter((card) => card.key !== key),
+    );
+    this.props.navigation.navigate('Reminder');
+  };
   pushCardList = () => {
     pillListStore.updatePillKey();
     pillListStore.CardList.push({
@@ -140,6 +151,18 @@ class SetCycleView extends Component<{navigation: object; Key?: number}, {}> {
             description="Critical alerts allows the app to ring the notification sound even when your phone is in silent or do not disturb mode."
           />
         )}
+
+        {this.props.Key ? (
+          <DeleteButton
+            onPress={() => {
+              this.deleteCard(this.props.Key);
+              console.log(pillListStore.CardList);
+            }}
+          />
+        ) : (
+          <View />
+        )}
+
         <TouchableOpacity
           style={{marginBottom: 30}}
           onPress={() => {

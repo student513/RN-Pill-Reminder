@@ -10,6 +10,11 @@ class PillListStore {
   updatePillKey = () => {
     this.PillKey++;
   };
+
+  @action
+  deleteObject = (CardList: any[]) => {
+    this.CardList = CardList;
+  };
 }
 
 export const pillListStore = new PillListStore();

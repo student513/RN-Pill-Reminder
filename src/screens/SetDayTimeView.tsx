@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {
+  View,
   StyleSheet,
   Dimensions,
   ScrollView,
@@ -9,18 +10,29 @@ import {
 import {MyText, MyTextInput} from '../components/MyText';
 import {observer} from 'mobx-react';
 import {setDayTimeStore} from 'store/SetDayTime';
-import {MyTableButton, MyToggleButton} from 'components/MyButton';
+import {DeleteButton, MyTableButton, MyToggleButton} from 'components/MyButton';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {pillListStore} from 'store';
 import moment from 'moment';
 
 const {height} = Dimensions.get('window');
 
+interface IProps {
+  navigation: object;
+  Key?: number;
+}
+
 @observer
-class SetDayTimeView extends Component<{navigation: object; Key?: number}, {}> {
+class SetDayTimeView extends Component<IProps, {}> {
   constructor(props: any) {
     super(props);
   }
+  deleteCard = (key?: number) => {
+    pillListStore.deleteObject(
+      pillListStore.CardList.filter((card) => card.key !== key),
+    );
+    this.props.navigation.navigate('Reminder');
+  };
   pushCardList = () => {
     pillListStore.updatePillKey();
     pillListStore.CardList.push({
@@ -109,6 +121,13 @@ class SetDayTimeView extends Component<{navigation: object; Key?: number}, {}> {
           value={setDayTimeStore.Critical}
           description="Critical alerts allows the app to ring the notification sound even when your phone is in silent or do not disturb mode."
         />
+
+        {this.props.Key ? (
+          <DeleteButton onPress={() => this.deleteCard(this.props.Key)} />
+        ) : (
+          <View />
+        )}
+
         <TouchableOpacity
           style={{marginBottom: 30}}
           onPress={() => {
