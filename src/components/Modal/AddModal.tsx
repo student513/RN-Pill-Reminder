@@ -76,7 +76,6 @@ class AddModal extends Component<AddModalProps, {}> {
             }}
             onPress={() => {
               setCycleStore.showTimepicker();
-              console.log(setCycleStore.StartTime);
             }}
             remark={setCycleStore.ParsedStartTime}
           />
@@ -106,12 +105,8 @@ class AddModal extends Component<AddModalProps, {}> {
             }}
             onPress={() => {
               setCycleStore.showDatepicker();
-              console.log(setCycleStore.EndTime);
             }}
-            remark={
-              // setCycleStore.isEndRepeat ? setCycleStore.ParsedEndTime : 'Never'
-              setCycleStore.ParsedEndTime
-            }
+            remark={setCycleStore.ParsedEndTime}
           />
           {setCycleStore.showDate && (
             <DateTimePicker
@@ -152,13 +147,6 @@ class AddModal extends Component<AddModalProps, {}> {
               description="Critical alerts allows the app to ring the notification sound even when your phone is in silent or do not disturb mode."
             />
           )}
-          {/* <TouchableOpacity
-            onPress={() => {
-              console.log(setCycleStore.Bedtime);
-              console.log(setCycleStore.Critical);
-            }}>
-            <MyText style={{marginBottom: 30}}>ddddddd</MyText>
-          </TouchableOpacity> */}
         </ScrollView>
       </Modal>
     );

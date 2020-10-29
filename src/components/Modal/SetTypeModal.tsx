@@ -1,11 +1,19 @@
 import React from 'react';
-import {View, StyleSheet, TouchableHighlight} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TouchableHighlight,
+  Dimensions,
+  Platform,
+} from 'react-native';
 import {MyText} from 'components/MyText';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLOR} from 'helper/helper';
 import Modal from 'react-native-modal';
 import {controlModalStore} from 'store/ControlModal';
-import {setCycleStore} from 'store';
+import {observer} from 'mobx-react';
+
+const {width} = Dimensions.get('window');
 
 interface SetTypeModalProps {
   isVisible: boolean;
@@ -14,8 +22,10 @@ interface SetTypeModalProps {
   backdropOpacity: number;
   onBackdropPress: Function;
   style: any;
+  navigation: object;
 }
 
+@observer
 export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
   return (
     <Modal
@@ -34,10 +44,7 @@ export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
             underlayColor={COLOR.TOUCH_GREEN}
             onPress={() => {
               controlModalStore.toggleSetTypeModalVisible(); //this modal off
-              controlModalStore.toggleSelectSetCycle(); //add modal type set
-              controlModalStore.toggleAddModalVisible(); //open add modal
-              setCycleStore.parseDateToString();
-              setCycleStore.updateTime();
+              props.navigation.navigate('Details', {pillType: 'Cycle'});
             }}>
             <View style={{display: 'flex', flexDirection: 'row'}}>
               <Icon
@@ -58,10 +65,7 @@ export const SetTypeModal: React.FC<SetTypeModalProps> = (props) => {
             underlayColor={COLOR.TOUCH_GREEN}
             onPress={() => {
               controlModalStore.toggleSetTypeModalVisible();
-              controlModalStore.toggleSelectDayTime();
-              controlModalStore.toggleAddModalVisible();
-              setCycleStore.parseDateToString();
-              setCycleStore.updateTime();
+              props.navigation.navigate('Details', {pillType: 'Select'});
             }}>
             <View style={{display: 'flex', flexDirection: 'row'}}>
               <Icon
@@ -104,13 +108,27 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
   },
   roundIcon: {
-    paddingTop: 18,
-    paddingLeft: 15,
+    ...Platform.select({
+      ios: {
+        paddingTop: 15,
+      },
+      android: {
+        paddingTop: 19,
+      },
+    }),
+    paddingLeft: 20,
   },
   chevron: {
+    ...Platform.select({
+      ios: {
+        paddingTop: 15,
+      },
+      android: {
+        paddingTop: 20,
+      },
+    }),
     color: COLOR.FONT_GREEN,
-    paddingTop: 18,
     position: 'absolute',
-    left: 300,
+    left: width - 40,
   },
 });

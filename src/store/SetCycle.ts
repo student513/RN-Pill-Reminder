@@ -1,8 +1,8 @@
 import {observable, action} from 'mobx';
 import {createContext} from 'react';
-import {Time, RePeat} from 'helper/interface';
 import {Platform} from 'react-native';
 import moment from 'moment';
+import {CyclePillInfo} from 'helper';
 
 class SetCycleStore {
   @observable Name: string = '';
@@ -14,20 +14,51 @@ class SetCycleStore {
   @observable EndRepeat: string = '';
   @observable ParsedEndTime: string = '';
   @observable isRepeat: boolean = false;
-  @observable Repeat: RePeat = null;
+  @observable frequency: string = 'Daily';
+  @observable every: number = 1;
   @observable Bedtime: boolean = false;
   @observable Critical: boolean = false;
+
   @observable Timing: string = '';
   @observable NextTime: Date = new Date();
 
-  // DateTime Picker variable
   @observable showTime: boolean = false;
   @observable showDate: boolean = false;
   @observable mode: string = 'date';
 
   @action
+  initCycle = (Key?: number, Card?: CyclePillInfo) => {
+    Key && Card ? (this.Name = Card?.Name) : (this.Name = '');
+    Key && Card ? (this.Dosage = Card?.Dosage) : (this.Dosage = '');
+    Key && Card ? (this.StartTime = Card?.StartTime) : (this.StartTime = new Date());
+    Key && Card ? (this.EndTime = Card?.EndTime) : (this.EndTime = new Date());
+    Key && Card ? (this.isEndRepeat = Card?.isEndRepeat) : (this.isEndRepeat = false);
+    Key && Card ? (this.EndRepeat = Card?.EndRepeat) : (this.EndRepeat = '');
+    Key && Card ? (this.isRepeat = Card?.isRepeat) : (this.isRepeat = false);
+    Key && Card ? (this.frequency = Card?.frequency) : (this.frequency = 'Daily');
+    Key && Card ? (this.every = Card?.every) : (this.every = 1);
+    Key && Card ? (this.Bedtime = Card?.Bedtime) : (this.Bedtime = false);
+    Key && Card ? (this.Critical = Card?.Critical) : (this.Critical = false);
+    this.showDate = false;
+    this.showTime = false;
+    this.parseDateToString();
+  };
+
+  @action
   onChangeName = (Name: string) => {
     this.Name = Name;
+  };
+  @action
+  onChangeDosage = (Dosage: string) => {
+    this.Dosage = Dosage;
+  };
+  @action
+  toggleRepeat = () => {
+    if (!this.isRepeat) {
+      this.isRepeat = true;
+    } else {
+      this.isRepeat = false;
+    }
   };
   @action
   toggleBedtime = () => {
@@ -44,6 +75,18 @@ class SetCycleStore {
     } else {
       this.Critical = false;
     }
+  };
+  @action
+  toggleEndRepeat = () => {
+    if (!this.isEndRepeat) {
+      this.isEndRepeat = true;
+    } else {
+      this.isEndRepeat = false;
+    }
+  };
+  @action
+  offEndRepeat = () => {
+    this.isEndRepeat = false;
   };
   // Date Time picker function
   @action
@@ -66,12 +109,20 @@ class SetCycleStore {
   };
   @action
   showDatepicker = () => {
-    this.showDate = true;
+    if (this.showDate) {
+      this.showDate = false;
+    } else {
+      this.showDate = true;
+    }
     this.mode = 'date';
   };
   @action
   showTimepicker = () => {
-    this.showTime = true;
+    if (this.showTime) {
+      this.showTime = false;
+    } else {
+      this.showTime = true;
+    }
     this.mode = 'time';
   };
   @action
@@ -87,6 +138,13 @@ class SetCycleStore {
   updateTime = () => {
     this.StartTime = new Date();
     this.EndTime = new Date();
+  };
+  //Repeat picker function
+  setFrequency = (itemValue: string) => {
+    this.frequency = itemValue;
+  };
+  setEvery = (itemValue: number) => {
+    this.every = itemValue;
   };
 }
 
