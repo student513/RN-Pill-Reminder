@@ -36,5 +36,7 @@ const styles = StyleSheet.create({
   textStyle: {
     padding: 15,
     color: '#931AB7',
+    fontFamily: 'ProximaNova-Bold',
+    fontSize: 22,
   },
 });

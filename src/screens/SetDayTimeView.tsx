@@ -18,7 +18,7 @@ import moment from 'moment';
 const {height} = Dimensions.get('window');
 
 interface IProps {
-  navigation: object;
+  navigation: any;
   Key?: number;
 }
 
@@ -46,6 +46,23 @@ class SetDayTimeView extends Component<IProps, {}> {
       EndRepeat: setDayTimeStore.EndRepeat,
       ParsedEndTime: setDayTimeStore.ParsedEndTime,
       Critical: setDayTimeStore.Critical,
+    });
+  };
+  componentDidMount = () => {
+    this.props.navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          style={{marginRight: 15}}
+          onPress={() => {
+            this.pushCardList();
+            this.props.navigation.goBack();
+            this.props.Key ? this.deleteCard(this.props.Key) : null;
+          }}>
+          <MyText style={{fontFamily: 'ProximaNova-Bold', color: '#13A45B'}}>
+            Done
+          </MyText>
+        </TouchableOpacity>
+      ),
     });
   };
   render() {
@@ -127,16 +144,6 @@ class SetDayTimeView extends Component<IProps, {}> {
         ) : (
           <View />
         )}
-
-        <TouchableOpacity
-          style={{marginBottom: 30}}
-          onPress={() => {
-            this.pushCardList();
-            this.props.navigation.goBack();
-            // console.log(pillListStore.CardList);
-          }}>
-          <MyText>Done</MyText>
-        </TouchableOpacity>
       </ScrollView>
     );
   }

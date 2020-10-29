@@ -18,4 +18,4 @@ export default () => {
       <Stack.Screen name="Day" component={Day} />
     </Stack.Navigator>
   );
-}
+};

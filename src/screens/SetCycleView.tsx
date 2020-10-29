@@ -53,7 +53,23 @@ class SetCycleView extends Component<IProps, {}> {
       Critical: setCycleStore.Critical,
     });
   };
-
+  componentDidMount = () => {
+    this.props.navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          style={{marginRight: 15}}
+          onPress={() => {
+            this.pushCardList();
+            this.props.navigation.goBack();
+            this.props.Key ? this.deleteCard(this.props.Key) : null;
+          }}>
+          <MyText style={{fontFamily: 'ProximaNova-Bold', color: '#13A45B'}}>
+            Done
+          </MyText>
+        </TouchableOpacity>
+      ),
+    });
+  };
   render() {
     return (
       <ScrollView style={styles.content}>
@@ -162,16 +178,6 @@ class SetCycleView extends Component<IProps, {}> {
         ) : (
           <View />
         )}
-
-        <TouchableOpacity
-          style={{marginBottom: 30}}
-          onPress={() => {
-            this.pushCardList();
-            this.props.navigation.goBack();
-            // console.log(pillListStore.CardList);
-          }}>
-          <MyText>Done</MyText>
-        </TouchableOpacity>
       </ScrollView>
     );
   }
