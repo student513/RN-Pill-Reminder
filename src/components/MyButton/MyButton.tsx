@@ -7,22 +7,24 @@ import {
   Switch,
   TouchableOpacityProps,
   SwitchProps,
+  Platform,
 } from 'react-native';
-import {COLOR} from 'helper';
+import {COLOR, POSITION} from 'helper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {MyText} from 'components/MyText';
 
 interface MyTableButtonProps extends TouchableOpacityProps {
-  icon: string;
+  icon?: string;
   title: string;
-  onPress: Function;
-  remark: string;
+  onPress: any;
+  remark?: string;
+  checked?: boolean;
 }
 
 interface MyToggleButtonProps extends SwitchProps {
   icon: string;
   title: string;
-  description: string;
+  description?: string;
 }
 
 export class MyTableButton extends PureComponent<MyTableButtonProps> {
@@ -30,18 +32,32 @@ export class MyTableButton extends PureComponent<MyTableButtonProps> {
     return (
       <TouchableOpacity onPress={() => this.props.onPress()}>
         <View style={[styles.buttonContainer, this.props.style]}>
-          <Icon
-            name={this.props.icon}
-            size={25}
-            style={{paddingTop: 18, paddingRight: 5}}
-          />
+          {this.props.icon ? (
+            <Icon name={this.props.icon} size={25} style={styles.icon} />
+          ) : (
+            <View />
+          )}
           <MyText style={{paddingVertical: 17}}>{this.props.title}</MyText>
-          <MyText style={styles.remark}>{this.props.remark}</MyText>
-          <Icon
-            name="chevron-forward-outline"
-            size={25}
-            style={styles.chevron}
-          />
+          <MyText
+            style={
+              this.props.icon ? styles.remark : styles.remarkWithoutChevron
+            }>
+            {this.props.remark}
+          </MyText>
+          {this.props.icon ? (
+            <Icon
+              name="chevron-forward-outline"
+              size={25}
+              style={styles.chevron}
+            />
+          ) : (
+            <View />
+          )}
+          {this.props.checked ? (
+            <Icon name="checkmark-outline" size={25} style={styles.chevron} />
+          ) : (
+            <View />
+          )}
         </View>
       </TouchableOpacity>
     );
@@ -53,45 +69,106 @@ export class MyToggleButton extends PureComponent<MyToggleButtonProps> {
     return (
       <View>
         <View style={[styles.buttonContainer, this.props.style]}>
-          <Icon
-            name={this.props.icon}
-            size={25}
-            style={{paddingTop: 18, paddingRight: 5}}
-          />
+          <Icon name={this.props.icon} size={25} style={styles.icon} />
           <MyText style={{paddingVertical: 17}}>{this.props.title}</MyText>
-          <View style={{position: 'absolute', left: 280, paddingTop: 18}}>
-            <Switch ios_backgroundColor={COLOR.FONT_GREEN} {...this.props} />
+          <View style={styles.switch}>
+            <Switch {...this.props} />
           </View>
         </View>
-        <MyText style={styles.notice}>{this.props.description}</MyText>
+        {this.props.description ? (
+          <MyText style={styles.notice}>{this.props.description}</MyText>
+        ) : (
+          <View />
+        )}
       </View>
     );
   }
 }
+
 const styles = StyleSheet.create({
   buttonContainer: {
     backgroundColor: '#F3F3F3',
-    paddingLeft: 10,
+    paddingLeft: 15,
     display: 'flex',
     flexDirection: 'row',
   },
   remark: {
+    ...Platform.select({
+      ios: {
+        paddingTop: 17,
+        fontSize: 17,
+      },
+      android: {
+        fontSize: 10,
+        paddingTop: 25,
+      },
+    }),
     position: 'absolute',
-    left: 180,
-    fontSize: 10,
-    paddingTop: 25,
+    right: 40,
     color: COLOR.FONT_GREEN,
+  },
+  remarkWithoutChevron: {
+    ...Platform.select({
+      ios: {
+        fontSize: 17,
+        paddingTop: 17,
+      },
+      android: {
+        fontSize: 10,
+        paddingTop: 25,
+      },
+    }),
+    position: 'absolute',
+    right: 20,
+    color: COLOR.FONT_GREEN,
+  },
+  icon: {
+    ...Platform.select({
+      ios: {
+        paddingTop: 15,
+      },
+      android: {
+        paddingTop: 20,
+      },
+    }),
+    paddingRight: 5,
   },
   chevron: {
+    ...Platform.select({
+      ios: {
+        paddingTop: 15,
+      },
+      android: {
+        paddingTop: 20,
+      },
+    }),
     color: COLOR.FONT_GREEN,
-    paddingTop: 18,
     position: 'absolute',
-    left: 300,
+    right: POSITION.CHEVRON,
   },
   notice: {
-    fontSize: 11,
+    ...Platform.select({
+      ios: {
+        fontSize: 14,
+      },
+      android: {
+        fontSize: 11,
+      },
+    }),
     color: '#5B5B5B',
     marginBottom: 25,
     paddingLeft: 2,
+  },
+  switch: {
+    ...Platform.select({
+      ios: {
+        paddingTop: 13,
+      },
+      android: {
+        paddingTop: 20,
+      },
+    }),
+    position: 'absolute',
+    right: POSITION.SWITCH,
   },
 });

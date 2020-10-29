@@ -1,14 +1,3 @@
-export interface Time {
-  hour: number;
-  minute: number;
-  isAM: boolean;
-}
-
-export interface RePeat {
-  Frequency: string;
-  Every: number;
-}
-
 export interface Week {
   Monday: boolean;
   Tuesday: boolean;
@@ -17,4 +6,34 @@ export interface Week {
   Friday: boolean;
   Saturday: boolean;
   Sunday: boolean;
+}
+
+export interface CyclePillInfo {
+  key: number;
+  Name: string;
+  Dosage: string;
+  StartTime: Date;
+  EndTime: Date;
+  ParsedStartTime: string;
+  isEndRepeat: boolean;
+  EndRepeat: string;
+  ParsedEndTime: string;
+  isRepeat: boolean;
+  frequency: string;
+  every: number;
+  Bedtime: boolean;
+  Critical: boolean;
+}
+
+export interface DayTimePillInfo {
+  key: number;
+  Name: string;
+  Dosage: string;
+  Time: Date;
+  EndTime: Date;
+  ParsedTime: string;
+  isEndRepeat: boolean;
+  EndRepeat: string;
+  ParsedEndTime: string;
+  Critical: boolean;
 }

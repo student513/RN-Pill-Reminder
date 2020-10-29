@@ -1,62 +1,89 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {View, StyleSheet, Dimensions, ScrollView} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import {MyText, MyTextInput} from '../components/MyText';
-import {TouchableOpacity} from 'react-native';
-import {COLOR} from 'helper';
 import {observer} from 'mobx-react';
 import {setCycleStore} from 'store/SetCycle';
-import {controlModalStore} from 'store';
-import {MyTableButton, MyToggleButton} from 'components/MyButton';
+import {DeleteButton, MyTableButton, MyToggleButton} from 'components/MyButton';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {pillListStore} from 'store';
 
 const {height} = Dimensions.get('window');
 
-interface DetailProps {
-  isVisible: boolean;
-  onSwipeComplete: Function;
-  swipeDirection: string[];
-  backdropOpacity: number;
-  onBackdropPress: Function;
-  style: any;
+interface IProps {
+  navigation: object;
+  Key?: number;
 }
 
 @observer
-class Detail extends Component<DetailProps, {}> {
+class SetCycleView extends Component<IProps, {}> {
   constructor(props: any) {
     super(props);
   }
+  deleteCard = (key?: number) => {
+    pillListStore.deleteObject(
+      pillListStore.CardList.filter((card) => card.key !== key),
+    );
+    this.props.navigation.navigate('Reminder');
+  };
+  pushCardList = () => {
+    pillListStore.updatePillKey();
+    pillListStore.CardList.push({
+      key: pillListStore.PillKey,
+      PillType: 'Cycle',
+      Name: setCycleStore.Name,
+      Dosage: setCycleStore.Dosage,
+      StartTime: setCycleStore.StartTime,
+      EndTime: setCycleStore.EndTime,
+      ParsedStartTime: setCycleStore.ParsedStartTime,
+      isEndRepeat: setCycleStore.isEndRepeat,
+      EndRepeat: setCycleStore.EndRepeat,
+      ParsedEndTime: setCycleStore.ParsedEndTime,
+      isRepeat: setCycleStore.isRepeat,
+      frequency: setCycleStore.frequency,
+      every: setCycleStore.every,
+      Bedtime: setCycleStore.Bedtime,
+      Critical: setCycleStore.Critical,
+    });
+  };
+  componentDidMount = () => {
+    this.props.navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          style={{marginRight: 15}}
+          onPress={() => {
+            this.pushCardList();
+            this.props.navigation.goBack();
+            this.props.Key ? this.deleteCard(this.props.Key) : null;
+          }}>
+          <MyText style={{fontFamily: 'ProximaNova-Bold', color: '#13A45B'}}>
+            Done
+          </MyText>
+        </TouchableOpacity>
+      ),
+    });
+  };
   render() {
     return (
       <ScrollView style={styles.content}>
-        {/* <View style={styles.modalHeader}>
-          <TouchableOpacity
-            onPress={() => controlModalStore.toggleAddModalVisible()}>
-            <MyText style={{color: COLOR.FONT_GREEN, fontSize: 16}}>
-              Cancel
-            </MyText>
-          </TouchableOpacity>
-          <MyText style={{fontFamily: 'ProximaNova-Bold'}}>Detail</MyText>
-          <TouchableOpacity>
-            <MyText
-              style={{
-                color: COLOR.FONT_GREEN,
-                fontSize: 16,
-                fontFamily: 'ProximaNova-Bold',
-              }}>
-              Done
-            </MyText>
-          </TouchableOpacity>
-        </View> */}
         <MyTextInput
           label="Name"
           placeholder="Medication name"
           onChangeText={(text: string) => setCycleStore.onChangeName(text)}
+          value={setCycleStore.Name}
         />
         <MyTextInput
           label="Dosage"
           placeholder="e.g. 2 Tablets, 30 mL"
-          onChangeText={(text: string) => setCycleStore.onChangeName(text)}
+          onChangeText={(text: string) => setCycleStore.onChangeDosage(text)}
+          value={setCycleStore.Dosage}
         />
         <MyTableButton
           icon="time-outline"
@@ -74,9 +101,9 @@ class Detail extends Component<DetailProps, {}> {
         {setCycleStore.showTime && (
           <DateTimePicker
             value={setCycleStore.StartTime}
-            mode={setCycleStore.mode}
+            mode={Platform.OS === 'android' ? setCycleStore.mode : 'datetime'}
             is24Hour={true}
-            display="default"
+            display={Platform.OS === 'ios' ? 'inline' : 'default'}
             onChange={setCycleStore.onChangeStartTime}
           />
         )}
@@ -86,6 +113,14 @@ class Detail extends Component<DetailProps, {}> {
           style={{
             marginBottom: 1,
           }}
+          onPress={() => {
+            this.props.navigation.navigate('Repeat');
+          }}
+          remark={
+            setCycleStore.isRepeat
+              ? 'Every ' + `${setCycleStore.every} ${setCycleStore.frequency}`
+              : ''
+          }
         />
         <MyTableButton
           icon="stop-circle-outline"
@@ -96,19 +131,12 @@ class Detail extends Component<DetailProps, {}> {
             marginBottom: 20,
           }}
           onPress={() => {
-            setCycleStore.showDatepicker();
+            this.props.navigation.navigate('EndRepeat', {type: 'cycle'});
           }}
-          remark={setCycleStore.ParsedEndTime}
+          remark={
+            setCycleStore.isEndRepeat ? setCycleStore.ParsedEndTime : 'Never'
+          }
         />
-        {setCycleStore.showDate && (
-          <DateTimePicker
-            value={setCycleStore.EndTime}
-            mode={setCycleStore.mode}
-            is24Hour={true}
-            display="default"
-            onChange={setCycleStore.onChangeEndTime}
-          />
-        )}
         {setCycleStore.Critical ? (
           <View />
         ) : (
@@ -139,6 +167,17 @@ class Detail extends Component<DetailProps, {}> {
             description="Critical alerts allows the app to ring the notification sound even when your phone is in silent or do not disturb mode."
           />
         )}
+
+        {this.props.Key ? (
+          <DeleteButton
+            onPress={() => {
+              this.deleteCard(this.props.Key);
+              console.log(pillListStore.CardList);
+            }}
+          />
+        ) : (
+          <View />
+        )}
       </ScrollView>
     );
   }
@@ -167,4 +206,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Detail;
+export default SetCycleView;
