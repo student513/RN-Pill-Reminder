@@ -19,7 +19,7 @@ class SetCycleStore {
   @observable Bedtime: boolean = false;
   @observable Critical: boolean = false;
 
-  @observable Timing: string = '';
+  @observable Timing: Date = new Date();
   @observable NextTime: Date = new Date();
 
   @observable showTime: boolean = false;
@@ -30,12 +30,18 @@ class SetCycleStore {
   initCycle = (Key?: number, Card?: CyclePillInfo) => {
     Key && Card ? (this.Name = Card?.Name) : (this.Name = '');
     Key && Card ? (this.Dosage = Card?.Dosage) : (this.Dosage = '');
-    Key && Card ? (this.StartTime = Card?.StartTime) : (this.StartTime = new Date());
+    Key && Card
+      ? (this.StartTime = Card?.StartTime)
+      : (this.StartTime = new Date());
     Key && Card ? (this.EndTime = Card?.EndTime) : (this.EndTime = new Date());
-    Key && Card ? (this.isEndRepeat = Card?.isEndRepeat) : (this.isEndRepeat = false);
+    Key && Card
+      ? (this.isEndRepeat = Card?.isEndRepeat)
+      : (this.isEndRepeat = false);
     Key && Card ? (this.EndRepeat = Card?.EndRepeat) : (this.EndRepeat = '');
     Key && Card ? (this.isRepeat = Card?.isRepeat) : (this.isRepeat = false);
-    Key && Card ? (this.frequency = Card?.frequency) : (this.frequency = 'Daily');
+    Key && Card
+      ? (this.frequency = Card?.frequency)
+      : (this.frequency = 'Daily');
     Key && Card ? (this.every = Card?.every) : (this.every = 1);
     Key && Card ? (this.Bedtime = Card?.Bedtime) : (this.Bedtime = false);
     Key && Card ? (this.Critical = Card?.Critical) : (this.Critical = false);
@@ -140,11 +146,31 @@ class SetCycleStore {
     this.EndTime = new Date();
   };
   //Repeat picker function
+  @action
   setFrequency = (itemValue: string) => {
     this.frequency = itemValue;
   };
+  @action
   setEvery = (itemValue: number) => {
     this.every = itemValue;
+  };
+
+  @action
+  setNextTime = () => {
+    let frequency;
+    if (this.frequency === 'Minutely') {
+      frequency = 'minutes';
+    } else if (this.frequency === 'Hourly') {
+      frequency = 'hours';
+    } else if (this.frequency === 'Daily') {
+      frequency = 'days';
+    } else if (this.frequency === 'Weekly') {
+      frequency = 'weeks';
+    } else if (this.frequency === 'Monthly') {
+      frequency = 'months';
+    }
+    this.NextTime = new Date(moment(this.NextTime).add(this.every, frequency));
+    console.log(this.NextTime);
   };
 }
 

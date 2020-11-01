@@ -51,6 +51,7 @@ class SetCycleView extends Component<IProps, {}> {
       every: setCycleStore.every,
       Bedtime: setCycleStore.Bedtime,
       Critical: setCycleStore.Critical,
+      NextTime: setCycleStore.StartTime,
     });
   };
   componentDidMount = () => {
@@ -172,7 +173,6 @@ class SetCycleView extends Component<IProps, {}> {
           <DeleteButton
             onPress={() => {
               this.deleteCard(this.props.Key);
-              console.log(pillListStore.CardList);
             }}
           />
         ) : (
