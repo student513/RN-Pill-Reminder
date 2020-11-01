@@ -154,24 +154,6 @@ class SetCycleStore {
   setEvery = (itemValue: number) => {
     this.every = itemValue;
   };
-
-  @action
-  setNextTime = () => {
-    let frequency;
-    if (this.frequency === 'Minutely') {
-      frequency = 'minutes';
-    } else if (this.frequency === 'Hourly') {
-      frequency = 'hours';
-    } else if (this.frequency === 'Daily') {
-      frequency = 'days';
-    } else if (this.frequency === 'Weekly') {
-      frequency = 'weeks';
-    } else if (this.frequency === 'Monthly') {
-      frequency = 'months';
-    }
-    this.NextTime = new Date(moment(this.NextTime).add(this.every, frequency));
-    console.log(this.NextTime);
-  };
 }
 
 export const setCycleStore = new SetCycleStore();

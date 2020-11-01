@@ -24,7 +24,7 @@ class Reminder extends Component<IProps, {today: string}> {
   }
   calculateTiming = (NextTime: Date) => {
     const nowTime = new Date();
-    console.log(NextTime);
+    // console.log(NextTime);
     if (NextTime.getTime() > nowTime.getTime()) {
       const parsedNextTime = moment.parseZone(NextTime).format('ddd,MMM D, LT');
       return parsedNextTime;
@@ -75,11 +75,7 @@ class Reminder extends Component<IProps, {today: string}> {
               PillType={pill.PillType}
               navigation={this.props.navigation}
               timing={this.calculateTiming(pill.NextTime)}
-              setNextTime={
-                pill.PillType === 'Cycle'
-                  ? () => setCycleStore.setNextTime()
-                  : () => setCycleStore.setNextTime()
-              }
+              setNextTime={() => pillListStore.setNextTime(pill.key)}
             />
           ))
         ) : (

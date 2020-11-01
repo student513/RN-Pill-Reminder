@@ -106,6 +106,7 @@ class SetCycleView extends Component<IProps, {}> {
             is24Hour={true}
             display={Platform.OS === 'ios' ? 'inline' : 'default'}
             onChange={setCycleStore.onChangeStartTime}
+            minimumDate={new Date()}
           />
         )}
         <MyTableButton
