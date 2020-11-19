@@ -7,7 +7,6 @@ import {controlModalStore} from 'store/ControlModal';
 import {MyCard} from 'components/MyCard';
 import {pillListStore} from 'store';
 import moment from 'moment';
-import {setCycleStore} from 'store/SetCycle';
 import TimeAgo from 'react-native-timeago';
 
 interface IProps {
@@ -24,9 +23,8 @@ class Reminder extends Component<IProps, {today: string}> {
   }
   calculateTiming = (NextTime: Date) => {
     const nowTime = new Date();
-    // console.log(NextTime);
     if (NextTime.getTime() > nowTime.getTime()) {
-      const parsedNextTime = moment.parseZone(NextTime).format('ddd,MMM D, LT');
+      const parsedNextTime = moment(NextTime).calendar();
       return parsedNextTime;
     } else {
       return <TimeAgo time={NextTime} />;
@@ -72,10 +70,13 @@ class Reminder extends Component<IProps, {today: string}> {
               name={pill.Name}
               dosage={pill.Dosage}
               Key={pill.key}
+              key={pill.key}
               PillType={pill.PillType}
               navigation={this.props.navigation}
               timing={this.calculateTiming(pill.NextTime)}
               setNextTime={() => pillListStore.setNextTime(pill.key)}
+              // every={pill.every}
+              // frequency={pill.frequency}
             />
           ))
         ) : (

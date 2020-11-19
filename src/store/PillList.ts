@@ -33,8 +33,12 @@ class PillListStore {
     } else if (this.CardList[pillIndex].frequency === 'Monthly') {
       frequency = 'months';
     }
-    this.CardList[pillIndex].NextTime = new Date(moment(this.CardList[pillIndex].NextTime).add(this.CardList[pillIndex].every, frequency));
-    console.log(this.CardList[pillIndex].NextTime);
+    this.CardList[pillIndex].NextTime = new Date(
+      moment(this.CardList[pillIndex].NextTime).add(
+        this.CardList[pillIndex].every,
+        frequency,
+      ),
+    );
   };
 }
 

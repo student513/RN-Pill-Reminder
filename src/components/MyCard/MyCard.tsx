@@ -19,6 +19,8 @@ interface IProps {
   navigation: object;
   PillType: string;
   setNextTime: Function;
+  every?: number;
+  frequency?: string;
 }
 
 export class MyCard extends PureComponent<IProps, {checked: boolean}> {
@@ -86,7 +88,11 @@ export class MyCard extends PureComponent<IProps, {checked: boolean}> {
               <MyText style={styles.dosage}>{this.props.dosage}</MyText>
             </View>
             <View style={styles.timingContainer}>
-              <MyText style={styles.timing}>{this.props.timing}</MyText>
+              <MyText style={styles.timing}>
+                {this.props.timing}
+                {/* (Every {this.props.every}{` `}
+                {this.props.frequency}) */}
+              </MyText>
             </View>
           </TouchableOpacity>
         </View>
