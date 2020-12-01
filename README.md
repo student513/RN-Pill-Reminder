@@ -7,4 +7,14 @@
 
 메디타임이 제 시간에 약을 복용할 수 있도록 도와드립니다. :)
 
-with React Native
+실행 순서
+1. yarn
+2. cd ios && pod install
+3. yarn ios 
+
++ React Native
++ eslint
++ Type script
++ Mobx
++ React Navigation
++ Moment
