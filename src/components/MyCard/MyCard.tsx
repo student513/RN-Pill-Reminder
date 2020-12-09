@@ -23,13 +23,17 @@ interface IProps {
   frequency?: string;
 }
 
-export class MyCard extends PureComponent<IProps, {checked: boolean}> {
+export class MyCard extends PureComponent<
+  IProps,
+  {checked: boolean; parsedFrequency: string}
+> {
   private swipeableRow: React.RefObject<HTMLInputElement>;
   constructor(props: any) {
     super(props);
     this.swipeableRow = React.createRef();
     this.state = {
       checked: false,
+      parsedFrequency: 'day',
     };
   }
   RightAction = () => {
@@ -57,6 +61,27 @@ export class MyCard extends PureComponent<IProps, {checked: boolean}> {
   };
   close = () => {
     this.swipeableRow.close();
+  };
+  componentDidMount = () => {
+    if (this.props.frequency === 'Minutely') {
+      this.setState({
+        parsedFrequency: this.props.every === 1 ? 'Minute' : 'Minutes',
+      });
+    } else if (this.props.frequency === 'Hourly') {
+      this.setState({
+        parsedFrequency: this.props.every === 1 ? 'Hour' : 'Hours',
+      });
+    } else if (this.props.frequency === 'Daily') {
+      this.setState({parsedFrequency: this.props.every === 1 ? 'Day' : 'Days'});
+    } else if (this.props.frequency === 'Weekly') {
+      this.setState({
+        parsedFrequency: this.props.every === 1 ? 'Week' : 'Weeks',
+      });
+    } else {
+      this.setState({
+        parsedFrequency: this.props.every === 1 ? 'Month' : 'Months',
+      });
+    }
   };
   render() {
     return (
@@ -90,8 +115,9 @@ export class MyCard extends PureComponent<IProps, {checked: boolean}> {
             <View style={styles.timingContainer}>
               <MyText style={styles.timing}>
                 {this.props.timing}
-                {/* (Every {this.props.every}{` `}
-                {this.props.frequency}) */}
+                (Every {this.props.every}
+                {` `}
+                {this.state.parsedFrequency})
               </MyText>
             </View>
           </TouchableOpacity>

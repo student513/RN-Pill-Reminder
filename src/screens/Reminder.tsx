@@ -75,8 +75,8 @@ class Reminder extends Component<IProps, {today: string}> {
               navigation={this.props.navigation}
               timing={this.calculateTiming(pill.NextTime)}
               setNextTime={() => pillListStore.setNextTime(pill.key)}
-              // every={pill.every}
-              // frequency={pill.frequency}
+              every={pill.every}
+              frequency={pill.frequency}
             />
           ))
         ) : (
