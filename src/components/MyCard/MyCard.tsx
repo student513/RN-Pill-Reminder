@@ -38,6 +38,7 @@ export class MyCard extends PureComponent<
   }
   RightAction = () => {
     const pressHandler = () => {
+      this.props.setNextTime();
       this.close();
     };
     return (
