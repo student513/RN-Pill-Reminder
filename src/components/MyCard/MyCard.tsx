@@ -14,23 +14,31 @@ import {RectButton} from 'react-native-gesture-handler';
 interface IProps {
   name: string;
   dosage: string;
-  timing?: string;
+  timing: Date;
   Key: number;
   navigation: object;
   PillType: string;
+  setNextTime: Function;
+  every?: number;
+  frequency?: string;
 }
 
-export class MyCard extends PureComponent<IProps, {checked: boolean}> {
+export class MyCard extends PureComponent<
+  IProps,
+  {checked: boolean; parsedFrequency: string}
+> {
   private swipeableRow: React.RefObject<HTMLInputElement>;
   constructor(props: any) {
     super(props);
     this.swipeableRow = React.createRef();
     this.state = {
       checked: false,
+      parsedFrequency: 'day',
     };
   }
   RightAction = () => {
     const pressHandler = () => {
+      this.props.setNextTime();
       this.close();
     };
     return (
@@ -55,6 +63,27 @@ export class MyCard extends PureComponent<IProps, {checked: boolean}> {
   close = () => {
     this.swipeableRow.close();
   };
+  componentDidMount = () => {
+    if (this.props.frequency === 'Minutely') {
+      this.setState({
+        parsedFrequency: this.props.every === 1 ? 'Minute' : 'Minutes',
+      });
+    } else if (this.props.frequency === 'Hourly') {
+      this.setState({
+        parsedFrequency: this.props.every === 1 ? 'Hour' : 'Hours',
+      });
+    } else if (this.props.frequency === 'Daily') {
+      this.setState({parsedFrequency: this.props.every === 1 ? 'Day' : 'Days'});
+    } else if (this.props.frequency === 'Weekly') {
+      this.setState({
+        parsedFrequency: this.props.every === 1 ? 'Week' : 'Weeks',
+      });
+    } else {
+      this.setState({
+        parsedFrequency: this.props.every === 1 ? 'Month' : 'Months',
+      });
+    }
+  };
   render() {
     return (
       <Swipeable renderRightActions={this.RightAction} ref={this.updateRef}>
@@ -67,7 +96,11 @@ export class MyCard extends PureComponent<IProps, {checked: boolean}> {
                 Key: this.props.Key,
               });
             }}>
-            <TouchableOpacity onPress={() => this.toggleCheck()}>
+            <TouchableOpacity
+              onPress={() => {
+                this.toggleCheck();
+                this.props.setNextTime();
+              }}>
               {this.state.checked ? (
                 <Icon name="checkmark-circle" size={27} style={styles.check} />
               ) : (
@@ -81,7 +114,12 @@ export class MyCard extends PureComponent<IProps, {checked: boolean}> {
               <MyText style={styles.dosage}>{this.props.dosage}</MyText>
             </View>
             <View style={styles.timingContainer}>
-              <MyText style={styles.timing}>1 hours ago</MyText>
+              <MyText style={styles.timing}>
+                {this.props.timing}
+                (Every {this.props.every}
+                {` `}
+                {this.state.parsedFrequency})
+              </MyText>
             </View>
           </TouchableOpacity>
         </View>
