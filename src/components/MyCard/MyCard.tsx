@@ -14,7 +14,7 @@ import {RectButton} from 'react-native-gesture-handler';
 interface IProps {
   name: string;
   dosage: string;
-  timing: Date;
+  timing: string;
   Key: number;
   navigation: object;
   PillType: string;

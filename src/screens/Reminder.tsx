@@ -8,30 +8,47 @@ import {MyCard} from 'components/MyCard';
 import {pillListStore} from 'store';
 import moment from 'moment';
 import TimeAgo from 'react-native-timeago';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {CyclePillInfo} from 'helper';
 
 interface IProps {
   navigation: object;
 }
 
 @observer
-class Reminder extends Component<IProps, {today: string}> {
+class Reminder extends Component<
+  IProps,
+  {today: string; pillList: Array<CyclePillInfo>}
+> {
   constructor(props: any) {
     super(props);
     this.state = {
       today: '',
+      pillList: [],
     };
   }
   calculateTiming = (NextTime: Date) => {
     const nowTime = new Date();
-    if (NextTime.getTime() > nowTime.getTime()) {
+    const nextTime = new Date(NextTime);
+    if (nextTime.getTime() > nowTime.getTime()) {
       const parsedNextTime = moment(NextTime).calendar();
       return parsedNextTime;
     } else {
       return <TimeAgo time={NextTime} />;
     }
   };
-
+  getPillStorage = async () => {
+    try {
+      const pillList = await AsyncStorage.getItem('pillList');
+      pillList
+        ? this.setState({pillList: JSON.parse(pillList)})
+        : await AsyncStorage.setItem('pillList', JSON.stringify([]));
+    } catch (e) {
+      console.log('error: ', e);
+    }
+  };
   componentDidMount = () => {
+    this.getPillStorage();
     const date = new Date();
     this.setState({today: moment.parseZone(date).format('dddd, MMMM D')});
   };
@@ -64,8 +81,8 @@ class Reminder extends Component<IProps, {today: string}> {
             {this.state.today}
           </MyText>
         </View>
-        {pillListStore.CardList.length > 0 ? (
-          pillListStore.CardList.map((pill) => (
+        {this.state.pillList.length > 0 ? (
+          this.state.pillList.map((pill) => (
             <MyCard
               name={pill.Name}
               dosage={pill.Dosage}

@@ -14,6 +14,8 @@ import {setCycleStore} from 'store/SetCycle';
 import {DeleteButton, MyTableButton, MyToggleButton} from 'components/MyButton';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {pillListStore} from 'store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {CyclePillInfo} from 'helper';
 
 const {height} = Dimensions.get('window');
 
@@ -33,9 +35,21 @@ class SetCycleView extends Component<IProps, {}> {
     );
     this.props.navigation.navigate('Reminder');
   };
+  storeData = async (pill: CyclePillInfo) => {
+    try {
+      const pillList = await AsyncStorage.getItem('pillList');
+      if (pillList) {
+        const parsedPillList = JSON.parse(pillList);
+        parsedPillList.push(pill);
+        await AsyncStorage.setItem('pillList', JSON.stringify(parsedPillList));
+      }
+    } catch (e) {
+      console.log('error: ', e);
+    }
+  };
   pushCardList = () => {
     pillListStore.updatePillKey();
-    pillListStore.CardList.push({
+    const pillObject = {
       key: pillListStore.PillKey,
       PillType: 'Cycle',
       Name: setCycleStore.Name,
@@ -52,7 +66,9 @@ class SetCycleView extends Component<IProps, {}> {
       Bedtime: setCycleStore.Bedtime,
       Critical: setCycleStore.Critical,
       NextTime: setCycleStore.StartTime,
-    });
+    };
+    pillListStore.CardList.push(pillObject);
+    this.storeData(pillObject);
   };
   componentDidMount = () => {
     this.props.navigation.setOptions({
