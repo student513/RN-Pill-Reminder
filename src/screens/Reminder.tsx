@@ -9,7 +9,7 @@ import {pillListStore} from 'store';
 import moment from 'moment';
 import TimeAgo from 'react-native-timeago';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {CyclePillInfo} from 'helper';
+import {CyclePillInfo, DayTimePillInfo} from 'helper';
 
 interface IProps {
   navigation: object;
@@ -18,7 +18,7 @@ interface IProps {
 @observer
 class Reminder extends Component<
   IProps,
-  {today: string; pillList: Array<CyclePillInfo>}
+  {today: string; pillList: Array<CyclePillInfo | DayTimePillInfo>}
 > {
   constructor(props: any) {
     super(props);

@@ -29,10 +29,16 @@ class SetCycleView extends Component<IProps, {}> {
   constructor(props: any) {
     super(props);
   }
-  deleteCard = (key?: number) => {
-    pillListStore.deleteObject(
-      pillListStore.CardList.filter((card) => card.key !== key),
-    );
+  deleteCard = async (id?: number) => {
+    const pillList = await AsyncStorage.getItem('pillList');
+    if (pillList) {
+      let parsedPillList = JSON.parse(pillList);
+      parsedPillList = parsedPillList.filter((card: any) => card.id !== id);
+      console.log(parsedPillList);
+      await AsyncStorage.setItem('pillList', JSON.stringify(parsedPillList));
+    } else {
+      console.log('error: Fail to delete pillCard');
+    }
     this.props.navigation.navigate('Reminder');
   };
   storeData = async (pill: CyclePillInfo) => {

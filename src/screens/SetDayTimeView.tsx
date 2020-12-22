@@ -29,16 +29,34 @@ class SetDayTimeView extends Component<IProps, {}> {
   constructor(props: any) {
     super(props);
   }
-  deleteCard = (key?: number) => {
-    pillListStore.deleteObject(
-      pillListStore.CardList.filter((card) => card.key !== key),
-    );
+  deleteCard = async (id?: number) => {
+    const pillList = await AsyncStorage.getItem('pillList');
+    if (pillList) {
+      let parsedPillList = JSON.parse(pillList);
+      parsedPillList = parsedPillList.filter((card: any) => card.id !== id);
+      await AsyncStorage.setItem('pillList', JSON.stringify(parsedPillList));
+      console.log(parsedPillList);
+    } else {
+      console.log('error: Fail to delete pillCard');
+    }
     this.props.navigation.navigate('Reminder');
   };
+  storeData = async (pill: DayTimePillInfo) => {
+    try {
+      const pillList = await AsyncStorage.getItem('pillList');
+      if (pillList) {
+        const parsedPillList = JSON.parse(pillList);
+        parsedPillList.push(pill);
+        await AsyncStorage.setItem('pillList', JSON.stringify(parsedPillList));
+      }
+    } catch (e) {
+      console.log('error: ', e);
+    }
+  };
   pushCardList = () => {
-    pillListStore.updatePillKey();
-    pillListStore.CardList.push({
-      key: pillListStore.PillKey,
+    pillListStore.updatePillId();
+    const pillObject = {
+      id: pillListStore.PillId,
       PillType: 'DayTime',
       Name: setDayTimeStore.Name,
       Dosage: setDayTimeStore.Dosage,
@@ -48,7 +66,10 @@ class SetDayTimeView extends Component<IProps, {}> {
       EndRepeat: setDayTimeStore.EndRepeat,
       ParsedEndTime: setDayTimeStore.ParsedEndTime,
       Critical: setDayTimeStore.Critical,
-    });
+      NextTime: setDayTimeStore.Time,
+    };
+    pillListStore.CardList.push(pillObject);
+    this.storeData(pillObject);
   };
   componentDidMount = () => {
     this.props.navigation.setOptions({

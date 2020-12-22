@@ -57,7 +57,7 @@ class EndRepeat extends Component<{route: any}, {}> {
                 is24Hour={true}
                 display={Platform.OS === 'ios' ? 'inline' : 'default'}
                 onChange={setCycleStore.onChangeEndTime}
-                minimumDate={new Date(setCycleStore.StartTime)}
+                minimumDate={new Date()}
               />
             )}
           </View>
