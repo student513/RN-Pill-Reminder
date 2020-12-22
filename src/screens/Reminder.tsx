@@ -82,16 +82,16 @@ class Reminder extends Component<
           </MyText>
         </View>
         {this.state.pillList.length > 0 ? (
-          this.state.pillList.map((pill) => (
+          this.state.pillList.map((pill, index) => (
             <MyCard
               name={pill.Name}
               dosage={pill.Dosage}
-              Key={pill.key}
-              key={pill.key}
+              key={index}
+              id={pill.id}
               PillType={pill.PillType}
               navigation={this.props.navigation}
               timing={this.calculateTiming(pill.NextTime)}
-              setNextTime={() => pillListStore.setNextTime(pill.key)}
+              setNextTime={() => pillListStore.setNextTime(pill.id)}
               every={pill.every}
               frequency={pill.frequency}
             />

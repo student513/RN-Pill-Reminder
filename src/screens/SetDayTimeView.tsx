@@ -14,12 +14,14 @@ import {DeleteButton, MyTableButton, MyToggleButton} from 'components/MyButton';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {pillListStore} from 'store';
 import moment from 'moment';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {DayTimePillInfo} from 'helper';
 
 const {height} = Dimensions.get('window');
 
 interface IProps {
   navigation: any;
-  Key?: number;
+  id?: number;
 }
 
 @observer
@@ -56,7 +58,7 @@ class SetDayTimeView extends Component<IProps, {}> {
           onPress={() => {
             this.pushCardList();
             this.props.navigation.goBack();
-            this.props.Key ? this.deleteCard(this.props.Key) : null;
+            this.props.id ? this.deleteCard(this.props.id) : null;
           }}>
           <MyText style={{fontFamily: 'ProximaNova-Bold', color: '#13A45B'}}>
             Done
@@ -139,8 +141,8 @@ class SetDayTimeView extends Component<IProps, {}> {
           description="Critical alerts allows the app to ring the notification sound even when your phone is in silent or do not disturb mode."
         />
 
-        {this.props.Key ? (
-          <DeleteButton onPress={() => this.deleteCard(this.props.Key)} />
+        {this.props.id ? (
+          <DeleteButton onPress={() => this.deleteCard(this.props.id)} />
         ) : (
           <View />
         )}

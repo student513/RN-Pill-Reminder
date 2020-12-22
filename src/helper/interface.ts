@@ -9,7 +9,7 @@ export interface Week {
 }
 
 export interface CyclePillInfo {
-  key: number;
+  id: number;
   PillType: string;
   Name: string;
   Dosage: string;
@@ -28,14 +28,16 @@ export interface CyclePillInfo {
 }
 
 export interface DayTimePillInfo {
-  key: number;
+  id: number;
+  PillType: string;
   Name: string;
   Dosage: string;
   Time: Date;
   EndTime: Date;
-  ParsedTime: string;
+  // ParsedTime: string;
   isEndRepeat: boolean;
   EndRepeat: string;
   ParsedEndTime: string;
   Critical: boolean;
+  NextTime: Date;
 }

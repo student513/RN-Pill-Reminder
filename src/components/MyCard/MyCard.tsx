@@ -15,7 +15,7 @@ interface IProps {
   name: string;
   dosage: string;
   timing: string;
-  Key: number;
+  id: number;
   navigation: object;
   PillType: string;
   setNextTime: Function;
@@ -93,7 +93,7 @@ export class MyCard extends PureComponent<
             onPress={() => {
               this.props.navigation.navigate('Details', {
                 pillType: this.props.PillType,
-                Key: this.props.Key,
+                id: this.props.id,
               });
             }}>
             <TouchableOpacity

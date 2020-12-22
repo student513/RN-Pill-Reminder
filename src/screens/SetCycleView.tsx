@@ -21,7 +21,7 @@ const {height} = Dimensions.get('window');
 
 interface IProps {
   navigation: object;
-  Key?: number;
+  id?: number;
 }
 
 @observer
@@ -48,9 +48,9 @@ class SetCycleView extends Component<IProps, {}> {
     }
   };
   pushCardList = () => {
-    pillListStore.updatePillKey();
+    pillListStore.updatePillId();
     const pillObject = {
-      key: pillListStore.PillKey,
+      id: pillListStore.PillId,
       PillType: 'Cycle',
       Name: setCycleStore.Name,
       Dosage: setCycleStore.Dosage,
@@ -78,7 +78,7 @@ class SetCycleView extends Component<IProps, {}> {
           onPress={() => {
             this.pushCardList();
             this.props.navigation.goBack();
-            this.props.Key ? this.deleteCard(this.props.Key) : null;
+            this.props.id ? this.deleteCard(this.props.id) : null;
           }}>
           <MyText style={{fontFamily: 'ProximaNova-Bold', color: '#13A45B'}}>
             Done
@@ -186,10 +186,10 @@ class SetCycleView extends Component<IProps, {}> {
           />
         )}
 
-        {this.props.Key ? (
+        {this.props.id ? (
           <DeleteButton
             onPress={() => {
-              this.deleteCard(this.props.Key);
+              this.deleteCard(this.props.id);
             }}
           />
         ) : (

@@ -5,11 +5,11 @@ import moment from 'moment';
 class PillListStore {
   @observable CardList: any[] = [];
   @observable VeiwLog: any[] = [];
-  @observable PillKey: number = 0;
+  @observable PillId: number = 0;
 
   @action
-  updatePillKey = () => {
-    this.PillKey++;
+  updatePillId = () => {
+    this.PillId++;
   };
 
   @action
@@ -18,10 +18,10 @@ class PillListStore {
   };
 
   @action
-  setNextTime = (key: number) => {
+  setNextTime = (id: number) => {
     //Pill Type에 따라 구분
     let frequency;
-    const pillIndex = this.CardList.findIndex((pill) => pill.key === key);
+    const pillIndex = this.CardList.findIndex((pill) => pill.id === id);
     if (this.CardList[pillIndex].frequency === 'Minutely') {
       frequency = 'minutes';
     } else if (this.CardList[pillIndex].frequency === 'Hourly') {

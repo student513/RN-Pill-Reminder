@@ -9,7 +9,7 @@ import {setCycleStore, setDayTimeStore, pillListStore} from 'store';
 interface IProps {
   navigation: object;
   route: any;
-  Key?: number;
+  id?: number;
 }
 
 @observer
@@ -17,15 +17,15 @@ class Detail extends Component<IProps, {}> {
   constructor(props: any) {
     super(props);
   }
-  getWillEditCard = (key: number) => {
-    const Card = pillListStore.CardList.find((card) => card.key === key);
+  getWillEditCard = (id: number) => {
+    const Card = pillListStore.CardList.find((card) => card.id === id);
     this.props.route.params.pillType === 'Cycle'
-      ? setCycleStore.initCycle(this.props.route.params.Key, Card)
-      : setDayTimeStore.initDayTime(this.props.route.params.Key, Card);
+      ? setCycleStore.initCycle(this.props.route.params.id, Card)
+      : setDayTimeStore.initDayTime(this.props.route.params.id, Card);
   };
   componentDidMount = () => {
-    this.props.route.params.Key
-      ? this.getWillEditCard(this.props.route.params.Key)
+    this.props.route.params.id
+      ? this.getWillEditCard(this.props.route.params.id)
       : this.props.route.params.pillType === 'Cycle'
       ? setCycleStore.initCycle()
       : setDayTimeStore.initDayTime();
@@ -36,12 +36,12 @@ class Detail extends Component<IProps, {}> {
       <View>
         {this.props.route.params.pillType === 'Cycle' ? (
           <SetCycleView
-            Key={this.props.route.params.Key}
+            id={this.props.route.params.id}
             navigation={this.props.navigation}
           />
         ) : (
           <SetDayTimeView
-            Key={this.props.route.params.Key}
+            id={this.props.route.params.id}
             navigation={this.props.navigation}
           />
         )}
