@@ -14,14 +14,13 @@ import {DeleteButton, MyTableButton, MyToggleButton} from 'components/MyButton';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {pillListStore} from 'store';
 import moment from 'moment';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {DayTimePillInfo} from 'helper';
 
 const {height} = Dimensions.get('window');
 
 interface IProps {
   navigation: any;
   id?: number;
+  saveCard: Function;
 }
 
 @observer
@@ -29,32 +28,9 @@ class SetDayTimeView extends Component<IProps, {}> {
   constructor(props: any) {
     super(props);
   }
-  deleteCard = async (id?: number) => {
-    const pillList = await AsyncStorage.getItem('pillList');
-    if (pillList) {
-      let parsedPillList = JSON.parse(pillList);
-      parsedPillList = parsedPillList.filter((card: any) => card.id !== id);
-      await AsyncStorage.setItem('pillList', JSON.stringify(parsedPillList));
-      console.log(parsedPillList);
-    } else {
-      console.log('error: Fail to delete pillCard');
-    }
-    this.props.navigation.navigate('Reminder');
-  };
-  storeData = async (pill: DayTimePillInfo) => {
-    try {
-      const pillList = await AsyncStorage.getItem('pillList');
-      if (pillList) {
-        const parsedPillList = JSON.parse(pillList);
-        parsedPillList.push(pill);
-        await AsyncStorage.setItem('pillList', JSON.stringify(parsedPillList));
-      }
-    } catch (e) {
-      console.log('error: ', e);
-    }
-  };
-  pushCardList = () => {
-    pillListStore.updatePillId();
+
+  saveCardList = () => {
+    this.props.id ? null : pillListStore.updatePillId();
     const pillObject = {
       id: pillListStore.PillId,
       PillType: 'DayTime',
@@ -68,8 +44,10 @@ class SetDayTimeView extends Component<IProps, {}> {
       Critical: setDayTimeStore.Critical,
       NextTime: setDayTimeStore.Time,
     };
-    pillListStore.CardList.push(pillObject);
-    this.storeData(pillObject);
+    // pillListStore.CardList.push(pillObject);
+    this.props.id
+      ? this.props.saveCard(pillObject, this.props.id)
+      : this.props.saveCard(pillObject);
   };
   componentDidMount = () => {
     this.props.navigation.setOptions({
@@ -77,9 +55,8 @@ class SetDayTimeView extends Component<IProps, {}> {
         <TouchableOpacity
           style={{marginRight: 15}}
           onPress={() => {
-            this.pushCardList();
+            this.saveCardList();
             this.props.navigation.goBack();
-            this.props.id ? this.deleteCard(this.props.id) : null;
           }}>
           <MyText style={{fontFamily: 'ProximaNova-Bold', color: '#13A45B'}}>
             Done
@@ -163,7 +140,12 @@ class SetDayTimeView extends Component<IProps, {}> {
         />
 
         {this.props.id ? (
-          <DeleteButton onPress={() => this.deleteCard(this.props.id)} />
+          <DeleteButton
+            onPress={() => {
+              pillListStore.deleteCard(this.props.id);
+              this.props.navigation.navigate('Reminder');
+            }}
+          />
         ) : (
           <View />
         )}

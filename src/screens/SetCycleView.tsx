@@ -14,14 +14,13 @@ import {setCycleStore} from 'store/SetCycle';
 import {DeleteButton, MyTableButton, MyToggleButton} from 'components/MyButton';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {pillListStore} from 'store';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {CyclePillInfo} from 'helper';
 
 const {height} = Dimensions.get('window');
 
 interface IProps {
   navigation: object;
   id?: number;
+  saveCard: Function;
 }
 
 @observer
@@ -29,32 +28,9 @@ class SetCycleView extends Component<IProps, {}> {
   constructor(props: any) {
     super(props);
   }
-  deleteCard = async (id?: number) => {
-    const pillList = await AsyncStorage.getItem('pillList');
-    if (pillList) {
-      let parsedPillList = JSON.parse(pillList);
-      parsedPillList = parsedPillList.filter((card: any) => card.id !== id);
-      console.log(parsedPillList);
-      await AsyncStorage.setItem('pillList', JSON.stringify(parsedPillList));
-    } else {
-      console.log('error: Fail to delete pillCard');
-    }
-    this.props.navigation.navigate('Reminder');
-  };
-  storeData = async (pill: CyclePillInfo) => {
-    try {
-      const pillList = await AsyncStorage.getItem('pillList');
-      if (pillList) {
-        const parsedPillList = JSON.parse(pillList);
-        parsedPillList.push(pill);
-        await AsyncStorage.setItem('pillList', JSON.stringify(parsedPillList));
-      }
-    } catch (e) {
-      console.log('error: ', e);
-    }
-  };
-  pushCardList = () => {
-    pillListStore.updatePillId();
+
+  saveCardList = () => {
+    this.props.id ? null : pillListStore.updatePillId();
     const pillObject = {
       id: pillListStore.PillId,
       PillType: 'Cycle',
@@ -73,8 +49,10 @@ class SetCycleView extends Component<IProps, {}> {
       Critical: setCycleStore.Critical,
       NextTime: setCycleStore.StartTime,
     };
-    pillListStore.CardList.push(pillObject);
-    this.storeData(pillObject);
+    // pillListStore.CardList.push(pillObject);
+    this.props.id
+      ? this.props.saveCard(pillObject, this.props.id)
+      : this.props.saveCard(pillObject);
   };
   componentDidMount = () => {
     this.props.navigation.setOptions({
@@ -82,9 +60,9 @@ class SetCycleView extends Component<IProps, {}> {
         <TouchableOpacity
           style={{marginRight: 15}}
           onPress={() => {
-            this.pushCardList();
+            this.saveCardList();
             this.props.navigation.goBack();
-            this.props.id ? this.deleteCard(this.props.id) : null;
+            // this.props.id ? this.deleteCard(this.props.id) : null;
           }}>
           <MyText style={{fontFamily: 'ProximaNova-Bold', color: '#13A45B'}}>
             Done
@@ -195,7 +173,8 @@ class SetCycleView extends Component<IProps, {}> {
         {this.props.id ? (
           <DeleteButton
             onPress={() => {
-              this.deleteCard(this.props.id);
+              pillListStore.deleteCard(this.props.id);
+              this.props.navigation.navigate('Reminder');
             }}
           />
         ) : (

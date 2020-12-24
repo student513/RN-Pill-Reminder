@@ -24,7 +24,6 @@ class Reminder extends Component<
     super(props);
     this.state = {
       today: '',
-      pillList: [],
     };
   }
   calculateTiming = (NextTime: Date) => {
@@ -41,7 +40,7 @@ class Reminder extends Component<
     try {
       const pillList = await AsyncStorage.getItem('pillList');
       pillList
-        ? this.setState({pillList: JSON.parse(pillList)})
+        ? pillListStore.setCardList(JSON.parse(pillList))
         : await AsyncStorage.setItem('pillList', JSON.stringify([]));
     } catch (e) {
       console.log('error: ', e);
@@ -81,8 +80,8 @@ class Reminder extends Component<
             {this.state.today}
           </MyText>
         </View>
-        {this.state.pillList.length > 0 ? (
-          this.state.pillList.map((pill, index) => (
+        {pillListStore.CardList.length > 0 ? (
+          pillListStore.CardList.map((pill, index) => (
             <MyCard
               name={pill.Name}
               dosage={pill.Dosage}

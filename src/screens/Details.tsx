@@ -5,6 +5,8 @@ import {observer} from 'mobx-react';
 import SetCycleView from './SetCycleView';
 import SetDayTimeView from './SetDayTimeView';
 import {setCycleStore, setDayTimeStore, pillListStore} from 'store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {CyclePillInfo, DayTimePillInfo} from 'helper';
 
 interface IProps {
   navigation: object;
@@ -17,12 +19,26 @@ class Detail extends Component<IProps, {}> {
   constructor(props: any) {
     super(props);
   }
-  getWillEditCard = (id: number) => {
-    const Card = pillListStore.CardList.find((card) => card.id === id);
+  getWillEditCard = async (id: number) => {
+    const Card = pillListStore.CardList.find(
+      (card: CyclePillInfo | DayTimePillInfo) => card.id === id,
+    );
     this.props.route.params.pillType === 'Cycle'
       ? setCycleStore.initCycle(this.props.route.params.id, Card)
       : setDayTimeStore.initDayTime(this.props.route.params.id, Card);
   };
+  saveCard = async (pill: DayTimePillInfo | CyclePillInfo, id: number) => {
+    if (!id) {
+      pillListStore.pushCard(pill);
+    } else {
+      pillListStore.editCard(pill, id);
+    }
+    await AsyncStorage.setItem(
+      'pillList',
+      JSON.stringify(pillListStore.CardList),
+    );
+  };
+
   componentDidMount = () => {
     this.props.route.params.id
       ? this.getWillEditCard(this.props.route.params.id)
@@ -38,11 +54,13 @@ class Detail extends Component<IProps, {}> {
           <SetCycleView
             id={this.props.route.params.id}
             navigation={this.props.navigation}
+            saveCard={this.saveCard}
           />
         ) : (
           <SetDayTimeView
             id={this.props.route.params.id}
             navigation={this.props.navigation}
+            saveCard={this.saveCard}
           />
         )}
       </View>
