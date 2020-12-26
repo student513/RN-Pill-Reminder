@@ -103,6 +103,9 @@ class SetCycleStore {
     this.ParsedStartTime = moment
       .parseZone(this.StartTime)
       .format('ddd,MMM D,LT');
+    this.ParsedEndTime = moment
+      .parseZone(this.StartTime)
+      .format('ddd,MMM D,YYYY');
   };
   @action
   onChangeEndTime = (event: Event, selectedDate?: Date) => {
