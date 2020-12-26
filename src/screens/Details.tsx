@@ -28,11 +28,7 @@ class Detail extends Component<IProps, {}> {
       : setDayTimeStore.initDayTime(this.props.route.params.id, Card);
   };
   saveCard = async (pill: DayTimePillInfo | CyclePillInfo, id: number) => {
-    if (!id) {
-      pillListStore.pushCard(pill);
-    } else {
-      pillListStore.editCard(pill, id);
-    }
+    id ? pillListStore.editCard(pill, id) : pillListStore.pushCard(pill);
     await AsyncStorage.setItem(
       'pillList',
       JSON.stringify(pillListStore.CardList),

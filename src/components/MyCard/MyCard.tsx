@@ -99,7 +99,7 @@ export class MyCard extends PureComponent<
             <TouchableOpacity
               onPress={() => {
                 this.toggleCheck();
-                this.props.setNextTime();
+                this.props.setNextTime(this.props.id);
               }}>
               {this.state.checked ? (
                 <Icon name="checkmark-circle" size={27} style={styles.check} />

@@ -32,7 +32,7 @@ class SetCycleView extends Component<IProps, {}> {
   saveCardList = () => {
     this.props.id ? null : pillListStore.updatePillId();
     const pillObject = {
-      id: pillListStore.PillId,
+      id: this.props.id || pillListStore.PillId,
       PillType: 'Cycle',
       Name: setCycleStore.Name,
       Dosage: setCycleStore.Dosage,
@@ -49,7 +49,6 @@ class SetCycleView extends Component<IProps, {}> {
       Critical: setCycleStore.Critical,
       NextTime: setCycleStore.StartTime,
     };
-    // pillListStore.CardList.push(pillObject);
     this.props.id
       ? this.props.saveCard(pillObject, this.props.id)
       : this.props.saveCard(pillObject);

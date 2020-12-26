@@ -18,7 +18,7 @@ interface IProps {
 @observer
 class Reminder extends Component<
   IProps,
-  {today: string; pillList: Array<CyclePillInfo | DayTimePillInfo>}
+  {today: string; pillList: (CyclePillInfo | DayTimePillInfo)[]}
 > {
   constructor(props: any) {
     super(props);

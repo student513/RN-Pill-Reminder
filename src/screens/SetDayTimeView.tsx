@@ -44,7 +44,6 @@ class SetDayTimeView extends Component<IProps, {}> {
       Critical: setDayTimeStore.Critical,
       NextTime: setDayTimeStore.Time,
     };
-    // pillListStore.CardList.push(pillObject);
     this.props.id
       ? this.props.saveCard(pillObject, this.props.id)
       : this.props.saveCard(pillObject);
