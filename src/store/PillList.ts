@@ -1,27 +1,50 @@
 import {action, observable} from 'mobx';
 import {createContext} from 'react';
 import moment from 'moment';
+import {CyclePillInfo, DayTimePillInfo} from 'helper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class PillListStore {
-  @observable CardList: any[] = [];
+  @observable CardList: (CyclePillInfo | DayTimePillInfo)[] = [];
   @observable VeiwLog: any[] = [];
-  @observable PillKey: number = 0;
+  @observable PillId: number = 0;
 
   @action
-  updatePillKey = () => {
-    this.PillKey++;
+  updatePillId = () => {
+    this.PillId = Math.random();
   };
 
   @action
-  deleteObject = (CardList: any[]) => {
-    this.CardList = CardList;
+  setCardList = (pillList: (CyclePillInfo | DayTimePillInfo)[]) => {
+    this.CardList = pillList;
   };
 
   @action
-  setNextTime = (key: number) => {
+  pushCard = (pill: CyclePillInfo | DayTimePillInfo) => {
+    this.CardList.push(pill);
+  };
+
+  @action
+  editCard = (pill: CyclePillInfo | DayTimePillInfo, id: number) => {
+    const editedIndex = this.CardList.findIndex(
+      (pill: DayTimePillInfo | CyclePillInfo) => pill.id === id,
+    );
+    this.CardList[editedIndex] = pill;
+  };
+
+  @action
+  deleteCard = async (id: number | undefined) => {
+    this.CardList = this.CardList.filter((card) => card.id !== id);
+    await AsyncStorage.setItem('pillList', JSON.stringify(this.CardList));
+  };
+
+  @action
+  setNextTime = (id: number) => {
     //Pill Type에 따라 구분
     let frequency;
-    const pillIndex = this.CardList.findIndex((pill) => pill.key === key);
+    const pillIndex = this.CardList.findIndex(
+      (pill: CyclePillInfo | DayTimePillInfo) => pill.id === id,
+    );
     if (this.CardList[pillIndex].frequency === 'Minutely') {
       frequency = 'minutes';
     } else if (this.CardList[pillIndex].frequency === 'Hourly') {

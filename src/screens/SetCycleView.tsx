@@ -19,7 +19,8 @@ const {height} = Dimensions.get('window');
 
 interface IProps {
   navigation: object;
-  Key?: number;
+  id?: number;
+  saveCard: Function;
 }
 
 @observer
@@ -27,16 +28,11 @@ class SetCycleView extends Component<IProps, {}> {
   constructor(props: any) {
     super(props);
   }
-  deleteCard = (key?: number) => {
-    pillListStore.deleteObject(
-      pillListStore.CardList.filter((card) => card.key !== key),
-    );
-    this.props.navigation.navigate('Reminder');
-  };
-  pushCardList = () => {
-    pillListStore.updatePillKey();
-    pillListStore.CardList.push({
-      key: pillListStore.PillKey,
+
+  saveCardList = () => {
+    this.props.id ? null : pillListStore.updatePillId();
+    const pillObject = {
+      id: this.props.id || pillListStore.PillId,
       PillType: 'Cycle',
       Name: setCycleStore.Name,
       Dosage: setCycleStore.Dosage,
@@ -52,7 +48,10 @@ class SetCycleView extends Component<IProps, {}> {
       Bedtime: setCycleStore.Bedtime,
       Critical: setCycleStore.Critical,
       NextTime: setCycleStore.StartTime,
-    });
+    };
+    this.props.id
+      ? this.props.saveCard(pillObject, this.props.id)
+      : this.props.saveCard(pillObject);
   };
   componentDidMount = () => {
     this.props.navigation.setOptions({
@@ -60,9 +59,9 @@ class SetCycleView extends Component<IProps, {}> {
         <TouchableOpacity
           style={{marginRight: 15}}
           onPress={() => {
-            this.pushCardList();
+            this.saveCardList();
             this.props.navigation.goBack();
-            this.props.Key ? this.deleteCard(this.props.Key) : null;
+            // this.props.id ? this.deleteCard(this.props.id) : null;
           }}>
           <MyText style={{fontFamily: 'ProximaNova-Bold', color: '#13A45B'}}>
             Done
@@ -170,10 +169,11 @@ class SetCycleView extends Component<IProps, {}> {
           />
         )}
 
-        {this.props.Key ? (
+        {this.props.id ? (
           <DeleteButton
             onPress={() => {
-              this.deleteCard(this.props.Key);
+              pillListStore.deleteCard(this.props.id);
+              this.props.navigation.navigate('Reminder');
             }}
           />
         ) : (

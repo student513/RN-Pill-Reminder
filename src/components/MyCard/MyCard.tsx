@@ -14,8 +14,8 @@ import {RectButton} from 'react-native-gesture-handler';
 interface IProps {
   name: string;
   dosage: string;
-  timing: Date;
-  Key: number;
+  timing: string;
+  id: number;
   navigation: object;
   PillType: string;
   setNextTime: Function;
@@ -93,13 +93,13 @@ export class MyCard extends PureComponent<
             onPress={() => {
               this.props.navigation.navigate('Details', {
                 pillType: this.props.PillType,
-                Key: this.props.Key,
+                id: this.props.id,
               });
             }}>
             <TouchableOpacity
               onPress={() => {
                 this.toggleCheck();
-                this.props.setNextTime();
+                this.props.setNextTime(this.props.id);
               }}>
               {this.state.checked ? (
                 <Icon name="checkmark-circle" size={27} style={styles.check} />

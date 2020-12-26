@@ -19,7 +19,8 @@ const {height} = Dimensions.get('window');
 
 interface IProps {
   navigation: any;
-  Key?: number;
+  id?: number;
+  saveCard: Function;
 }
 
 @observer
@@ -27,16 +28,11 @@ class SetDayTimeView extends Component<IProps, {}> {
   constructor(props: any) {
     super(props);
   }
-  deleteCard = (key?: number) => {
-    pillListStore.deleteObject(
-      pillListStore.CardList.filter((card) => card.key !== key),
-    );
-    this.props.navigation.navigate('Reminder');
-  };
-  pushCardList = () => {
-    pillListStore.updatePillKey();
-    pillListStore.CardList.push({
-      key: pillListStore.PillKey,
+
+  saveCardList = () => {
+    this.props.id ? null : pillListStore.updatePillId();
+    const pillObject = {
+      id: pillListStore.PillId,
       PillType: 'DayTime',
       Name: setDayTimeStore.Name,
       Dosage: setDayTimeStore.Dosage,
@@ -46,7 +42,11 @@ class SetDayTimeView extends Component<IProps, {}> {
       EndRepeat: setDayTimeStore.EndRepeat,
       ParsedEndTime: setDayTimeStore.ParsedEndTime,
       Critical: setDayTimeStore.Critical,
-    });
+      NextTime: setDayTimeStore.Time,
+    };
+    this.props.id
+      ? this.props.saveCard(pillObject, this.props.id)
+      : this.props.saveCard(pillObject);
   };
   componentDidMount = () => {
     this.props.navigation.setOptions({
@@ -54,9 +54,8 @@ class SetDayTimeView extends Component<IProps, {}> {
         <TouchableOpacity
           style={{marginRight: 15}}
           onPress={() => {
-            this.pushCardList();
+            this.saveCardList();
             this.props.navigation.goBack();
-            this.props.Key ? this.deleteCard(this.props.Key) : null;
           }}>
           <MyText style={{fontFamily: 'ProximaNova-Bold', color: '#13A45B'}}>
             Done
@@ -139,8 +138,13 @@ class SetDayTimeView extends Component<IProps, {}> {
           description="Critical alerts allows the app to ring the notification sound even when your phone is in silent or do not disturb mode."
         />
 
-        {this.props.Key ? (
-          <DeleteButton onPress={() => this.deleteCard(this.props.Key)} />
+        {this.props.id ? (
+          <DeleteButton
+            onPress={() => {
+              pillListStore.deleteCard(this.props.id);
+              this.props.navigation.navigate('Reminder');
+            }}
+          />
         ) : (
           <View />
         )}
